@@ -1,0 +1,133 @@
+/// <reference types="react" />
+import type { MessagesContextValue } from '../../../contexts/messagesContext/MessagesContext';
+import type { DefaultAttachmentType, DefaultChannelType, DefaultUserType, UnknownType } from '../../../types/types';
+export declare const useCreateMessagesContext: <At extends UnknownType = DefaultAttachmentType, Ch extends UnknownType = DefaultChannelType, Co extends string = import("stream-chat").LiteralStringForUnion, Ev extends UnknownType = UnknownType, Me extends UnknownType = UnknownType, Re extends UnknownType = UnknownType, Us extends UnknownType = DefaultUserType>({ additionalTouchableProps, animatedLongPress, Attachment, AttachmentActions, blockUser, Card, CardCover, CardFooter, CardHeader, channelId, copyMessage, DateHeader, deleteMessage, disableTypingIndicator, dismissKeyboardOnMessageTouch, editMessage, enableMessageGroupingByUser, FileAttachment, FileAttachmentGroup, FileAttachmentIcon, flagMessage, FlatList, forceAlignMessages, formatDate, Gallery, Giphy, handleBlock, handleCopy, handleDelete, handleEdit, handleFlag, handleMute, handleQuotedReply, handleReaction, handleRetry, handleThreadReply, initialScrollToFirstUnreadMessage, InlineDateSeparator, InlineUnreadIndicator, legacyImageViewerSwipeBehaviour, markdownRules, Message, messageActions, MessageAvatar, MessageContent, messageContentOrder, MessageDeleted, MessageFooter, MessageHeader, MessageList, MessageReplies, MessageRepliesAvatars, MessageSimple, MessageStatus, MessageSystem, MessageText, mutesEnabled, muteUser, myMessageTheme, onDoubleTapMessage, onLongPressMessage, onPressInMessage, onPressMessage, OverlayReactionList, quotedRepliesEnabled, quotedReply, ReactionList, reactionsEnabled, removeMessage, Reply, retry, retrySendMessage, ScrollToBottomButton, selectReaction, setEditingState, setQuotedMessageState, supportedReactions, threadRepliesEnabled, threadReply, TypingIndicator, TypingIndicatorContainer, updateMessage, UrlPreview, }: import("../../../contexts/messagesContext/MessagesContext").MessagesConfig & {
+    Attachment: import("react").ComponentType<import("../..").AttachmentProps<At, Ch, Co, Ev, Me, Re, Us>>;
+    AttachmentActions: import("react").ComponentType<import("../..").AttachmentActionsProps<At, Ch, Co, Ev, Me, Re, Us>>;
+    Card: import("react").ComponentType<import("../..").CardProps<At, Ch, Co, Ev, Me, Re, Us>>;
+    DateHeader: import("react").ComponentType<import("../..").DateHeaderProps>;
+    dismissKeyboardOnMessageTouch: boolean;
+    enableMessageGroupingByUser: boolean;
+    FileAttachment: import("react").ComponentType<import("../..").FileAttachmentProps<At, Ch, Co, Ev, Me, Re, Us>>;
+    FileAttachmentGroup: import("react").ComponentType<import("../..").FileAttachmentGroupProps<At, Ch, Co, Ev, Me, Re, Us>>;
+    FileAttachmentIcon: import("react").ComponentType<import("../..").FileIconProps>;
+    FlatList: typeof import("react-native").FlatList;
+    Gallery: import("react").ComponentType<Partial<import("../..").GalleryPropsWithContext<At, Ch, Co, Ev, Me, Re, Us>>>;
+    Giphy: import("react").ComponentType<import("../..").GiphyProps<At, Ch, Co, Ev, Me, Re, Us>>;
+    initialScrollToFirstUnreadMessage: boolean;
+    InlineDateSeparator: import("react").ComponentType<import("../..").InlineDateSeparatorProps>;
+    InlineUnreadIndicator: import("react").ComponentType<{}>;
+    Message: import("react").ComponentType<import("../..").MessageProps<At, Ch, Co, Ev, Me, Re, Us>>;
+    MessageAvatar: import("react").ComponentType<Partial<import("../..").MessageAvatarPropsWithContext<At, Ch, Co, Ev, Me, Re, Us>>>;
+    MessageContent: import("react").ComponentType<import("../..").MessageContentProps<At, Ch, Co, Ev, Me, Re, Us>>;
+    messageContentOrder: import("../../../contexts/messagesContext/MessagesContext").MessageContentType[];
+    MessageDeleted: import("react").ComponentType<import("../..").MessageDeletedProps<At, Ch, Co, Ev, Me, Re, Us>>;
+    MessageFooter: import("react").ComponentType<import("../..").MessageFooterProps<At, Ch, Co, Ev, Me, Re, Us>>;
+    MessageList: import("react").ComponentType<Partial<Pick<import("../../..").AttachmentPickerContextValue, "selectedPicker" | "closePicker" | "setSelectedPicker"> & Pick<import("../../..").ChannelContextValue<At, Ch, Co, Ev, Me, Re, Us>, "channel" | "disabled" | "EmptyStateIndicator" | "hideStickyDateHeader" | "loadChannelAtMessage" | "loading" | "LoadingIndicator" | "markRead" | "NetworkDownIndicator" | "reloadChannel" | "scrollToFirstUnreadThreshold" | "setTargetedMessage" | "StickyHeader" | "targetedMessage" | "typingEventsEnabled"> & Pick<import("../../..").ChatContextValue<At, Ch, Co, Ev, Me, Re, Us>, "client"> & Pick<import("../../..").ImageGalleryContextValue<At, Ch, Co, Ev, Me, Re, Us>, "setImages"> & Pick<import("../../..").PaginatedMessageListContextValue<At, Ch, Co, Ev, Me, Re, Us>, "loadMore" | "loadMoreRecent"> & Pick<import("../../..").OverlayContextValue, "overlay"> & Pick<MessagesContextValue<At, Ch, Co, Ev, Me, Re, Us>, "DateHeader" | "FlatList" | "initialScrollToFirstUnreadMessage" | "InlineDateSeparator" | "InlineUnreadIndicator" | "Message" | "MessageSystem" | "ScrollToBottomButton" | "TypingIndicator" | "TypingIndicatorContainer" | "disableTypingIndicator" | "legacyImageViewerSwipeBehaviour" | "myMessageTheme"> & Pick<import("../../..").ThreadContextValue<At, Ch, Co, Ev, Me, Re, Us>, "loadMoreThread" | "thread"> & Pick<import("../../..").TranslationContextValue, "t" | "tDateTimeParser"> & {
+        additionalFlatListProps?: Partial<import("react-native").FlatListProps<import("../..").MessageType<At, Ch, Co, Ev, Me, Re, Us>>> | undefined;
+        FooterComponent?: import("react").ComponentType<{}> | undefined;
+        HeaderComponent?: import("react").ComponentType<{}> | undefined;
+        inverted?: boolean | undefined;
+        noGroupByUser?: boolean | undefined;
+        onListScroll?: ((event: import("react-native").NativeSyntheticEvent<import("react-native").NativeScrollEvent>) => void) | undefined;
+        onThreadSelect?: ((message: import("../..").MessageType<At, Ch, Co, Ev, Me, Re, Us> | null) => void) | undefined;
+        setFlatListRef?: ((ref: import("react-native").FlatList<import("../..").MessageType<At, Ch, Co, Ev, Me, Re, Us>> | null) => void) | undefined;
+        threadList?: boolean | undefined;
+    }>>;
+    MessageReplies: import("react").ComponentType<Partial<import("../..").MessageRepliesPropsWithContext<At, Ch, Co, Ev, Me, Re, Us>>>;
+    MessageRepliesAvatars: import("react").ComponentType<import("../..").MessageRepliesAvatarsProps<At, Ch, Co, Ev, Me, Re, Us>>;
+    MessageSimple: import("react").ComponentType<Partial<import("../..").MessageSimplePropsWithContext<At, Ch, Co, Ev, Me, Re, Us>>>;
+    MessageStatus: import("react").ComponentType<Partial<import("../..").MessageStatusPropsWithContext<At, Ch, Co, Ev, Me, Re, Us>>>;
+    MessageSystem: import("react").ComponentType<import("../..").MessageSystemProps<At, Ch, Co, Ev, Me, Re, Us>>;
+    OverlayReactionList: import("react").ComponentType<import("../..").OverlayReactionListProps<At, Ch, Co, Ev, Me, Re, Us>>;
+    ReactionList: import("react").ComponentType<import("../..").ReactionListProps<At, Ch, Co, Ev, Me, Re, Us>>;
+    removeMessage: (message: {
+        id: string;
+        parent_id?: string | undefined;
+    }) => void;
+    Reply: import("react").ComponentType<Partial<Pick<import("../../..").MessageInputContextValue<At, Ch, Co, Ev, Me, Re, Us>, "quotedMessage"> & Pick<MessagesContextValue<At, Ch, Co, Ev, Me, Re, Us>, "FileAttachmentIcon" | "MessageAvatar"> & Pick<import("../../..").TranslationContextValue, "t"> & {
+        attachmentSize?: number | undefined;
+        styles?: Partial<{
+            container: import("react-native").ViewStyle;
+            fileAttachmentContainer: import("react-native").ViewStyle;
+            imageAttachment: import("react-native").ImageStyle;
+            messageContainer: import("react-native").ViewStyle;
+            textContainer: import("react-native").ViewStyle;
+        }> | undefined;
+    }>>;
+    retrySendMessage: (message: import("stream-chat").MessageResponse<At, Ch, Co, Me, Re, Us>) => Promise<void>;
+    ScrollToBottomButton: import("react").ComponentType<import("../..").ScrollToBottomButtonProps>;
+    setEditingState: (message: import("../..").MessageType<At, Ch, Co, Ev, Me, Re, Us>) => void;
+    setQuotedMessageState: (message: import("../..").MessageType<At, Ch, Co, Ev, Me, Re, Us>) => void;
+    supportedReactions: import("../../..").ReactionData[];
+    TypingIndicator: import("react").ComponentType<{}>;
+    TypingIndicatorContainer: import("react").ComponentType<{}>;
+    updateMessage: (updatedMessage: import("stream-chat").MessageResponse<At, Ch, Co, Me, Re, Us>, extraState?: {
+        commands?: import("../../..").SuggestionCommand<Co>[] | undefined;
+        messageInput?: string | undefined;
+        threadMessages?: import("stream-chat").FormatMessageResponse<At, Ch, Co, Me, Re, Us>[] | undefined;
+    } | undefined) => void;
+    UrlPreview: import("react").ComponentType<import("../..").CardProps<At, Ch, Co, Ev, Me, Re, Us>>;
+    additionalTouchableProps?: Omit<import("react-native").TouchableOpacityProps, "style"> | undefined;
+    animatedLongPress?: boolean | undefined;
+    blockUser?: ((message: import("../..").MessageType<At, Ch, Co, Ev, Me, Re, Us>) => import("../../..").MessageAction) | null | undefined;
+    CardCover?: import("react").ComponentType<import("../..").CardProps<At, Ch, Co, Ev, Me, Re, Us>> | undefined;
+    CardFooter?: import("react").ComponentType<import("../..").CardProps<At, Ch, Co, Ev, Me, Re, Us>> | undefined;
+    CardHeader?: import("react").ComponentType<import("../..").CardProps<At, Ch, Co, Ev, Me, Re, Us>> | undefined;
+    copyMessage?: ((message: import("../..").MessageType<At, Ch, Co, Ev, Me, Re, Us>) => import("../../..").MessageAction) | null | undefined;
+    deleteMessage?: ((message: import("../..").MessageType<At, Ch, Co, Ev, Me, Re, Us>) => import("../../..").MessageAction) | null | undefined;
+    disableTypingIndicator?: boolean | undefined;
+    editMessage?: ((message: import("../..").MessageType<At, Ch, Co, Ev, Me, Re, Us>) => import("../../..").MessageAction) | null | undefined;
+    flagMessage?: ((message: import("../..").MessageType<At, Ch, Co, Ev, Me, Re, Us>) => import("../../..").MessageAction) | null | undefined;
+    forceAlignMessages?: boolean | import("../../..").Alignment | undefined;
+    formatDate?: ((date: import("../../..").TDateTimeParserInput) => string) | undefined;
+    handleBlock?: ((message: import("../..").MessageType<At, Ch, Co, Ev, Me, Re, Us>) => Promise<void>) | undefined;
+    handleCopy?: ((message: import("../..").MessageType<At, Ch, Co, Ev, Me, Re, Us>) => Promise<void>) | undefined;
+    handleDelete?: ((message: import("../..").MessageType<At, Ch, Co, Ev, Me, Re, Us>) => Promise<void>) | undefined;
+    handleEdit?: ((message: import("../..").MessageType<At, Ch, Co, Ev, Me, Re, Us>) => void) | undefined;
+    handleFlag?: ((message: import("../..").MessageType<At, Ch, Co, Ev, Me, Re, Us>) => Promise<void>) | undefined;
+    handleMute?: ((message: import("../..").MessageType<At, Ch, Co, Ev, Me, Re, Us>) => Promise<void>) | undefined;
+    handleQuotedReply?: ((message: import("../..").MessageType<At, Ch, Co, Ev, Me, Re, Us>) => Promise<void>) | undefined;
+    handleReaction?: ((message: import("../..").MessageType<At, Ch, Co, Ev, Me, Re, Us>, reactionType: string) => Promise<void>) | undefined;
+    handleRetry?: ((message: import("../..").MessageType<At, Ch, Co, Ev, Me, Re, Us>) => Promise<void>) | undefined;
+    handleThreadReply?: ((message: import("../..").MessageType<At, Ch, Co, Ev, Me, Re, Us>) => Promise<void>) | undefined;
+    legacyImageViewerSwipeBehaviour?: boolean | undefined;
+    markdownRules?: Partial<import("simple-markdown").DefaultRules> | undefined;
+    messageActions?: (import("../../..").MessageAction | null)[] | (({ blockUser, canModifyMessage, copyMessage, deleteMessage, dismissOverlay, editMessage, error, flagMessage, isMyMessage, isThreadMessage, message, messageReactions, muteUser, quotedRepliesEnabled, quotedReply, retry, threadRepliesEnabled, threadReply, }: {
+        blockUser: import("../../..").MessageAction | null;
+        canModifyMessage: boolean;
+        copyMessage: import("../../..").MessageAction | null;
+        deleteMessage: import("../../..").MessageAction | null;
+        dismissOverlay: () => void;
+        editMessage: import("../../..").MessageAction | null;
+        error: boolean;
+        flagMessage: import("../../..").MessageAction | null;
+        isMyMessage: boolean;
+        isThreadMessage: boolean;
+        message: import("../..").MessageType<At, Ch, Co, Ev, Me, Re, Us>;
+        messageReactions: boolean;
+        muteUser: import("../../..").MessageAction | null;
+        quotedReply: import("../../..").MessageAction | null;
+        retry: import("../../..").MessageAction | null;
+        threadReply: import("../../..").MessageAction | null;
+        quotedRepliesEnabled?: boolean | undefined;
+        threadRepliesEnabled?: boolean | undefined;
+    }) => (import("../../..").MessageAction | null)[] | undefined) | undefined;
+    MessageHeader?: import("react").ComponentType<import("../..").MessageFooterProps<At, Ch, Co, Ev, Me, Re, Us>> | undefined;
+    MessageText?: import("react").ComponentType<import("../..").MessageTextProps<At, Ch, Co, Ev, Me, Re, Us>> | undefined;
+    muteUser?: ((message: import("../..").MessageType<At, Ch, Co, Ev, Me, Re, Us>) => import("../../..").MessageAction) | null | undefined;
+    myMessageTheme?: import("../../..").DeepPartial<import("../../..").Theme> | undefined;
+    onDoubleTapMessage?: ((payload: import("../..").MessageTouchableHandlerPayload<At, Ch, Co, Ev, Me, Re, Us>) => void) | undefined;
+    onLongPressMessage?: ((payload: import("../..").MessageTouchableHandlerPayload<At, Ch, Co, Ev, Me, Re, Us>) => void) | undefined;
+    onPressInMessage?: ((payload: import("../..").MessageTouchableHandlerPayload<At, Ch, Co, Ev, Me, Re, Us>) => void) | undefined;
+    onPressMessage?: ((payload: import("../..").MessageTouchableHandlerPayload<At, Ch, Co, Ev, Me, Re, Us>) => void) | undefined;
+    quotedReply?: ((message: import("../..").MessageType<At, Ch, Co, Ev, Me, Re, Us>) => import("../../..").MessageAction) | null | undefined;
+    retry?: ((message: import("../..").MessageType<At, Ch, Co, Ev, Me, Re, Us>) => import("../../..").MessageAction) | null | undefined;
+    selectReaction?: ((message: import("../..").MessageType<At, Ch, Co, Ev, Me, Re, Us>) => (reactionType: string) => Promise<void>) | undefined;
+    threadReply?: ((message: import("../..").MessageType<At, Ch, Co, Ev, Me, Re, Us>) => import("../../..").MessageAction) | undefined;
+} & {
+    /**
+     * To ensure we allow re-render, when channel is changed
+     */
+    channelId?: string | undefined;
+}) => MessagesContextValue<At, Ch, Co, Ev, Me, Re, Us>;

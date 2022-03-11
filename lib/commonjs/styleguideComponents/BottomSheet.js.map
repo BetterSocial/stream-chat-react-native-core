@@ -1,0 +1,1 @@
+{"version":3,"sources":["BottomSheet.tsx"],"names":["BottomSheet"],"mappings":";;;;;;;AAAA;;;;;AAEO,IAAMA,WAAW,GAAG,SAAdA,WAAc;AAAA,SAAM,gCAAC,iBAAD,CAAO,QAAP;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA,IAAN;AAAA,CAApB","sourcesContent":["import React from 'react';\n\nexport const BottomSheet = () => <React.Fragment />;\n"]}

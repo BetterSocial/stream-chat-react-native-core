@@ -1,0 +1,7 @@
+import type { ChatContextValue } from '../../../contexts/chatContext/ChatContext';
+import type { ThreadContextValue } from '../../../contexts/threadContext/ThreadContext';
+import type { TypingContextValue } from '../../../contexts/typingContext/TypingContext';
+import type { DefaultAttachmentType, DefaultChannelType, DefaultCommandType, DefaultEventType, DefaultMessageType, DefaultReactionType, DefaultUserType, UnknownType } from '../../../types/types';
+declare type FilterTypingUsersParams<At extends UnknownType = DefaultAttachmentType, Ch extends UnknownType = DefaultChannelType, Co extends string = DefaultCommandType, Ev extends UnknownType = DefaultEventType, Me extends UnknownType = DefaultMessageType, Re extends UnknownType = DefaultReactionType, Us extends UnknownType = DefaultUserType> = Pick<TypingContextValue<At, Ch, Co, Ev, Me, Re, Us>, 'typing'> & Pick<ChatContextValue<At, Ch, Co, Ev, Me, Re, Us>, 'client'> & Pick<ThreadContextValue<At, Ch, Co, Ev, Me, Re, Us>, 'thread'>;
+export declare const filterTypingUsers: <At extends UnknownType = DefaultAttachmentType, Ch extends UnknownType = DefaultChannelType, Co extends string = import("stream-chat").LiteralStringForUnion, Ev extends UnknownType = UnknownType, Me extends UnknownType = UnknownType, Re extends UnknownType = UnknownType, Us extends UnknownType = DefaultUserType>({ client, thread, typing, }: FilterTypingUsersParams<At, Ch, Co, Ev, Me, Re, Us>) => string[];
+export {};

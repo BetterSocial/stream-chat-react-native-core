@@ -1,0 +1,3 @@
+import type { TypingContextValue } from '../../../contexts/typingContext/TypingContext';
+import type { DefaultAttachmentType, DefaultChannelType, DefaultUserType, UnknownType } from '../../../types/types';
+export declare const useCreateTypingContext: <At extends UnknownType = DefaultAttachmentType, Ch extends UnknownType = DefaultChannelType, Co extends string = import("stream-chat").LiteralStringForUnion, Ev extends UnknownType = UnknownType, Me extends UnknownType = UnknownType, Re extends UnknownType = UnknownType, Us extends UnknownType = DefaultUserType>({ typing, }: TypingContextValue<At, Ch, Co, Ev, Me, Re, Us>) => TypingContextValue<At, Ch, Co, Ev, Me, Re, Us>;

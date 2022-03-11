@@ -1,0 +1,23 @@
+import type { MessageType } from '../../MessageList/hooks/useMessageList';
+import type { MessageAction } from '../../../contexts/messageOverlayContext/MessageOverlayContext';
+import type { DefaultAttachmentType, DefaultChannelType, DefaultUserType, UnknownType } from '../../../types/types';
+export declare const messageActions: <At extends UnknownType = DefaultAttachmentType, Ch extends UnknownType = DefaultChannelType, Co extends string = import("stream-chat").LiteralStringForUnion, Ev extends UnknownType = UnknownType, Me extends UnknownType = UnknownType, Re extends UnknownType = UnknownType, Us extends UnknownType = DefaultUserType>({ blockUser, canModifyMessage, copyMessage, deleteMessage, editMessage, error, flagMessage, isMyMessage, isThreadMessage, message, messageReactions, mutesEnabled, muteUser, quotedRepliesEnabled, quotedReply, retry, threadRepliesEnabled, threadReply, }: {
+    blockUser: MessageAction | null;
+    canModifyMessage: boolean;
+    copyMessage: MessageAction | null;
+    deleteMessage: MessageAction | null;
+    editMessage: MessageAction | null;
+    error: boolean;
+    flagMessage: MessageAction | null;
+    isMyMessage: boolean;
+    isThreadMessage: boolean;
+    message: MessageType<At, Ch, Co, Ev, Me, Re, Us>;
+    messageReactions: boolean;
+    muteUser: MessageAction | null;
+    quotedReply: MessageAction | null;
+    retry: MessageAction | null;
+    threadReply: MessageAction | null;
+    mutesEnabled?: boolean | undefined;
+    quotedRepliesEnabled?: boolean | undefined;
+    threadRepliesEnabled?: boolean | undefined;
+}) => Array<MessageAction | null> | undefined;

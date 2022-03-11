@@ -1,0 +1,3 @@
+import type { MessageType } from '../../MessageList/hooks/useMessageList';
+import type { DefaultAttachmentType, DefaultChannelType, DefaultUserType, UnknownType } from '../../../types/types';
+export declare const removeReservedFields: <At extends UnknownType = DefaultAttachmentType, Ch extends UnknownType = DefaultChannelType, Co extends string = import("stream-chat").LiteralStringForUnion, Ev extends UnknownType = UnknownType, Me extends UnknownType = UnknownType, Re extends UnknownType = UnknownType, Us extends UnknownType = DefaultUserType>(message: MessageType<At, Ch, Co, Ev, Me, Re, Us>) => MessageType<At, Ch, Co, Ev, Me, Re, Us>;

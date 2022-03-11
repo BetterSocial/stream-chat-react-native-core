@@ -1,0 +1,1 @@
+{"version":3,"sources":["react-native-mock.js"],"names":["jest","mock"],"mappings":"AAAAA,IAAI,CAACC,IAAL,CAAU,sDAAV","sourcesContent":["jest.mock('react-native/Libraries/Animated/NativeAnimatedHelper');\n"]}

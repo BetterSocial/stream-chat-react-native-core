@@ -1,0 +1,1 @@
+{"version":3,"sources":["Markdown.tsx"],"names":["children"],"mappings":";;;;;eAAe;AAAA,MAAGA,QAAH,QAAGA,QAAH;AAAA,SAAkBA,QAAlB;AAAA,C","sourcesContent":["export default ({ children }) => children;\n"]}

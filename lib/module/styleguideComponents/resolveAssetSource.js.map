@@ -1,0 +1,1 @@
+{"version":3,"sources":["resolveAssetSource.js"],"names":["resolveAssetSource"],"mappings":";;;;;AAAA,IAAMA,kBAAkB,GAAG,SAArBA,kBAAqB;AAAA,SAAM,IAAN;AAAA,CAA3B","sourcesContent":["const resolveAssetSource = () => null;\nexport { resolveAssetSource };\n"]}
