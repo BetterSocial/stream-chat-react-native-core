@@ -84,7 +84,8 @@ type PostMakerDataChildren = {
 
 type PontNotfifcationPreviewProps = {
     context:ContextChildren,
-    item:ItemChildren
+    item:ItemChildren,
+    onSelectAdditionalData: (item:object) => void
 }
 
 type ContextChildren = {
@@ -102,7 +103,7 @@ type MyProfileChildren = {
 
 
 
-const PostNotificationPreview : React.FC<PontNotfifcationPreviewProps> = ({item, context}) => {
+const PostNotificationPreview : React.FC<PontNotfifcationPreviewProps> = ({item, context, onSelectAdditionalData}) => {
     const [profile] = context.profile
     console.log(profile, 'holak')
     const handleReplyComment = () => {
@@ -131,7 +132,7 @@ const PostNotificationPreview : React.FC<PontNotfifcationPreviewProps> = ({item,
         return ""
     }
     return (
-        <TouchableOpacity  style={styles.containerCard} >
+        <TouchableOpacity onPress={() => onSelectAdditionalData(item)}  style={styles.containerCard} >
             <View style={styles.row} >
             <View style={styles.avatarContainer} >
                 {item.postMaker && item.postMaker.data ? <Image source={{ uri: item.postMaker.data.profile_pic_url }} style={styles.avatar} /> : null}

@@ -76,6 +76,7 @@ export type ChannelListProps<
     | 'numberOfSkeletons'
     | 'additionalData'
     | 'context'
+    | 'onSelectAdditionalData'
   >
 > & {
   /**
@@ -263,7 +264,8 @@ export const ChannelList = <
     Skeleton = SkeletonDefault,
     sort = DEFAULT_SORT,
     additionalData,
-    context
+    context,
+    onSelectAdditionalData
   } = props;
 
   const [forceUpdate, setForceUpdate] = useState(0);
@@ -378,11 +380,12 @@ export const ChannelList = <
     },
     Skeleton,
     additionalData,
-    context  
+    context,
+    onSelectAdditionalData 
   });
   return (
     <ChannelsProvider value={channelsContext}>
-      <List context={context}  additionalData={additionalData} />
+      <List onSelectAdditionalData={onSelectAdditionalData} context={context}  additionalData={additionalData} />
     </ChannelsProvider>
   );
 };

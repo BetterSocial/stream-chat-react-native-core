@@ -150,7 +150,8 @@ const ChannelListMessengerWithContext = <
     reloadList,
     setFlatListRef,
     additionalData,
-    context
+    context,
+    onSelectAdditionalData
   } = props;
   console.log(additionalData , context, 'rampung')
   const {
@@ -199,7 +200,7 @@ const renderItem = ({item, index}) => {
   if(item.type === 'messaging') {
     return <ChannelPreview<At, Ch, Co, Ev, Me, Re, Us> key={index} channel={item} />
   } else {
-    return <PostNotificationPreview item={item} context={context}  />
+    return <PostNotificationPreview onSelectAdditionalData={onSelectAdditionalData} item={item} context={context}  />
   }
 }
 
@@ -208,8 +209,6 @@ const renderItem = ({item, index}) => {
   }, [additionalData, channels])
 
 
-
-  console.log(additionalData, channels, 'ramaian')
 
   const ListFooterComponent = () =>
     channels.length && ListHeaderComponent ? <ListHeaderComponent /> : null;
@@ -236,7 +235,6 @@ const renderItem = ({item, index}) => {
         ListHeaderComponent={ListFooterComponent}
         onEndReached={onEndReached}
         onEndReachedThreshold={loadMoreThreshold}
-        // @ts-expect-error waiting for this merged PR to be released https://github.com/software-mansion/react-native-gesture-handler/pull/1394
         ref={setFlatListRef}
         refreshControl={<RefreshControl onRefresh={refreshList} refreshing={refreshing} />}
         renderItem={renderItem}
