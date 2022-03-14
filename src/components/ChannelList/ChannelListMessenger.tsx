@@ -205,7 +205,7 @@ const renderItem = ({item, index}) => {
 }
 
   useEffect(() => {
-    setJoinChannel([...getUniqueListBy(channels, 'id'), ...getUniqueListBy(additionalData, 'activity_id')].sort((a:any, b:any) => new Date(b.data.last_message_at).getTime() - new Date(a.data.last_message_at).getTime()))
+    setJoinChannel([...getUniqueListBy(channels, 'id'), ...getUniqueListBy(additionalData, 'activity_id')].sort((a:any, b:any) => new Date(b.data.last_message_at ? b.data.last_message_at : b.data.updated_at).getTime() - new Date(a.data.last_message_at ? a.data.last_message_at : a.data.updated_at).getTime()))
   }, [additionalData, channels])
 
 
