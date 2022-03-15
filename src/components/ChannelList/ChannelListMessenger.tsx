@@ -151,9 +151,8 @@ const ChannelListMessengerWithContext = <
     setFlatListRef,
     additionalData,
     context,
-    onSelectAdditionalData
+    onSelectAdditionalData,
   } = props;
-  console.log(additionalData , context, 'rampung')
   const {
     theme: {
       channelListMessenger: { flatList, flatListContent },
@@ -161,6 +160,7 @@ const ChannelListMessengerWithContext = <
     },
   } = useTheme();
 
+ 
   /**
    * In order to prevent the EmptyStateIndicator component from showing up briefly on mount,
    * we set the loading state one cycle behind to ensure the channels are set before the
@@ -204,10 +204,19 @@ const renderItem = ({item, index}) => {
   }
 }
 
-  useEffect(() => {
-    setJoinChannel([...getUniqueListBy(channels, 'id'), ...getUniqueListBy(additionalData, 'activity_id')].sort((a:any, b:any) => new Date(b.data.last_message_at ? b.data.last_message_at : b.data.updated_at).getTime() - new Date(a.data.last_message_at ? a.data.last_message_at : a.data.updated_at).getTime()))
-  }, [additionalData, channels])
 
+
+  useEffect(() => {
+    const newChannel = channels.concat(additionalData).map((channel) => {
+      if(!channel.data.last_message_at) {
+        console.log('jihay')
+        return Object.assign(channel, {data: {...channel.data, last_message_at: channel.data.updated_at, last_message_time: new Date(channel.data.updated_at).getTime()}})
+      } else {
+        return Object.assign(channel, {data: {...channel.data, last_message_time: new Date(channel.data.last_message_at).getTime()}})
+      }
+    }).sort((a, b) => b.data.last_message_time - a.data.last_message_time)
+    setJoinChannel(newChannel)
+  }, [channels, additionalData])
 
 
   const ListFooterComponent = () =>
@@ -215,7 +224,7 @@ const renderItem = ({item, index}) => {
 
   return (
     <>
-      <FlatList
+    <FlatList
         contentContainerStyle={[
           styles.flatListContentContainer,
           { backgroundColor: white_snow },
@@ -242,6 +251,7 @@ const renderItem = ({item, index}) => {
         testID='channel-list-messenger'
         {...additionalFlatListProps}
       />
+      
       <StatusIndicator<At, Ch, Co, Ev, Me, Re, Us> />
     </>
   );
