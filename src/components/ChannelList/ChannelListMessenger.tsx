@@ -207,6 +207,8 @@ const renderItem = ({item, index}) => {
 
 
   useEffect(() => {
+    // const newChannel = channels.concat(additionalData)
+    // console.log(newChannel, 'channel kita')
     const newChannel = channels.concat(additionalData).map((channel) => {
       if(!channel.data.last_message_at) {
         return Object.assign(channel, {data: {...channel.data, last_message_at: channel.data.updated_at, last_message_time: new Date(channel.data.updated_at).getTime()}})
@@ -217,7 +219,7 @@ const renderItem = ({item, index}) => {
     setJoinChannel(newChannel)
   }, [channels, additionalData])
 
-
+  
   const ListFooterComponent = () =>
     channels.length && ListHeaderComponent ? <ListHeaderComponent /> : null;
 

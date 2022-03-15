@@ -80,7 +80,7 @@ export const usePaginatedChannels = <
 
     try {
       const channelQueryResponse = await client.queryChannels(filters, sort, newOptions);
-
+      console.log(channelQueryResponse, 'sukjo')
       if (!isMounted.current) return;
 
       channelQueryResponse.forEach((channel) => channel.state.setIsUpToDate(true));
@@ -89,7 +89,7 @@ export const usePaginatedChannels = <
         queryType === 'reload' || queryType === 'refresh'
           ? channelQueryResponse
           : [...channels, ...channelQueryResponse];
-
+      console.log(newChannels, 'new channel')
       setChannels(newChannels);
       setHasNextPage(channelQueryResponse.length >= newOptions.limit);
       setError(false);
