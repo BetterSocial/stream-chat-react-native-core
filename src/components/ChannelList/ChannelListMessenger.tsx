@@ -204,8 +204,8 @@ const renderItem = ({item, index}) => {
   }
 }
 
-const handleUpdate = async () => {
-  await reloadList()
+const handleUpdate = () => {
+  reloadList()
   const newChannel = channels.concat(additionalData).map((channel) => {
     if(!channel.data.last_message_at) {
       return Object.assign(channel, {data: {...channel.data, last_message_at: channel.data.updated_at, last_message_time: new Date(channel.data.updated_at).getTime()}})
