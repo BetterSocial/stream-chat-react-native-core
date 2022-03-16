@@ -204,19 +204,20 @@ const renderItem = ({item, index}) => {
   }
 }
 
-
+const handleUpdate = async () => {
+  await reloadList()
+  const newChannel = channels.concat(additionalData).map((channel) => {
+    if(!channel.data.last_message_at) {
+      return Object.assign(channel, {data: {...channel.data, last_message_at: channel.data.updated_at, last_message_time: new Date(channel.data.updated_at).getTime()}})
+    } else {
+      return Object.assign(channel, {data: {...channel.data, last_message_time: new Date(channel.data.last_message_at).getTime()}})
+    }
+  }).sort((a, b) => b.data.last_message_time - a.data.last_message_time)
+  setJoinChannel(newChannel)
+}
 
   useEffect(() => {
-    // const newChannel = channels.concat(additionalData)
-    // console.log(newChannel, 'channel kita')
-    const newChannel = channels.concat(additionalData).map((channel) => {
-      if(!channel.data.last_message_at) {
-        return Object.assign(channel, {data: {...channel.data, last_message_at: channel.data.updated_at, last_message_time: new Date(channel.data.updated_at).getTime()}})
-      } else {
-        return Object.assign(channel, {data: {...channel.data, last_message_time: new Date(channel.data.last_message_at).getTime()}})
-      }
-    }).sort((a, b) => b.data.last_message_time - a.data.last_message_time)
-    setJoinChannel(newChannel)
+    handleUpdate()
   }, [channels, additionalData])
 
   
