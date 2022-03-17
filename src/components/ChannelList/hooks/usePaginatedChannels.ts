@@ -101,7 +101,7 @@ export const usePaginatedChannels = <
         setLoadingNextPage(false);
         setRefreshing(false);
         console.warn(err);
-        return setError(true);
+        return err
       }
 
       return queryChannels(queryType, retryCount + 1);
