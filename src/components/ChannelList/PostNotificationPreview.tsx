@@ -160,13 +160,13 @@ const PostNotificationPreview : React.FC<PontNotfifcationPreviewProps> = ({item,
                 <View style={[styles.avatarContainer, styles.avatarNoHeight]} />
                 <View style={[styles.row, styles.centerAlign, styles.mr10]} >
                     <Text style={styles.textVoteMargin} >
-                        {item.upvote}
+                        {item.downvote}
                     </Text>
                     <MemoIc_arrow_down_vote_on width={15} height={15} />
                 </View>
                 <View style={[styles.row, styles.centerAlign, styles.mr10]} >
                     <Text style={styles.textVoteMargin} >
-                        {item.downvote}
+                        {item.upvote}
                     </Text>
                     <MemoIc_arrow_upvote_on width={15} height={15} />
                 </View>
