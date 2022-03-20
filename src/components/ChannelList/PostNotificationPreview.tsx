@@ -5,6 +5,7 @@ import MemoIc_arrow_down_vote_on from './assets/Ic_downvote_on';
 import MemoIc_arrow_upvote_on from './assets/Ic_upvote_on';
 import MemoIc_comment from './assets/Ic_comment';
 import MemoIc_block_inactive from './assets/Ic_block_inactive';
+import { calculateTime } from 'stream-chat-react-native-core/src/components/ChannelList/customUtils';
 
 const styles = StyleSheet.create({
     containerCard: {
@@ -127,7 +128,7 @@ const PostNotificationPreview : React.FC<PontNotfifcationPreviewProps> = ({item,
     }
     const handleDate = (reaction) => {
         if(reaction && reaction.updated_at) {
-            return moment(reaction.updated_at).format('dddd')
+            return calculateTime(moment(reaction.updated_at))
         }
         return ""
     }
