@@ -6,7 +6,7 @@ import MemoIc_arrow_upvote_on from './assets/Ic_upvote_on';
 import MemoIc_comment from './assets/Ic_comment';
 import MemoIc_block_inactive from './assets/Ic_block_inactive';
 import { calculateTime } from 'stream-chat-react-native-core/src/components/ChannelList/customUtils';
-
+import Anonym from './assets/images/anonym.png'
 const styles = StyleSheet.create({
     containerCard: {
         paddingHorizontal: 16,
@@ -25,6 +25,8 @@ const styles = StyleSheet.create({
     },
     titleText: {
         fontWeight: 'bold',
+        flex: 1,
+        
     },
     lastContentContainer: {
         marginLeft: 'auto'
@@ -33,7 +35,8 @@ const styles = StyleSheet.create({
         maxWidth: '70%',
     },
     subtitleStyle: {
-        color: '#6A6A6A'
+        color: '#6A6A6A',
+        flex: 1
     },
     descriptionContainer: {
         flexDirection: 'row',
@@ -53,7 +56,7 @@ const styles = StyleSheet.create({
         marginRight: 15
     },
     textVoteMargin: {
-        marginRight: 5
+        marginRight: 15
     },
     dateFont: {
         fontSize: 12
@@ -66,7 +69,8 @@ type ItemChildren = {
     titlePost:string,
     upvote: number,
     downvote: number,
-    block:number
+    block:number,
+    isAnonym: boolean
 }
 
 type CommentsChildren = {
@@ -111,19 +115,24 @@ const PostNotificationPreview : React.FC<PontNotfifcationPreviewProps> = ({item,
         const actorId = item.comments[0] && item.comments[0].actor && item.comments[0].actor.data && item.comments[0].actor.id
         const {myProfile} : DetailProfile = profile
         console.log(actorId, myProfile.user_id, 'salak')
-        if(actorId === myProfile.user_id) {
+        if(actorId === myProfile.user_id && !item.isAnonym) {
             return "You"
-        } else if(item.comments[0] && item.comments[0].reaction && item.comments[0].reaction.parent !== "") {
+        } else if(item.comments[0] && item.comments[0].reaction && item.comments[0].reaction.parent !== "" && !item.isAnonym) {
             return `${item.comments[0] 
                 && item.comments[0].actor 
                 && item.comments[0].actor.data 
                 && item.comments[0].actor.data.username} Replied to your comment`
         }
         else {
+            if(!item.isAnonym) {
             return item.comments[0] 
             && item.comments[0].actor 
             && item.comments[0].actor.data 
             && item.comments[0].actor.data.username
+            } else {
+                return 'Anonymous'
+            }
+            
         }
     }
     const handleDate = (reaction) => {
@@ -132,16 +141,24 @@ const PostNotificationPreview : React.FC<PontNotfifcationPreviewProps> = ({item,
         }
         return ""
     }
+
+    const handleImage = () => {
+        if(item.isAnonym) {
+            return Anonym
+        }
+        return {uri: item.postMaker.data.profile_pic_url}
+    }
+
     return (
         <TouchableOpacity onPress={() => onSelectAdditionalData(item)}  style={styles.containerCard} >
             <View style={styles.row} >
             <View style={styles.avatarContainer} >
-                {item.postMaker && item.postMaker.data ? <Image source={{ uri: item.postMaker.data.profile_pic_url }} style={styles.avatar} /> : null}
+                {item.postMaker && item.postMaker.data ? <Image source={handleImage()} style={styles.avatar} /> : null}
             </View>
             <View style={styles.titleContainer} >
-                {item.postMaker && item.postMaker.data ? <Text style={styles.titleText} >{item.postMaker.data.username}'s post: {item.titlePost}</Text> : null}
+                {item.postMaker && item.postMaker.data ? <Text numberOfLines={1} style={styles.titleText} >{!item.isAnonym ? item.postMaker.data.username : 'Anonymous'}'s post: {item.titlePost}</Text> : null}
                 
-                <Text style={styles.subtitleStyle} >
+                <Text numberOfLines={2} style={styles.subtitleStyle} >
                     <Text style={styles.titleText} >
                     {handleReplyComment()}:
                     </Text>
