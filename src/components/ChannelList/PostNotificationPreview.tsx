@@ -5,6 +5,8 @@ import MemoIc_arrow_down_vote_on from './assets/Ic_downvote_on';
 import MemoIc_arrow_upvote_on from './assets/Ic_upvote_on';
 import MemoIc_comment from './assets/Ic_comment';
 import MemoIc_block_inactive from './assets/Ic_block_inactive';
+import MemoIc_block_active from './assets/Ic_block_active';
+
 import { calculateTime } from 'stream-chat-react-native-core/src/components/ChannelList/customUtils';
 import Anonym from './assets/images/anonym.png'
 const styles = StyleSheet.create({
@@ -198,7 +200,7 @@ const PostNotificationPreview : React.FC<PontNotfifcationPreviewProps> = ({item,
                     <Text style={styles.textVoteMargin} >
                         {String(item.block)}
                     </Text>
-                    <MemoIc_block_inactive width={15} height={15} />
+                    {Number(item.block) > 0 ?  <MemoIc_block_active width={15} height={15} /> : <MemoIc_block_inactive width={15} height={15} />}
                 </View>
             </View>
         </TouchableOpacity>
