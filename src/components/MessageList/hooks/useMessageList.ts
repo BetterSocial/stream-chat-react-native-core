@@ -110,7 +110,6 @@ export const useMessageList = <
   });
 
   const readData = getReadStates(client.userID, messageList, readList);
-  console.log('makina')
   const messagesWithStylesReadByAndDateSeparator = messageList
     .filter((msg) => !msg.deleted_at || msg.user?.id === client.userID)
     .map((msg) => ({

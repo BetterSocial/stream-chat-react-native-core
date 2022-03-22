@@ -112,11 +112,9 @@ type MyProfileChildren = {
 
 const PostNotificationPreview : React.FC<PontNotfifcationPreviewProps> = ({item, context, onSelectAdditionalData}) => {
     const [profile] = context.profile
-    console.log(profile, 'holak')
     const handleReplyComment = () => {
         const actorId = item.comments[0] && item.comments[0].actor && item.comments[0].actor.data && item.comments[0].actor.id
         const {myProfile} : DetailProfile = profile
-        console.log(actorId, myProfile.user_id, 'salak')
         if(actorId === myProfile.user_id && !item.isAnonym) {
             return "You"
         } else if(item.comments[0] && item.comments[0].reaction && item.comments[0].reaction.parent !== "" && !item.isAnonym) {

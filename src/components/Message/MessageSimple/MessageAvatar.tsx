@@ -130,7 +130,6 @@ export const MessageAvatar = <
 ) => {
   const { alignment, lastGroupMessage, message, showAvatar } =
     useMessageContext<At, Ch, Co, Ev, Me, Re, Us>();
-  console.log('lapuk')
   return (
     <MemoizedMessageAvatar
       {...{

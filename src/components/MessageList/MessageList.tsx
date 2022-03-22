@@ -542,7 +542,6 @@ const MessageListWithContext = <
       setAutoscrollToTop(true);
     }
   }, [messageListLengthAfterUpdate]);
-  console.log('mlebu')
   useEffect(() => {
     if(myMessage && typeof myMessage === 'function') {
       myMessage(messageList)
@@ -904,7 +903,6 @@ const MessageListWithContext = <
       </View>
     );
   }
-  console.log(messageList, 'romansa')
   return (
     <View style={[styles.container, { backgroundColor: white_snow }, container]}>
       <FlatList
