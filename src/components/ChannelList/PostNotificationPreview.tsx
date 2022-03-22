@@ -81,7 +81,8 @@ type CommentsChildren = {
 }
 
 type PostMakerChildren = {
-    data: PostMakerDataChildren
+    data: PostMakerDataChildren,
+    id: string
 }
 
 type PostMakerDataChildren = {
@@ -112,6 +113,7 @@ type MyProfileChildren = {
 
 const PostNotificationPreview : React.FC<PontNotfifcationPreviewProps> = ({item, context, onSelectAdditionalData}) => {
     const [profile] = context.profile
+    const {myProfile} : DetailProfile = profile
     const handleReplyComment = () => {
         const actorId = item.comments[0] && item.comments[0].actor && item.comments[0].actor.data && item.comments[0].actor.id
         const {myProfile} : DetailProfile = profile
@@ -173,8 +175,7 @@ const PostNotificationPreview : React.FC<PontNotfifcationPreviewProps> = ({item,
                 <Text style={styles.dateFont} >{handleDate(item.comments[0] && item.comments[0].reaction)} </Text>
             </View>
             </View>
-         
-            <View style={[styles.descriptionContainer]} >
+            {item.postMaker.id === myProfile.user_id ? <View style={[styles.descriptionContainer]} >
                 <View style={[styles.avatarContainer, styles.avatarNoHeight]} />
                 <View style={[styles.row, styles.centerAlign, styles.mr10]} >
                     <Text style={styles.textVoteMargin} >
@@ -200,7 +201,7 @@ const PostNotificationPreview : React.FC<PontNotfifcationPreviewProps> = ({item,
                     </Text>
                     {Number(item.block) > 0 ?  <MemoIc_block_active width={15} height={15} /> : <MemoIc_block_inactive width={15} height={15} />}
                 </View>
-            </View>
+            </View> : null}
         </TouchableOpacity>
     )
 }
