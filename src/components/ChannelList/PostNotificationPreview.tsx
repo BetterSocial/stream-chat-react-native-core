@@ -46,7 +46,8 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     row: {
-        flexDirection: 'row'
+        flexDirection: 'row',
+        flex:1,
     },
     avatarNoHeight: {
         width: 40
@@ -58,7 +59,7 @@ const styles = StyleSheet.create({
         marginRight: 15
     },
     textVoteMargin: {
-        marginRight: 15
+        marginRight: 10
     },
     dateFont: {
         fontSize: 12
@@ -137,6 +138,8 @@ const PostNotificationPreview : React.FC<PontNotfifcationPreviewProps> = ({item,
             
         }
     }
+
+    
     const handleDate = (reaction) => {
         if(reaction && reaction.updated_at) {
             return calculateTime(moment(reaction.updated_at))
@@ -158,7 +161,7 @@ const PostNotificationPreview : React.FC<PontNotfifcationPreviewProps> = ({item,
                 {item.postMaker && item.postMaker.data ? <Image source={handleImage()} style={styles.avatar} /> : null}
             </View>
             <View style={styles.titleContainer} >
-                {item.postMaker && item.postMaker.data ? <Text numberOfLines={1} style={styles.titleText} >{!item.isAnonym ? item.postMaker.data.username : 'Anonymous'}'s post: {item.titlePost}</Text> : null}
+                {item.postMaker && item.postMaker.data ? <Text numberOfLines={1} style={styles.titleText} >Your post: {item.titlePost}</Text> : null}
                 
                 <Text numberOfLines={2} style={styles.subtitleStyle} >
                     <Text style={styles.titleText} >
