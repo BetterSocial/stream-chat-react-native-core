@@ -6,15 +6,14 @@ import MemoIc_arrow_upvote_on from './assets/Ic_upvote_on';
 import MemoIc_comment from './assets/Ic_comment';
 import MemoIc_block_inactive from './assets/Ic_block_inactive';
 import MemoIc_block_active from './assets/Ic_block_active';
-
+import { useTheme } from '../../contexts/themeContext/ThemeContext';
 import { calculateTime } from 'stream-chat-react-native-core/src/components/ChannelList/customUtils';
 import Anonym from './assets/images/anonym.png'
 const styles = StyleSheet.create({
     containerCard: {
         paddingHorizontal: 16,
         backgroundColor: 'white',
-        borderBottomColor: '#f2f2f2',
-        borderBottomWidth: 2,
+        borderBottomWidth: 1,
         paddingVertical: 5,
     },
     avatar: {
@@ -119,6 +118,13 @@ type MyProfileChildren = {
 
 const PostNotificationPreview : React.FC<PontNotfifcationPreviewProps> = ({item, context, onSelectAdditionalData}) => {
     const [profile] = context.profile
+    const {
+        theme: {
+          channelPreview: { container, contentContainer, row, title },
+          colors: { border, white_snow },
+        },
+      } = useTheme();
+    
     const {myProfile} : DetailProfile = profile
     const handleReplyComment = () => {
         const actorId = item.comments[0] && item.comments[0].actor && item.comments[0].actor.data && item.comments[0].actor.id
@@ -159,7 +165,7 @@ const PostNotificationPreview : React.FC<PontNotfifcationPreviewProps> = ({item,
         return {uri: item.postMaker.data.profile_pic_url}
     }
     return (
-        <TouchableOpacity onPress={() => onSelectAdditionalData(item)}  style={styles.containerCard} >
+        <TouchableOpacity onPress={() => onSelectAdditionalData(item)}  style={[styles.containerCard, {borderBottomColor: border}]} >
             <View style={styles.row} >
             <View style={styles.avatarContainer} >
                 {item.postMaker && item.postMaker.data ? <Image source={handleImage()} style={styles.avatar} /> : null}
