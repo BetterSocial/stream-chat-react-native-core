@@ -23,12 +23,12 @@ const styles = StyleSheet.create({
         borderRadius: 20
     },
     avatarContainer: {
-        marginRight: 10,
+        marginRight: 7,
     },
     titleText: {
         fontWeight: 'bold',
         flex: 1,
-        
+        fontSize: 12
     },
     lastContentContainer: {
         marginLeft: 'auto'
@@ -38,7 +38,8 @@ const styles = StyleSheet.create({
     },
     subtitleStyle: {
         color: '#6A6A6A',
-        flex: 1
+        flex: 1,
+        marginTop:3
     },
     descriptionContainer: {
         flexDirection: 'row',
@@ -59,10 +60,15 @@ const styles = StyleSheet.create({
         marginRight: 15
     },
     textVoteMargin: {
-        marginRight: 10
+        marginRight: 0,
+        width: 30
     },
     dateFont: {
         fontSize: 12
+    },
+    titleTextBig: {
+        fontSize: 14,
+        fontWeight: 'bold'
     }
 })
 
@@ -161,11 +167,10 @@ const PostNotificationPreview : React.FC<PontNotfifcationPreviewProps> = ({item,
                 {item.postMaker && item.postMaker.data ? <Image source={handleImage()} style={styles.avatar} /> : null}
             </View>
             <View style={styles.titleContainer} >
-                {item.postMaker && item.postMaker.data ? <Text numberOfLines={1} style={styles.titleText} >Your post: {item.titlePost}</Text> : null}
+                {item.postMaker && item.postMaker.data ? <Text numberOfLines={1} style={styles.titleTextBig} >Your post: {item.titlePost}</Text> : null}
                 
                 <Text numberOfLines={2} style={styles.subtitleStyle} >
-                    <Text style={styles.titleText} >
-                    {handleReplyComment()}:
+                    <Text style={styles.titleText} >{handleReplyComment()}:
                     </Text>
                   
                     {" "}
