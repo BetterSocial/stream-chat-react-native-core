@@ -158,7 +158,6 @@ const PostNotificationPreview : React.FC<PontNotfifcationPreviewProps> = ({item,
         }
         return {uri: item.postMaker.data.profile_pic_url}
     }
-
     return (
         <TouchableOpacity onPress={() => onSelectAdditionalData(item)}  style={styles.containerCard} >
             <View style={styles.row} >
@@ -166,7 +165,7 @@ const PostNotificationPreview : React.FC<PontNotfifcationPreviewProps> = ({item,
                 {item.postMaker && item.postMaker.data ? <Image source={handleImage()} style={styles.avatar} /> : null}
             </View>
             <View style={styles.titleContainer} >
-                {item.postMaker && item.postMaker.data ? <Text numberOfLines={1} style={styles.titleTextBig} >Your post: {item.titlePost}</Text> : null}
+                {item.postMaker && item.postMaker.data ? <Text numberOfLines={1} style={styles.titleTextBig} >{item.postMaker.id === myProfile.user_id ? "Your post" : item.postMaker.data.username}: {item.titlePost}</Text> : null}
                 
                 <Text numberOfLines={2} style={styles.subtitleStyle} >
                     <Text style={styles.titleText} >{handleReplyComment()}:
