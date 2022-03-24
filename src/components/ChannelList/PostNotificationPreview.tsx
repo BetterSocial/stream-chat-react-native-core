@@ -67,6 +67,9 @@ const styles = StyleSheet.create({
     titleTextBig: {
         fontSize: 14,
         fontWeight: 'bold'
+    },
+    iconMargin: {
+        marginRight: 5
     }
 })
 
@@ -190,28 +193,28 @@ const PostNotificationPreview : React.FC<PontNotfifcationPreviewProps> = ({item,
             {item.postMaker.id === myProfile.user_id ? <View style={[styles.descriptionContainer]} >
                 <View style={[styles.avatarContainer, styles.avatarNoHeight]} />
                 <View style={[styles.row, styles.centerAlign, styles.mr10]} >
+                <MemoIc_arrow_down_vote_on style={styles.iconMargin} width={15} height={15} />
                     <Text style={styles.textVoteMargin} >
                         {item.downvote}
                     </Text>
-                    <MemoIc_arrow_down_vote_on width={15} height={15} />
                 </View>
                 <View style={[styles.row, styles.centerAlign, styles.mr10]} >
+                <MemoIc_arrow_upvote_on style={styles.iconMargin} width={15} height={15} />
                     <Text style={styles.textVoteMargin} >
                         {item.upvote}
                     </Text>
-                    <MemoIc_arrow_upvote_on width={15} height={15} />
                 </View>
                 <View style={[styles.row, styles.centerAlign, styles.mr10]} >
+                <MemoIc_comment style={styles.iconMargin} width={15} height={15} />
                     <Text style={styles.textVoteMargin} >
                         {item.comments.length}
                     </Text>
-                    <MemoIc_comment width={15} height={15} />
                 </View>
                 <View style={[styles.row, styles.centerAlign, styles.mr10]} >
+                {Number(item.block) > 0 ?  <MemoIc_block_active style={styles.iconMargin} width={15} height={15} /> : <MemoIc_block_inactive style={styles.iconMargin} width={15} height={15} />}
                     <Text style={styles.textVoteMargin} >
                         {String(item.block)}
                     </Text>
-                    {Number(item.block) > 0 ?  <MemoIc_block_active width={15} height={15} /> : <MemoIc_block_inactive width={15} height={15} />}
                 </View>
             </View> : null}
         </TouchableOpacity>
