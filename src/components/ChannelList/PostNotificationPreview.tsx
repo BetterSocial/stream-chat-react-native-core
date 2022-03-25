@@ -38,7 +38,8 @@ const styles = StyleSheet.create({
     subtitleStyle: {
         color: '#6A6A6A',
         flex: 1,
-        marginTop:3
+        marginTop:3,
+        fontSize: 12
     },
     descriptionContainer: {
         flexDirection: 'row',
@@ -193,15 +194,15 @@ const PostNotificationPreview : React.FC<PontNotfifcationPreviewProps> = ({item,
             {item.postMaker.id === myProfile.user_id ? <View style={[styles.descriptionContainer]} >
                 <View style={[styles.avatarContainer, styles.avatarNoHeight]} />
                 <View style={[styles.row, styles.centerAlign, styles.mr10]} >
-                <MemoIc_arrow_down_vote_on style={styles.iconMargin} width={15} height={15} />
-                    <Text style={styles.textVoteMargin} >
-                        {item.downvote}
-                    </Text>
-                </View>
-                <View style={[styles.row, styles.centerAlign, styles.mr10]} >
                 <MemoIc_arrow_upvote_on style={styles.iconMargin} width={15} height={15} />
                     <Text style={styles.textVoteMargin} >
                         {item.upvote}
+                    </Text>
+                </View>
+                <View style={[styles.row, styles.centerAlign, styles.mr10]} >
+                <MemoIc_arrow_down_vote_on style={styles.iconMargin} width={15} height={15} />
+                    <Text style={styles.textVoteMargin} >
+                        {item.downvote}
                     </Text>
                 </View>
                 <View style={[styles.row, styles.centerAlign, styles.mr10]} >
