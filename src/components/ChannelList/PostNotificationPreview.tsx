@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
         marginRight: 7,
     },
     titleText: {
-        fontWeight: 'bold',
+        // fontWeight: 'bold',
         flex: 1,
         fontSize: 12
     },
@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
     subtitleStyle: {
         color: '#6A6A6A',
         flex: 1,
-        marginTop:3,
+        // marginTop:3,
         fontSize: 12
     },
     descriptionContainer: {
@@ -71,6 +71,10 @@ const styles = StyleSheet.create({
     },
     iconMargin: {
         marginRight: 5
+    },
+    replyContainer: {
+        flexDirection: 'row',
+        marginTop: 3
     }
 })
 
@@ -174,10 +178,10 @@ const PostNotificationPreview : React.FC<PontNotfifcationPreviewProps> = ({item,
             <View style={styles.avatarContainer} >
                 {item.postMaker && item.postMaker.data ? <Image source={handleImage()} style={styles.avatar} /> : null}
             </View>
-            <View style={styles.titleContainer} >
+            <View style={{flex: 1}} >
                 {item.postMaker && item.postMaker.data ? <Text numberOfLines={1} style={styles.titleTextBig} >{item.postMaker.id === myProfile.user_id ? "Your post" : item.postMaker.data.username}: {item.titlePost}</Text> : null}
-                
-                <Text numberOfLines={2} style={styles.subtitleStyle} >
+                <View style={styles.replyContainer} >
+                <Text numberOfLines={1} style={styles.subtitleStyle} >
                     <Text style={styles.titleText} >{handleReplyComment()}:
                     </Text>
                   
@@ -186,13 +190,17 @@ const PostNotificationPreview : React.FC<PontNotfifcationPreviewProps> = ({item,
                     && item.comments[0].reaction 
                     && item.comments[0].reaction.data 
                     && item.comments[0].reaction.data.text} </Text>
-            </View>
-            <View style={styles.lastContentContainer} >
+                     <View style={styles.lastContentContainer} >
                 <Text style={styles.dateFont} >{handleDate(item.comments[0] && item.comments[0].reaction)} </Text>
+                </View>
+                </View>
+               
             </View>
+           
             </View>
-            {item.postMaker.id === myProfile.user_id ? <View style={[styles.descriptionContainer]} >
+                <View style={[styles.descriptionContainer]} >
                 <View style={[styles.avatarContainer, styles.avatarNoHeight]} />
+                {item.postMaker.id === myProfile.user_id ?        <React.Fragment>
                 <View style={[styles.row, styles.centerAlign, styles.mr10]} >
                 <MemoIc_arrow_upvote_on style={styles.iconMargin} width={15} height={15} />
                     <Text style={styles.textVoteMargin} >
@@ -217,7 +225,10 @@ const PostNotificationPreview : React.FC<PontNotfifcationPreviewProps> = ({item,
                         {String(item.block)}
                     </Text>
                 </View>
-            </View> : null}
+                </React.Fragment> : null}
+         
+                
+            </View> 
         </TouchableOpacity>
     )
 }
