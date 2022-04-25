@@ -5,16 +5,16 @@ import MemoIc_arrow_down_vote_on from './assets/Ic_downvote_on';
 import MemoIc_arrow_upvote_on from './assets/Ic_upvote_on';
 import MemoIc_comment from './assets/Ic_comment';
 import MemoIc_block_inactive from './assets/Ic_block_inactive';
-import MemoIc_block_active from './assets/Ic_block_active';
 import { useTheme } from '../../contexts/themeContext/ThemeContext';
 import { calculateTime } from 'stream-chat-react-native-core/src/components/ChannelList/customUtils';
+import Imageblock from './assets/images/block.png'
 import Anonym from './assets/images/anonym.png'
 const styles = StyleSheet.create({
     containerCard: {
         paddingHorizontal: 16,
         backgroundColor: 'white',
         borderBottomWidth: 1,
-        paddingVertical: 5,
+        paddingVertical: 12,
     },
     avatar: {
         height: 40,
@@ -22,12 +22,13 @@ const styles = StyleSheet.create({
         borderRadius: 20
     },
     avatarContainer: {
-        marginRight: 7,
+        marginRight: 0,
     },
     titleText: {
         // fontWeight: 'bold',
         flex: 1,
-        fontSize: 12
+        fontSize: 12,
+        flexShrink: 1,
     },
     lastContentContainer: {
         marginLeft: 'auto'
@@ -39,7 +40,8 @@ const styles = StyleSheet.create({
         color: '#6A6A6A',
         flex: 1,
         // marginTop:3,
-        fontSize: 12
+        fontSize: 12,
+        flexShrink: 1,
     },
     descriptionContainer: {
         flexDirection: 'row',
@@ -67,7 +69,7 @@ const styles = StyleSheet.create({
     },
     titleTextBig: {
         fontSize: 14,
-        fontWeight: 'bold'
+        fontWeight: '700'
     },
     iconMargin: {
         marginRight: 5
@@ -178,7 +180,7 @@ const PostNotificationPreview : React.FC<PontNotfifcationPreviewProps> = ({item,
             <View style={styles.avatarContainer} >
                 {item.postMaker && item.postMaker.data ? <Image source={handleImage()} style={styles.avatar} /> : null}
             </View>
-            <View style={{flex: 1}} >
+            <View style={{flex: 1,  paddingLeft: 8}} >
                 {item.postMaker && item.postMaker.data ? <Text numberOfLines={1} style={styles.titleTextBig} >{item.postMaker.id === myProfile.user_id ? "Your post" : item.postMaker.data.username}: {item.titlePost}</Text> : null}
                 <View style={styles.replyContainer} >
                 <Text numberOfLines={1} style={styles.subtitleStyle} >
@@ -220,7 +222,7 @@ const PostNotificationPreview : React.FC<PontNotfifcationPreviewProps> = ({item,
                     </Text>
                 </View>
                 <View style={[styles.row, styles.centerAlign, styles.mr10]} >
-                {Number(item.block) > 0 ?  <MemoIc_block_active style={styles.iconMargin} width={15} height={15} /> : <MemoIc_block_inactive style={styles.iconMargin} width={15} height={15} />}
+                {Number(item.block) > 0 ?  <Image source={Imageblock} style={styles.iconMargin} width={15} height={15} /> : <MemoIc_block_inactive style={styles.iconMargin} width={15} height={15} />}
                     <Text style={styles.textVoteMargin} >
                         {String(item.block)}
                     </Text>
