@@ -132,7 +132,7 @@ const ChannelPreviewMessengerWithContext = <
   const {
     theme: {
       channelPreview: { container, contentContainer, row, title },
-      colors: { border, white_snow },
+      colors: { border, white },
     },
   } = useTheme();
 
@@ -150,7 +150,7 @@ const ChannelPreviewMessengerWithContext = <
       }}
       style={[
         styles.container,
-        { backgroundColor: white_snow, borderBottomColor: border },
+        { backgroundColor: white, borderBottomColor: border },
         container,
       ]}
       testID='channel-preview-button'

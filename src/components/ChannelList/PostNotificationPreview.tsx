@@ -46,7 +46,8 @@ const styles = StyleSheet.create({
     descriptionContainer: {
         flexDirection: 'row',
         marginTop: 5,
-        alignItems: 'center'
+        alignItems: 'center',
+        paddingLeft: 8,
     },
     row: {
         flexDirection: 'row',
