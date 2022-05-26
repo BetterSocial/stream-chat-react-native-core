@@ -232,7 +232,7 @@ const handleUpdate = () => {
           { backgroundColor: white_snow },
           flatListContent,
         ]}
-        data={joinChannel}
+        data={loading ? [] : joinChannel}
         extraData={forceUpdate}
         keyExtractor={keyExtractor}
         ListEmptyComponent={
