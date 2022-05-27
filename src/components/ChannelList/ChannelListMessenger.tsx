@@ -167,6 +167,7 @@ const ChannelListMessengerWithContext = <
    * change to loadingChannels is registered.
    */
   const [loading, setLoading] = useState(true);
+  const [loadingUpdate, setLoadingUpdate] = useState(true)
   const [joinChannel, setJoinChannel] = useState([])
   useEffect(() => {
     if (!!loadingChannels !== loading) {
@@ -214,11 +215,15 @@ const handleUpdate = () => {
     }
   }).sort((a, b) => b.data.last_message_time - a.data.last_message_time)
   setJoinChannel(newChannel)
+  setLoadingUpdate(false)
 }
 
   useEffect(() => {
-    handleUpdate()
-  }, [channels, additionalData])
+    if(!loading && !loadingChannels) {
+      setLoadingUpdate(true)
+      handleUpdate()
+    }
+  }, [channels, additionalData, loadingChannels, loading])
 
   
   const ListFooterComponent = () =>
@@ -236,7 +241,7 @@ const handleUpdate = () => {
         extraData={forceUpdate}
         keyExtractor={keyExtractor}
         ListEmptyComponent={
-          loading ? (
+          loadingUpdate ? (
             <LoadingIndicator listType='channel' />
           ) : (
             <EmptyStateIndicator listType='channel' />
