@@ -10,7 +10,6 @@ export const calculateTime = (time) => {
     const hours = utc.diff(date, 'hours');
     const days = utc.diff(date, 'days');
     const weeks = utc.diff(date, 'weeks');
-    console.log(days, 'harinih')
     if (days >= 31) {
       return new Date(date).toLocaleDateString();
     }
