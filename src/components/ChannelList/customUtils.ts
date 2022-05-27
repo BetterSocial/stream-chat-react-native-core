@@ -2,7 +2,6 @@ import moment from 'moment';
 
 // eslint-disable-next-line import/prefer-default-export
 export const calculateTime = (time) => {
-  console.log(time, 'timeskip')
   if (time) {
     const now = moment();
     const utc = now;
