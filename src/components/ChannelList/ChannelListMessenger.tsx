@@ -167,6 +167,7 @@ const ChannelListMessengerWithContext = <
    * change to loadingChannels is registered.
    */
   const [loading, setLoading] = useState(true);
+  const [loadingUpdate, setLoadingUpdate] = useState(true)
   const [joinChannel, setJoinChannel] = useState([])
   useEffect(() => {
     if (!!loadingChannels !== loading) {
@@ -204,26 +205,30 @@ const renderItem = ({item, index}) => {
   }
 }
 
-const handleUpdate = () => {
+const handleUpdate = async () => {
   reloadList()
-  const newChannel = channels.concat(additionalData).map((channel) => {
+  const newChannel = await channels.concat(additionalData).map((channel) => {
     if(!channel.data.last_message_at) {
       return Object.assign(channel, {data: {...channel.data, last_message_at: channel.data.updated_at, last_message_time: new Date(channel.data.updated_at).getTime()}})
     } else {
       return Object.assign(channel, {data: {...channel.data, last_message_time: new Date(channel.data.last_message_at).getTime()}})
     }
   }).sort((a, b) => b.data.last_message_time - a.data.last_message_time)
-  setJoinChannel(newChannel)
+  await setJoinChannel(newChannel)
+  setTimeout(() => {
+    setLoadingUpdate(false)
+  }, 5000)
 }
-
   useEffect(() => {
-    handleUpdate()
-  }, [channels, additionalData])
+    if(!loading) {
+      setLoadingUpdate(true)
+      handleUpdate()
+    }
+  }, [channels, additionalData, loading])
 
   
   const ListFooterComponent = () =>
     channels.length && ListHeaderComponent ? <ListHeaderComponent /> : null;
-
   return (
     <>
     <FlatList
@@ -236,10 +241,11 @@ const handleUpdate = () => {
         extraData={forceUpdate}
         keyExtractor={keyExtractor}
         ListEmptyComponent={
-          loading ? (
-            <LoadingIndicator listType='channel' />
-          ) : (
+         !loadingUpdate ? (
             <EmptyStateIndicator listType='channel' />
+
+          ) : (
+            <LoadingIndicator listType='channel' />
           )
         }
         ListFooterComponent={loadingNextPage ? <FooterLoadingIndicator /> : undefined}
