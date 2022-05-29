@@ -205,30 +205,30 @@ const renderItem = ({item, index}) => {
   }
 }
 
-const handleUpdate = () => {
+const handleUpdate = async () => {
   reloadList()
-  const newChannel = channels.concat(additionalData).map((channel) => {
+  const newChannel = await channels.concat(additionalData).map((channel) => {
     if(!channel.data.last_message_at) {
       return Object.assign(channel, {data: {...channel.data, last_message_at: channel.data.updated_at, last_message_time: new Date(channel.data.updated_at).getTime()}})
     } else {
       return Object.assign(channel, {data: {...channel.data, last_message_time: new Date(channel.data.last_message_at).getTime()}})
     }
   }).sort((a, b) => b.data.last_message_time - a.data.last_message_time)
-  setJoinChannel(newChannel)
-  setLoadingUpdate(false)
+  await setJoinChannel(newChannel)
+  setTimeout(() => {
+    setLoadingUpdate(false)
+  }, 5000)
 }
-
   useEffect(() => {
-    if(!loading && !loadingChannels) {
+    if(!loading) {
       setLoadingUpdate(true)
       handleUpdate()
     }
-  }, [channels, additionalData, loadingChannels, loading])
+  }, [channels, additionalData, loading])
 
   
   const ListFooterComponent = () =>
     channels.length && ListHeaderComponent ? <ListHeaderComponent /> : null;
-
   return (
     <>
     <FlatList
@@ -241,10 +241,11 @@ const handleUpdate = () => {
         extraData={forceUpdate}
         keyExtractor={keyExtractor}
         ListEmptyComponent={
-          loadingUpdate ? (
-            <LoadingIndicator listType='channel' />
-          ) : (
+         !loadingUpdate ? (
             <EmptyStateIndicator listType='channel' />
+
+          ) : (
+            <LoadingIndicator listType='channel' />
           )
         }
         ListFooterComponent={loadingNextPage ? <FooterLoadingIndicator /> : undefined}
