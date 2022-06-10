@@ -220,13 +220,9 @@ const handleUpdate = async () => {
   }, 5000)
 }
   useEffect(() => {
-    if(!loading) {
-      setLoadingUpdate(true)
       handleUpdate()
-    }
-  }, [channels, additionalData, loading])
+  }, [channels, additionalData])
 
-  
   const ListFooterComponent = () =>
     channels.length && ListHeaderComponent ? <ListHeaderComponent /> : null;
   return (
