@@ -215,14 +215,14 @@ const handleUpdate = async () => {
     }
   }).sort((a, b) => b.data.last_message_time - a.data.last_message_time)
   await setJoinChannel(newChannel)
-
+  setTimeout(() => {
+    setLoadingUpdate(false)
+  }, 1000)
 }
   useEffect(() => {
     if(!loading) {
       handleUpdate()
 
-    } else {
-      setLoadingUpdate(false)
     }
   }, [channels, additionalData, loading])
 
