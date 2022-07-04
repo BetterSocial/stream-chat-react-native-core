@@ -216,6 +216,7 @@ const handleUpdate = async () => {
   }).sort((a, b) => b.data.last_message_time - a.data.last_message_time)
   await setJoinChannel(newChannel)
   setTimeout(() => {
+    refreshList()
     setLoadingUpdate(false)
   }, 1000)
 }
@@ -226,9 +227,6 @@ const handleUpdate = async () => {
     }
   }, [channels, additionalData, loading])
 
-  useEffect(() => {
-    refreshList()
-  }, [channels])
 
   const ListFooterComponent = () =>
     channels.length && ListHeaderComponent ? <ListHeaderComponent /> : null;
