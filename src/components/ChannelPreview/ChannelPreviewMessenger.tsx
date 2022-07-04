@@ -1,6 +1,5 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import { ChannelAvatar } from './ChannelAvatar';
 import { useChannelPreviewDisplayName } from './hooks/useChannelPreviewDisplayName';
@@ -29,6 +28,7 @@ import { ChannelPreviewTitle } from './ChannelPreviewTitle';
 import { ChannelPreviewMessage } from './ChannelPreviewMessage';
 import { ChannelPreviewStatus } from './ChannelPreviewStatus';
 import { ChannelPreviewUnreadCount } from './ChannelPreviewUnreadCount';
+import ButtonHighlight from 'stream-chat-react-native-core/src/components/ChannelPreview/ButtonHighlight';
 
 const styles = StyleSheet.create({
   container: {
@@ -141,8 +141,9 @@ const ChannelPreviewMessengerWithContext = <
     Math.floor(maxWidth / ((title.fontSize || styles.title.fontSize) / 2)),
   );
 
+
   return (
-    <TouchableOpacity
+    <ButtonHighlight
       onPress={() => {
         if (onSelect) {
           onSelect(channel);
@@ -170,7 +171,7 @@ const ChannelPreviewMessengerWithContext = <
           />
         </View>
       </View>
-    </TouchableOpacity>
+    </ButtonHighlight>
   );
 };
 

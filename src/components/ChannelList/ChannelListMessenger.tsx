@@ -206,7 +206,7 @@ const renderItem = ({item, index}) => {
 }
 
 const handleUpdate = async () => {
-  reloadList()
+  // reloadList()
   const newChannel = await channels.concat(additionalData).map((channel) => {
     if(!channel.data.last_message_at) {
       return Object.assign(channel, {data: {...channel.data, last_message_at: channel.data.updated_at, last_message_time: new Date(channel.data.updated_at).getTime()}})
@@ -225,6 +225,10 @@ const handleUpdate = async () => {
 
     }
   }, [channels, additionalData, loading])
+
+  useEffect(() => {
+    refreshList()
+  }, [channels])
 
   const ListFooterComponent = () =>
     channels.length && ListHeaderComponent ? <ListHeaderComponent /> : null;
