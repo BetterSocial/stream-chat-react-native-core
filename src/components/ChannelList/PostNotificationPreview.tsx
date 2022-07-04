@@ -9,6 +9,7 @@ import { useTheme } from '../../contexts/themeContext/ThemeContext';
 import { calculateTime } from 'stream-chat-react-native-core/src/components/ChannelList/customUtils';
 import Imageblock from './assets/images/block.png'
 import Anonym from './assets/images/anonym.png'
+import ButtonHighlight from '../ChannelPreview/ButtonHighlight'
 const styles = StyleSheet.create({
     containerCard: {
         paddingHorizontal: 16,
@@ -176,7 +177,7 @@ const PostNotificationPreview : React.FC<PontNotfifcationPreviewProps> = ({item,
         return {uri: item.postMaker.data.profile_pic_url}
     }
     return (
-        <TouchableOpacity onPress={() => onSelectAdditionalData(item)}  style={[styles.containerCard, {borderBottomColor: border}]} >
+        <ButtonHighlight onPress={() => onSelectAdditionalData(item)}  style={[styles.containerCard, {borderBottomColor: border}]} >
             <View style={styles.row} >
             <View style={styles.avatarContainer} >
                 {item.postMaker && item.postMaker.data ? <Image source={handleImage()} style={styles.avatar} /> : null}
@@ -232,9 +233,11 @@ const PostNotificationPreview : React.FC<PontNotfifcationPreviewProps> = ({item,
          
                 
             </View> 
-        </TouchableOpacity>
+        </ButtonHighlight>
     )
 }
 
 
-export default PostNotificationPreview
+export default React.memo (PostNotificationPreview, (prevProps, nextProps) => {
+    return prevProps.item === nextProps.item
+})
