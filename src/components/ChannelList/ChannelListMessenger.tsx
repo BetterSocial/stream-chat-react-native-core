@@ -244,7 +244,7 @@ const handleUpdate = async () => {
         extraData={forceUpdate}
         keyExtractor={keyExtractor}
         ListEmptyComponent={
-         !loadingUpdate ? (
+         !loading ? (
             null
 
           ) : (
