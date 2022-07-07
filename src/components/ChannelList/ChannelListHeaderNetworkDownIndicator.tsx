@@ -12,7 +12,8 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   errorText: {
-    fontSize: 14,
+    fontSize: 12,
+    textAlign: 'center'
   },
 });
 
@@ -20,14 +21,14 @@ export const ChannelListHeaderNetworkDownIndicator: React.FC = () => {
   const {
     theme: {
       channelListHeaderErrorIndicator: { container, errorText },
-      colors: { grey, white },
+      colors: { grey, white, accent_red },
     },
   } = useTheme();
   const { t } = useTranslationContext();
 
   return (
     <View style={[styles.container, { backgroundColor: `${grey}E6` }, container]}>
-      <Text style={[styles.errorText, { color: white }, errorText]}>{t('Reconnecting...')}</Text>
+      <Text style={[styles.errorText, { color: accent_red }, errorText]}>{t('NoNetwork')}</Text>
     </View>
   );
 };
