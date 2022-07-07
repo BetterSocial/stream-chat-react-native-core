@@ -243,14 +243,14 @@ const handleUpdate = async () => {
         data={joinChannel}
         extraData={forceUpdate}
         keyExtractor={keyExtractor}
-        // ListEmptyComponent={
-        //  !loadingUpdate ? (
-        //     <EmptyStateIndicator listType='channel' />
+        ListEmptyComponent={
+         !loadingUpdate ? (
+            null
 
-        //   ) : (
-        //     <LoadingIndicator listType='channel' />
-        //   )
-        // }
+          ) : (
+            <LoadingIndicator listType='channel' />
+          )
+        }
         ListFooterComponent={loadingNextPage ? <FooterLoadingIndicator /> : undefined}
         ListHeaderComponent={ListFooterComponent}
         onEndReached={onEndReached}
