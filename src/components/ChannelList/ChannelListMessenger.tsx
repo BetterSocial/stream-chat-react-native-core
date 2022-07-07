@@ -78,11 +78,12 @@ const StatusIndicator = <
       </View>
     );
   } else if (error) {
-    return (
-      <View style={styles.statusIndicator}>
-        <HeaderErrorIndicator onPress={refreshList} />
-      </View>
-    );
+    // return (
+    //   <View style={styles.statusIndicator}>
+    //     <HeaderErrorIndicator onPress={refreshList} />
+    //   </View>
+    // );
+    return null
   }
   return null;
 };
@@ -177,14 +178,15 @@ const ChannelListMessengerWithContext = <
 
 
   if (error && !refreshing && !loadingChannels && !channels?.length) {
-    return (
-      <LoadingErrorIndicator
-        error={error}
-        listType='channel'
-        loadNextPage={loadNextPage}
-        retry={reloadList}
-      />
-    );
+    // return (
+    //   <LoadingErrorIndicator
+    //     error={error}
+    //     listType='channel'
+    //     loadNextPage={loadNextPage}
+    //     retry={reloadList}
+    //   />
+    // );
+    return null
   }
 
   const onEndReached = () => {

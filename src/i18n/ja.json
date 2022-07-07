@@ -26,6 +26,7 @@
   "Please enable access to your photos and videos so you can share them.": "写真やビデオへのアクセスを有効にして、共有できるようにしてください。",
   "Please select a channel first": "最初にチャンネルを選択してください",
   "Reconnecting...": "再接続中。。。",
+  "NoNetwork": "チャットを読み込めません。接続していることを確認してください。",
   "Resend": "再送",
   "Search GIFs": "GIFの探索",
   "Send a message": "メッセージを送る",

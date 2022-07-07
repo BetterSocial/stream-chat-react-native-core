@@ -11,14 +11,14 @@ const styles = StyleSheet.create({
   errorNotification: {
     alignItems: 'center',
     left: 0,
-    paddingVertical: 4,
+    paddingVertical: 8,
     position: 'absolute',
     right: 0,
     top: 0,
   },
   errorNotificationText: {
     color: '#FFFFFF',
-    fontSize: 14,
+    fontSize: 12,
   },
 });
 
@@ -27,7 +27,7 @@ export const NetworkDownIndicator = () => {
   const { isOnline } = useChatContext();
   const {
     theme: {
-      colors: { grey },
+      colors: { grey, accent_red },
       messageList: { errorNotification, errorNotificationText },
     },
   } = useTheme();
@@ -42,12 +42,13 @@ export const NetworkDownIndicator = () => {
       style={[styles.errorNotification, { backgroundColor: `${grey}E6` }, errorNotification]}
       testID='error-notification'
     >
-      <Text style={[styles.errorNotificationText, errorNotificationText]}>
-        {!isOnline
+      <Text style={[styles.errorNotificationText, {color:accent_red }, errorNotificationText]}>
+        {!isOnline ? t('NoNetwork') : ''}
+        {/* {!isOnline
           ? t('Reconnecting...')
           : error
           ? t('Error loading messages for this channel...')
-          : ''}
+          : ''} */}
       </Text>
     </View>
   );
