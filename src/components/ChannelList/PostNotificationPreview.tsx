@@ -89,7 +89,13 @@ type ItemChildren = {
     upvote: number,
     downvote: number,
     block:number,
-    isAnonym: boolean
+    isAnonym: boolean,
+    data:DataDateProps
+}
+
+type DataDateProps = {
+    updated_at:string,
+    last_message_at:string
 }
 
 type CommentsChildren = {
@@ -162,12 +168,8 @@ const PostNotificationPreview : React.FC<PontNotfifcationPreviewProps> = ({item,
         }
     }
 
-    
-    const handleDate = (reaction) => {
-        if(reaction && reaction.updated_at) {
-            return calculateTime(moment(reaction.updated_at))
-        }
-        return ""
+    const handleDate = () => {
+        return calculateTime(item.data.last_message_at)
     }
 
     const handleImage = () => {
@@ -185,7 +187,8 @@ const PostNotificationPreview : React.FC<PontNotfifcationPreviewProps> = ({item,
             <View style={{flex: 1,  paddingLeft: 8}} >
                 {item.postMaker && item.postMaker.data ? <Text numberOfLines={1} style={styles.titleTextBig} >{item.postMaker.id === myProfile.user_id ? "Your post" : item.postMaker.data.username}: {item.titlePost}</Text> : null}
                 <View style={styles.replyContainer} >
-                <Text numberOfLines={1} style={styles.subtitleStyle} >
+                    {Array.isArray(item.comments) && item.comments.length > 0 ? <>
+                        <Text numberOfLines={1} style={styles.subtitleStyle} >
                     <Text style={styles.titleText} >{handleReplyComment()}:
                     </Text>
                   
@@ -193,7 +196,8 @@ const PostNotificationPreview : React.FC<PontNotfifcationPreviewProps> = ({item,
                     {item.comments[0] 
                     && item.comments[0].reaction 
                     && item.comments[0].reaction.data 
-                    && item.comments[0].reaction.data.text} </Text>
+                    && item.comments[0].reaction.data.text} </Text></> : null}
+        
                      <View style={styles.lastContentContainer} >
                 <Text style={styles.dateFont} >{handleDate(item.comments[0] && item.comments[0].reaction)} </Text>
                 </View>
