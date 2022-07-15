@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
         flex: 1,
         // marginTop:3,
         fontSize: 12,
-        flexShrink: 1,
+        // flexShrink: 1,
     },
     descriptionContainer: {
         flexDirection: 'row',
