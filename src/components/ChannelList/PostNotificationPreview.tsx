@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
         flex: 1,
         // marginTop:3,
         fontSize: 12,
-        // flexShrink: 1,
+        flexShrink: 1,
     },
     descriptionContainer: {
         flexDirection: 'row',
@@ -196,9 +196,9 @@ const PostNotificationPreview : React.FC<PontNotfifcationPreviewProps> = ({item,
                     {item.comments[0] 
                     && item.comments[0].reaction 
                     && item.comments[0].reaction.data 
-                    && item.comments[0].reaction.data.text} </Text></> : "No comments yet"
+                    && item.comments[0].reaction.data.text} </Text></> : <Text numberOfLines={1} style={styles.subtitleStyle} >No comments yet
 
-                   }
+                    </Text>}
         
                      <View style={styles.lastContentContainer} >
                 <Text style={styles.dateFont} >{handleDate(item.comments[0] && item.comments[0].reaction)} </Text>
