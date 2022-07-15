@@ -196,7 +196,7 @@ const PostNotificationPreview : React.FC<PontNotfifcationPreviewProps> = ({item,
                     {item.comments[0] 
                     && item.comments[0].reaction 
                     && item.comments[0].reaction.data 
-                    && item.comments[0].reaction.data.text} </Text></> : null}
+                    && item.comments[0].reaction.data.text} </Text></> : <Text numberOfLines={1} style={styles.subtitleStyle} >No Comment</Text>}
         
                      <View style={styles.lastContentContainer} >
                 <Text style={styles.dateFont} >{handleDate(item.comments[0] && item.comments[0].reaction)} </Text>
