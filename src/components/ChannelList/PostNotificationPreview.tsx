@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
         maxWidth: '70%',
     },
     subtitleStyle: {
-        color: '#6A6A6A',
+        // color: '#6A6A6A',
         flex: 1,
         // marginTop:3,
         fontSize: 12,
@@ -139,7 +139,7 @@ const PostNotificationPreview : React.FC<PontNotfifcationPreviewProps> = ({item,
     const {
         theme: {
           channelPreview: { container, contentContainer, row, title },
-          colors: { border, white_snow },
+          colors: { border, white_snow, grey },
         },
       } = useTheme();
     
@@ -188,7 +188,7 @@ const PostNotificationPreview : React.FC<PontNotfifcationPreviewProps> = ({item,
                 {item.postMaker && item.postMaker.data ? <Text numberOfLines={1} style={styles.titleTextBig} >{item.postMaker.id === myProfile.user_id ? "Your post" : item.postMaker.data.username}: {item.titlePost}</Text> : null}
                 <View style={styles.replyContainer} >
                     {Array.isArray(item.comments) && item.comments.length > 0 ? <>
-                        <Text numberOfLines={1} style={styles.subtitleStyle} >
+                        <Text numberOfLines={1} style={[styles.subtitleStyle, {color: grey}]} >
                     <Text style={styles.titleText} >{handleReplyComment()}:
                     </Text>
                   
@@ -196,7 +196,7 @@ const PostNotificationPreview : React.FC<PontNotfifcationPreviewProps> = ({item,
                     {item.comments[0] 
                     && item.comments[0].reaction 
                     && item.comments[0].reaction.data 
-                    && item.comments[0].reaction.data.text} </Text></> : <Text numberOfLines={1} style={styles.subtitleStyle} >No comments yet
+                    && item.comments[0].reaction.data.text} </Text></> : <Text numberOfLines={1} style={[styles.subtitleStyle, {color: grey}]} >No comments yet
 
                     </Text>}
         
