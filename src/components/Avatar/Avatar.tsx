@@ -29,6 +29,7 @@ const styles = StyleSheet.create({
     top: 0,
     width: 12,
   },
+
 });
 
 const getInitials = (fullName: string) =>
@@ -51,6 +52,8 @@ export type AvatarProps = {
   presenceIndicator?: CircleProps;
   presenceIndicatorContainerStyle?: StyleProp<ViewStyle>;
   testID?: string;
+  showType?:boolean,
+  childrenType?: React.ReactNode
 };
 
 /**
@@ -67,6 +70,8 @@ export const Avatar: React.FC<AvatarProps> = (props) => {
     presenceIndicatorContainerStyle,
     size,
     testID,
+    showType,
+    childrenType
   } = props;
   const {
     theme: {
@@ -119,6 +124,7 @@ export const Avatar: React.FC<AvatarProps> = (props) => {
           testID={testID || 'avatar-image'}
         />
       </View>
+      {showType ?  childrenType : null}
       {online && (
         <View
           style={[
