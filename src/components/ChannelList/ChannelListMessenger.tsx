@@ -153,6 +153,7 @@ const ChannelListMessengerWithContext = <
     additionalData,
     context,
     onSelectAdditionalData,
+    showBadgePostNotif
   } = props;
   const {
     theme: {
@@ -203,7 +204,7 @@ const renderItem = ({item, index}) => {
   if(item.type === 'messaging') {
     return <ChannelPreview<At, Ch, Co, Ev, Me, Re, Us> key={index} channel={item} />
   } else {
-    return <PostNotificationPreview onSelectAdditionalData={onSelectAdditionalData} item={item} context={context}  />
+    return <PostNotificationPreview showBadgePostNotif={showBadgePostNotif} onSelectAdditionalData={onSelectAdditionalData} item={item} context={context}  />
   }
 }
 
@@ -228,8 +229,6 @@ const handleUpdate = async () => {
 
     }
   }, [channels, additionalData, loading])
-
-
   const ListFooterComponent = () =>
     channels.length && ListHeaderComponent ? <ListHeaderComponent /> : null;
   return (

@@ -220,7 +220,8 @@ export type ChannelsContextValue<
 
   additionalData?: object[];
   context?:object;
-  onSelectAdditionalData?: () => void
+  onSelectAdditionalData?: () => void;
+  showBadgePostNotif?:boolean
 };
 
 export const ChannelsContext = React.createContext({} as ChannelsContextValue);

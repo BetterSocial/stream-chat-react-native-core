@@ -1,6 +1,5 @@
 import React from 'react'
-import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native'
-import moment from 'moment'
+import { View, Text, StyleSheet, Image } from 'react-native'
 import MemoIc_arrow_down_vote_on from './assets/Ic_downvote_on';
 import MemoIc_arrow_upvote_on from './assets/Ic_upvote_on';
 import MemoIc_comment from './assets/Ic_comment';
@@ -8,8 +7,9 @@ import MemoIc_block_inactive from './assets/Ic_block_inactive';
 import { useTheme } from '../../contexts/themeContext/ThemeContext';
 import { calculateTime } from 'stream-chat-react-native-core/src/components/ChannelList/customUtils';
 import Imageblock from './assets/images/block.png'
-import Anonym from './assets/images/anonym.png'
 import ButtonHighlight from '../ChannelPreview/ButtonHighlight'
+import {Avatar} from '../Avatar/Avatar'
+import FeedIcon from './assets/images/feed-icon.png'
 const styles = StyleSheet.create({
     containerCard: {
         paddingHorizontal: 16,
@@ -79,6 +79,23 @@ const styles = StyleSheet.create({
     replyContainer: {
         flexDirection: 'row',
         marginTop: 3
+    },
+    iconStyle: {
+        height: 13.5, width: 13.5,
+    },
+    iconContainerStyle: {
+        backgroundColor:'#55C2FF'
+    },
+    typeContainer: {
+        height: 20,
+        width: 20,
+        backgroundColor: '#55C2FF',
+        borderRadius: 10,
+        position: 'absolute',
+        bottom: -6,
+        right: 0,
+        alignItems: 'center',
+        justifyContent: 'center'
     }
 })
 
@@ -116,7 +133,8 @@ type PostMakerDataChildren = {
 type PontNotfifcationPreviewProps = {
     context:ContextChildren,
     item:ItemChildren,
-    onSelectAdditionalData: (item:object) => void
+    onSelectAdditionalData: (item:object) => void,
+    showBadgePostNotif?:boolean
 }
 
 type ContextChildren = {
@@ -134,7 +152,7 @@ type MyProfileChildren = {
 
 
 
-const PostNotificationPreview : React.FC<PontNotfifcationPreviewProps> = ({item, context, onSelectAdditionalData}) => {
+const PostNotificationPreview : React.FC<PontNotfifcationPreviewProps> = ({item, context, onSelectAdditionalData, showBadgePostNotif}) => {
     const [profile] = context.profile
     const {
         theme: {
@@ -167,23 +185,20 @@ const PostNotificationPreview : React.FC<PontNotfifcationPreviewProps> = ({item,
             
         }
     }
-
     const handleDate = () => {
         return calculateTime(item.data.last_message_at)
     }
 
     const handleImage = () => {
         if(item.isAnonym) {
-            return Anonym
+            return 'https://firebasestorage.googleapis.com/v0/b/bettersocial-dev.appspot.com/o/anonym.png?alt=media&token=5ffe7504-c0e7-4a0c-9cbb-3e7b7572886f'
         }
-        return {uri: item.postMaker.data.profile_pic_url}
+        return item.postMaker.data.profile_pic_url
     }
     return (
         <ButtonHighlight onPress={() => onSelectAdditionalData(item)}  style={[styles.containerCard, {borderBottomColor: border}]} >
             <View style={styles.row} >
-            <View style={styles.avatarContainer} >
-                {item.postMaker && item.postMaker.data ? <Image source={handleImage()} style={styles.avatar} /> : null}
-            </View>
+                {item.postMaker && item.postMaker.data ? <Avatar childrenType={<View style={styles.typeContainer} ><Image source={FeedIcon} style={styles.iconStyle} /></View>} showType={showBadgePostNotif} size={40} image={handleImage()} /> : null}
             <View style={{flex: 1,  paddingLeft: 8}} >
                 {item.postMaker && item.postMaker.data ? <Text numberOfLines={1} style={styles.titleTextBig} >{item.postMaker.id === myProfile.user_id ? "Your post" : item.postMaker.data.username}: {item.titlePost}</Text> : null}
                 <View style={styles.replyContainer} >

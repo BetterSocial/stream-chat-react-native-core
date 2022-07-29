@@ -77,6 +77,7 @@ export type ChannelListProps<
     | 'additionalData'
     | 'context'
     | 'onSelectAdditionalData'
+    | 'showBadgePostNotif'
   >
 > & {
   /**
@@ -265,7 +266,8 @@ export const ChannelList = <
     sort = DEFAULT_SORT,
     additionalData,
     context,
-    onSelectAdditionalData
+    onSelectAdditionalData,
+    showBadgePostNotif
   } = props;
 
   const [forceUpdate, setForceUpdate] = useState(0);
@@ -381,11 +383,12 @@ export const ChannelList = <
     Skeleton,
     additionalData,
     context,
-    onSelectAdditionalData 
+    onSelectAdditionalData ,
+    showBadgePostNotif
   });
   return (
     <ChannelsProvider value={channelsContext}>
-      <List onSelectAdditionalData={onSelectAdditionalData} context={context}  additionalData={additionalData} />
+      <List showBadgePostNotif={showBadgePostNotif} onSelectAdditionalData={onSelectAdditionalData} context={context}  additionalData={additionalData} />
     </ChannelsProvider>
   );
 };
