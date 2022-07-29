@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
         marginTop: 3
     },
     iconStyle: {
-        height: 13.5, width: 13.5,
+        height: 12, width: 12,
     },
     iconContainerStyle: {
         backgroundColor:'#55C2FF'
@@ -95,7 +95,8 @@ const styles = StyleSheet.create({
         bottom: -6,
         right: 0,
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        flex: 1
     }
 })
 
