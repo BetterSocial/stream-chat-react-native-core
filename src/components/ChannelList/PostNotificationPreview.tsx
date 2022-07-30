@@ -87,10 +87,10 @@ const styles = StyleSheet.create({
         backgroundColor:'#55C2FF'
     },
     typeContainer: {
-        height: 20,
-        width: 20,
+        height: 24,
+        width: 24,
         backgroundColor: '#55C2FF',
-        borderRadius: 10,
+        borderRadius: 12,
         position: 'absolute',
         bottom: -6,
         right: 0,
@@ -201,7 +201,7 @@ const PostNotificationPreview : React.FC<PontNotfifcationPreviewProps> = ({item,
     return (
         <ButtonHighlight onPress={() => onSelectAdditionalData(item)}  style={[styles.containerCard, {borderBottomColor: border}]} >
             <View style={styles.row} >
-                {item.postMaker && item.postMaker.data ? <Avatar childrenType={<View style={styles.typeContainer} ><Image source={FeedIcon} style={styles.iconStyle} /></View>} showType={showBadgePostNotif} size={40} image={handleImage()} /> : null}
+                {item.postMaker && item.postMaker.data ? <Avatar childrenType={<View style={styles.typeContainer} ><Image source={FeedIcon} style={styles.iconStyle} /></View>} showType={showBadgePostNotif} size={48} image={handleImage()} /> : null}
             <View style={{flex: 1,  paddingLeft: 8}} >
                 {item.postMaker && item.postMaker.data ? <Text numberOfLines={1} style={styles.titleTextBig} >{item.postMaker.id === myProfile.user_id ? "Your post" : item.postMaker.data.username}: {item.titlePost}</Text> : null}
                 <View style={styles.replyContainer} >
