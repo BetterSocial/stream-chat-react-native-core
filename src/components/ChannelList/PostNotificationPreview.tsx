@@ -96,7 +96,9 @@ const styles = StyleSheet.create({
         right: 0,
         alignItems: 'center',
         justifyContent: 'center',
-        flex: 1
+        flex: 1,
+        borderWidth: 1,
+        borderColor: 'white'
     }
 })
 
