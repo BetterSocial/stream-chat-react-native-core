@@ -221,7 +221,10 @@ export type ChannelsContextValue<
   additionalData?: object[];
   context?:object;
   onSelectAdditionalData?: () => void;
-  showBadgePostNotif?:boolean
+  showBadgePostNotif?:boolean;
+  countPostNotif?:React.ReactNode;
+  postNotifComponent?:React.ReactNode
+
 };
 
 export const ChannelsContext = React.createContext({} as ChannelsContextValue);

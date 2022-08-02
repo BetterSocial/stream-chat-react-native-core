@@ -78,6 +78,8 @@ export type ChannelListProps<
     | 'context'
     | 'onSelectAdditionalData'
     | 'showBadgePostNotif'
+    | 'countPostNotif'
+    | 'postNotifComponent'
   >
 > & {
   /**
@@ -267,7 +269,9 @@ export const ChannelList = <
     additionalData,
     context,
     onSelectAdditionalData,
-    showBadgePostNotif
+    showBadgePostNotif,
+    countPostNotif,
+    postNotifComponent
   } = props;
 
   const [forceUpdate, setForceUpdate] = useState(0);
@@ -384,11 +388,13 @@ export const ChannelList = <
     additionalData,
     context,
     onSelectAdditionalData ,
-    showBadgePostNotif
+    showBadgePostNotif,
+    countPostNotif,
+    postNotifComponent
   });
   return (
     <ChannelsProvider value={channelsContext}>
-      <List showBadgePostNotif={showBadgePostNotif} onSelectAdditionalData={onSelectAdditionalData} context={context}  additionalData={additionalData} />
+      <List postNotifComponent={postNotifComponent} countPostNotif={countPostNotif} showBadgePostNotif={showBadgePostNotif} onSelectAdditionalData={onSelectAdditionalData} context={context}  additionalData={additionalData} />
     </ChannelsProvider>
   );
 };

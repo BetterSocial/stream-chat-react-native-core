@@ -32,7 +32,9 @@ const styles = StyleSheet.create({
         flexShrink: 1,
     },
     lastContentContainer: {
-        marginLeft: 'auto'
+        marginLeft: 'auto',
+        backgroundColor: 'red',
+     
     },
     titleContainer: {
         maxWidth: '70%',
@@ -67,7 +69,8 @@ const styles = StyleSheet.create({
         width: 30
     },
     dateFont: {
-        fontSize: 12
+        fontSize: 12,
+        marginLeft: 'auto'
     },
     titleTextBig: {
         fontSize: 14,
@@ -78,7 +81,7 @@ const styles = StyleSheet.create({
     },
     replyContainer: {
         flexDirection: 'row',
-        marginTop: 3
+        marginTop: 3,
     },
     iconStyle: {
         height: 12, width: 12,
@@ -137,7 +140,8 @@ type PontNotfifcationPreviewProps = {
     context:ContextChildren,
     item:ItemChildren,
     onSelectAdditionalData: (item:object) => void,
-    showBadgePostNotif?:boolean
+    showBadgePostNotif?:boolean,
+    countPostNotif?:React.ReactNode
 }
 
 type ContextChildren = {
@@ -155,7 +159,7 @@ type MyProfileChildren = {
 
 
 
-const PostNotificationPreview : React.FC<PontNotfifcationPreviewProps> = ({item, context, onSelectAdditionalData, showBadgePostNotif}) => {
+const PostNotificationPreview : React.FC<PontNotfifcationPreviewProps> = ({item, context, onSelectAdditionalData, showBadgePostNotif, countPostNotif}) => {
     const [profile] = context.profile
     const {
         theme: {
@@ -198,12 +202,17 @@ const PostNotificationPreview : React.FC<PontNotfifcationPreviewProps> = ({item,
         }
         return item.postMaker.data.profile_pic_url
     }
+
     return (
         <ButtonHighlight onPress={() => onSelectAdditionalData(item)}  style={[styles.containerCard, {borderBottomColor: border}]} >
             <View style={styles.row} >
                 {item.postMaker && item.postMaker.data ? <Avatar childrenType={<View style={styles.typeContainer} ><Image resizeMode='contain' source={FeedIcon} style={styles.iconStyle} /></View>} showType={showBadgePostNotif} size={48} image={handleImage()} /> : null}
             <View style={{flex: 1,  paddingLeft: 8}} >
-                {item.postMaker && item.postMaker.data ? <Text numberOfLines={1} style={styles.titleTextBig} >{item.postMaker.id === myProfile.user_id ? "Your post" : item.postMaker.data.username}: {item.titlePost}</Text> : null}
+                <View style={styles.row} >
+                {item.postMaker && item.postMaker.data ? <Text numberOfLines={1} style={[styles.titleTextBig, {maxWidth: '85%'}]} >{item.postMaker.id === myProfile.user_id ? "Your post" : item.postMaker.data.username}: {item.titlePost}</Text> : null}
+                <Text style={[styles.dateFont]} >{handleDate(item.comments[0] && item.comments[0].reaction)} </Text>
+
+                </View>
                 <View style={styles.replyContainer} >
                     {Array.isArray(item.comments) && item.comments.length > 0 ? <>
                         <Text numberOfLines={1} style={[styles.subtitleStyle, {color: grey}]} >
@@ -218,9 +227,9 @@ const PostNotificationPreview : React.FC<PontNotfifcationPreviewProps> = ({item,
 
                     </Text>}
         
-                     <View style={styles.lastContentContainer} >
-                <Text style={styles.dateFont} >{handleDate(item.comments[0] && item.comments[0].reaction)} </Text>
-                </View>
+                 
+                    {countPostNotif && typeof countPostNotif === 'function' ? countPostNotif(item) : null}
+           
                 </View>
                
             </View>

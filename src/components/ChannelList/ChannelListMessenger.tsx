@@ -153,7 +153,9 @@ const ChannelListMessengerWithContext = <
     additionalData,
     context,
     onSelectAdditionalData,
-    showBadgePostNotif
+    showBadgePostNotif,
+    countPostNotif,
+    postNotifComponent
   } = props;
   const {
     theme: {
@@ -162,7 +164,6 @@ const ChannelListMessengerWithContext = <
     },
   } = useTheme();
 
- 
   /**
    * In order to prevent the EmptyStateIndicator component from showing up briefly on mount,
    * we set the loading state one cycle behind to ensure the channels are set before the
@@ -204,7 +205,7 @@ const renderItem = ({item, index}) => {
   if(item.type === 'messaging') {
     return <ChannelPreview<At, Ch, Co, Ev, Me, Re, Us> key={index} channel={item} />
   } else {
-    return <PostNotificationPreview showBadgePostNotif={showBadgePostNotif} onSelectAdditionalData={onSelectAdditionalData} item={item} context={context}  />
+    return postNotifComponent && typeof postNotifComponent === 'function' ? postNotifComponent(item, index) : <PostNotificationPreview countPostNotif={countPostNotif} showBadgePostNotif={showBadgePostNotif} onSelectAdditionalData={onSelectAdditionalData} item={item} context={context}  />
   }
 }
 
@@ -223,6 +224,7 @@ const handleUpdate = async () => {
     setLoadingUpdate(false)
   }, 1000)
 }
+
   useEffect(() => {
     if(!loading) {
       handleUpdate()

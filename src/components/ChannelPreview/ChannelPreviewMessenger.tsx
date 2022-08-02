@@ -160,15 +160,16 @@ const ChannelPreviewMessengerWithContext = <
       <View style={[styles.contentContainer, contentContainer]}>
         <View style={[styles.row, row]}>
           <PreviewTitle channel={channel} displayName={displayName} />
-          <PreviewUnreadCount channel={channel} maxUnreadCount={maxUnreadCount} unread={unread} />
-        </View>
-        <View style={[styles.row, row]}>
-          <PreviewMessage latestMessagePreview={latestMessagePreview} />
           <PreviewStatus
             channel={channel}
             formatLatestMessageDate={formatLatestMessageDate}
             latestMessagePreview={latestMessagePreview}
           />
+        </View>
+        <View style={[styles.row, row]}>
+          <PreviewMessage latestMessagePreview={latestMessagePreview} />
+          <PreviewUnreadCount channel={channel} maxUnreadCount={maxUnreadCount} unread={unread} />
+
         </View>
       </View>
     </ButtonHighlight>
