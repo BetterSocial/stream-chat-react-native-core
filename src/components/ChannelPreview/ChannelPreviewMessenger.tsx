@@ -167,7 +167,7 @@ const ChannelPreviewMessengerWithContext = <
           />
         </View>
         <View style={[styles.row, row]}>
-          <PreviewMessage latestMessagePreview={latestMessagePreview} />
+          <PreviewMessage latestMessagePreview={latestMessagePreview} channel={channel} />
           <PreviewUnreadCount channel={channel} maxUnreadCount={maxUnreadCount} unread={unread} />
 
         </View>
