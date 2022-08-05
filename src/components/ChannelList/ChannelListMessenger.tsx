@@ -155,8 +155,7 @@ const ChannelListMessengerWithContext = <
     onSelectAdditionalData,
     showBadgePostNotif,
     countPostNotif,
-    postNotifComponent,
-    itemData
+    postNotifComponent
   } = props;
   const {
     theme: {
@@ -206,9 +205,10 @@ const renderItem = ({item, index}) => {
   if(item.type === 'messaging') {
     return <ChannelPreview<At, Ch, Co, Ev, Me, Re, Us> key={index} channel={item} />
   } else {
-    return postNotifComponent && typeof postNotifComponent === 'function' ? postNotifComponent(item, index, refreshList) : <PostNotificationPreview countPostNotif={countPostNotif} showBadgePostNotif={showBadgePostNotif} onSelectAdditionalData={onSelectAdditionalData} item={item} context={context}  />
+    return postNotifComponent && typeof postNotifComponent === 'function' ? postNotifComponent(item, index) : <PostNotificationPreview countPostNotif={countPostNotif} showBadgePostNotif={showBadgePostNotif} onSelectAdditionalData={onSelectAdditionalData} item={item} context={context}  />
   }
 }
+
 const handleUpdate = async () => {
   // reloadList()
   const newChannel = await channels.concat(additionalData).map((channel) => {
@@ -219,16 +219,11 @@ const handleUpdate = async () => {
     }
   }).sort((a, b) => b.data.last_message_time - a.data.last_message_time)
   await setJoinChannel(newChannel)
-  setTimeout(() => {
+  setTimeout(() => {  
+    refreshList()
     setLoadingUpdate(false)
   }, 1000)
 }
-
-  React.useEffect(() => {
-     if(!loadingUpdate) {
-      refreshList()
-     }
-  }, [loadingUpdate])
 
   useEffect(() => {
     if(!loading) {
