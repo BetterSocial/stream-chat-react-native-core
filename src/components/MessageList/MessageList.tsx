@@ -116,7 +116,6 @@ const keyExtractor = <
 const flatListViewabilityConfig = {
   viewAreaCoveragePercentThreshold: 1,
 };
-
 type MessageListPropsWithContext<
   At extends UnknownType = DefaultAttachmentType,
   Ch extends UnknownType = DefaultChannelType,
@@ -568,7 +567,7 @@ const MessageListWithContext = <
     if (message.type === 'system') {
       return (
         <>
-          <MessageSystem message={message} style={styles.messagePadding} />
+          <MessageSystem channel={channel} message={message} style={styles.messagePadding} />
           {insertInlineUnreadIndicator && <InlineUnreadIndicator />}
         </>
       );
