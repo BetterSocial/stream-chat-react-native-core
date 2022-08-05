@@ -205,7 +205,7 @@ const renderItem = ({item, index}) => {
   if(item.type === 'messaging') {
     return <ChannelPreview<At, Ch, Co, Ev, Me, Re, Us> key={index} channel={item} />
   } else {
-    return postNotifComponent && typeof postNotifComponent === 'function' ? postNotifComponent(item, index) : <PostNotificationPreview countPostNotif={countPostNotif} showBadgePostNotif={showBadgePostNotif} onSelectAdditionalData={onSelectAdditionalData} item={item} context={context}  />
+    return postNotifComponent && typeof postNotifComponent === 'function' ? postNotifComponent(item, index, refreshList) : <PostNotificationPreview countPostNotif={countPostNotif} showBadgePostNotif={showBadgePostNotif} onSelectAdditionalData={onSelectAdditionalData} item={item} context={context}  />
   }
 }
 
