@@ -155,7 +155,7 @@ const ChannelListMessengerWithContext = <
     onSelectAdditionalData,
     showBadgePostNotif,
     countPostNotif,
-    postNotifComponent
+    PostNotifComponent
   } = props;
   const {
     theme: {
@@ -197,15 +197,12 @@ const ChannelListMessengerWithContext = <
     }
   };
 
-  function getUniqueListBy(arr, key) {
-    return [...new Map(arr.map(item => [item[key], item])).values()]
-}
 
 const renderItem = ({item, index}) => {
   if(item.type === 'messaging') {
     return <ChannelPreview<At, Ch, Co, Ev, Me, Re, Us> key={index} channel={item} />
   } else {
-    return postNotifComponent && typeof postNotifComponent === 'function' ? postNotifComponent(item, index, refreshList) : <PostNotificationPreview countPostNotif={countPostNotif} showBadgePostNotif={showBadgePostNotif} onSelectAdditionalData={onSelectAdditionalData} item={item} context={context}  />
+    return PostNotifComponent ? <PostNotifComponent item={item} index={index} refreshList={refreshList} />  : <PostNotificationPreview countPostNotif={countPostNotif} showBadgePostNotif={showBadgePostNotif} onSelectAdditionalData={onSelectAdditionalData} item={item} context={context}  />
   }
 }
 
@@ -224,7 +221,7 @@ const handleUpdate = async () => {
     setLoadingUpdate(false)
   }, 1000)
 }
-
+  console.log(joinChannel, 'join')
   useEffect(() => {
     if(!loading) {
       handleUpdate()

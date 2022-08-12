@@ -223,7 +223,7 @@ export type ChannelsContextValue<
   onSelectAdditionalData?: () => void;
   showBadgePostNotif?:boolean;
   countPostNotif?:React.ReactNode;
-  postNotifComponent?:React.ReactNode
+  PostNotifComponent?:React.ReactNode
 
 };
 
