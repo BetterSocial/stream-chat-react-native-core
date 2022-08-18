@@ -127,6 +127,7 @@ const ChannelPreviewMessengerWithContext = <
     PreviewTitle = ChannelPreviewTitle,
     PreviewUnreadCount = ChannelPreviewUnreadCount,
     unread,
+    refreshList
   } = props;
 
   const {
@@ -146,7 +147,7 @@ const ChannelPreviewMessengerWithContext = <
     <ButtonHighlight
       onPress={() => {
         if (onSelect) {
-          onSelect(channel);
+          onSelect(channel, refreshList);
         }
       }}
       style={[
