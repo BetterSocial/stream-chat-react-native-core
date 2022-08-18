@@ -52,7 +52,7 @@ const ChannelPreviewWithContext = <
 >(
   props: ChannelPreviewPropsWithContext<At, Ch, Co, Ev, Me, Re, Us>,
 ) => {
-  const { channel, client, Preview } = props;
+  const { channel, client, Preview, refreshList } = props;
 
   const [lastMessage, setLastMessage] = useState<
     | ReturnType<ChannelState<At, Ch, Co, Ev, Me, Re, Us>['formatMessage']>
@@ -118,7 +118,7 @@ const ChannelPreviewWithContext = <
     return () => channel.off('message.read', handleReadEvent);
   }, []);
 
-  return <Preview channel={channel} latestMessagePreview={latestMessagePreview} unread={unread} />;
+  return <Preview channel={channel} refreshList={refreshList} latestMessagePreview={latestMessagePreview} unread={unread} />;
 };
 
 export type ChannelPreviewProps<
