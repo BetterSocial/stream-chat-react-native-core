@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 // RNGR's FlatList ist currently breaking the pull-to-refresh behaviour on Android
 // See https://github.com/software-mansion/react-native-gesture-handler/issues/598
 import { FlatList, RefreshControl, StyleSheet, View } from 'react-native';
-
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { ChannelPreview } from '../ChannelPreview/ChannelPreview';
 
 import { useChatContext } from '../../contexts/chatContext/ChatContext';
@@ -171,7 +171,18 @@ const ChannelListMessengerWithContext = <
    */
   const [loading, setLoading] = useState(true);
   const [loadingUpdate, setLoadingUpdate] = useState(true)
+  const [firstPage, setFirstPage] = useState(true);
   const [joinChannel, setJoinChannel] = useState([])
+
+  const setDataFromLocalStorage = async () => {
+    const value = await AsyncStorage.getItem('PERSIST_LIST');
+    setJoinChannel(JSON.parse(value));
+  }
+
+  useEffect(() => {
+    setDataFromLocalStorage();
+  }, []);
+
   useEffect(() => {
     if (!!loadingChannels !== loading) {
       setLoading(!!loadingChannels);
@@ -194,6 +205,7 @@ const ChannelListMessengerWithContext = <
   const onEndReached = () => {
     if (loadNextPage) {
       loadNextPage();
+      setFirstPage(false);
     }
   };
 
@@ -215,13 +227,17 @@ const handleUpdate = async () => {
       return Object.assign(channel, {data: {...channel.data, last_message_time: new Date(channel.data.last_message_at).getTime()}})
     }
   }).sort((a, b) => b.data.last_message_time - a.data.last_message_time)
+
+  if (firstPage) {
+    await AsyncStorage.setItem('PERSIST_LIST', JSON.stringify(newChannel));
+  }
   await setJoinChannel(newChannel)
-  setTimeout(() => {  
+  setTimeout(() => {
     refreshList()
     setLoadingUpdate(false)
   }, 1000)
 }
-  console.log(joinChannel, 'join')
+
   useEffect(() => {
     if(!loading) {
       handleUpdate()
@@ -260,7 +276,7 @@ const handleUpdate = async () => {
         testID='channel-list-messenger'
         {...additionalFlatListProps}
       />
-      
+
       <StatusIndicator<At, Ch, Co, Ev, Me, Re, Us> />
     </>
   );
