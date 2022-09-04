@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { MAX_QUERY_CHANNELS_LIMIT } from '../utils';
 
@@ -19,15 +20,15 @@ import type {
 } from '../../../types/types';
 
 const wait = (ms: number) =>
-  new Promise((resolve) => {
-    setTimeout(resolve, ms);
-  });
+    new Promise((resolve) => {
+      setTimeout(resolve, ms);
+    });
 
 type Parameters<
-  Ch extends UnknownType = DefaultChannelType,
-  Co extends string = DefaultCommandType,
-  Us extends UnknownType = DefaultUserType,
-> = {
+    Ch extends UnknownType = DefaultChannelType,
+    Co extends string = DefaultCommandType,
+    Us extends UnknownType = DefaultUserType,
+    > = {
   filters: ChannelFilters<Ch, Co, Us>;
   options: ChannelOptions;
   sort: ChannelSort<Ch>;
@@ -38,18 +39,18 @@ const DEFAULT_OPTIONS = {
 };
 
 export const usePaginatedChannels = <
-  At extends UnknownType = DefaultAttachmentType,
-  Ch extends UnknownType = DefaultChannelType,
-  Co extends string = DefaultCommandType,
-  Ev extends UnknownType = DefaultEventType,
-  Me extends UnknownType = DefaultMessageType,
-  Re extends UnknownType = DefaultReactionType,
-  Us extends UnknownType = DefaultUserType,
->({
-  filters = {},
-  options = DEFAULT_OPTIONS,
-  sort = {},
-}: Parameters<Ch, Co, Us>) => {
+    At extends UnknownType = DefaultAttachmentType,
+    Ch extends UnknownType = DefaultChannelType,
+    Co extends string = DefaultCommandType,
+    Ev extends UnknownType = DefaultEventType,
+    Me extends UnknownType = DefaultMessageType,
+    Re extends UnknownType = DefaultReactionType,
+    Us extends UnknownType = DefaultUserType,
+    >({
+        filters = {},
+        options = DEFAULT_OPTIONS,
+        sort = {},
+      }: Parameters<Ch, Co, Us>) => {
   const { client } = useChatContext<At, Ch, Co, Ev, Me, Re, Us>();
 
   const [channels, setChannels] = useState<Channel<At, Ch, Co, Ev, Me, Re, Us>[]>([]);
@@ -59,7 +60,28 @@ export const usePaginatedChannels = <
   const [loadingChannels, setLoadingChannels] = useState(false);
   const [loadingNextPage, setLoadingNextPage] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
+  const [firstPage, setFirstPage] = useState(true);
   const isMounted = useIsMountedRef();
+
+  const setLocalStorageChannels = async () => {
+    // @ts-ignore
+    const channelQueryResponse = await client.getLocalChannelData();
+
+    channelQueryResponse.forEach((channel) => channel.state.setIsUpToDate(true));
+    setChannels(channelQueryResponse);
+  }
+
+  useEffect(() => {
+    if (channels.length === 0) {
+      setLocalStorageChannels();
+    }
+  }, []);
+
+  useEffect(() => {
+    if (isMounted && channels.length !== 0) {
+      setFirstPage(false);
+    }
+  }, [isMounted]);
 
   const queryChannels = async (queryType = '', retryCount = 0): Promise<void> => {
     if (!client || loadingChannels || loadingNextPage || refreshing || !isMounted.current) return;
@@ -79,15 +101,16 @@ export const usePaginatedChannels = <
     };
 
     try {
-      const channelQueryResponse = await client.queryChannels(filters, sort, newOptions);
+      // @ts-ignore
+      const channelQueryResponse = await client.queryChannels(filters, sort, newOptions, firstPage);
       if (!isMounted.current) return;
 
       channelQueryResponse.forEach((channel) => channel.state.setIsUpToDate(true));
 
       const newChannels =
-        queryType === 'reload' || queryType === 'refresh'
-          ? channelQueryResponse
-          : [...channels, ...channelQueryResponse];
+          queryType === 'reload' || queryType === 'refresh'
+              ? channelQueryResponse
+              : [...channels, ...channelQueryResponse];
       setChannels(newChannels);
       setHasNextPage(channelQueryResponse.length >= newOptions.limit);
       setError(false);
