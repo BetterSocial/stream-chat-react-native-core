@@ -54,7 +54,7 @@ export type ChannelListMessengerPropsWithContext<
   | 'PreviewAvatar'
   | 'previewMessage'
   | 'Skeleton'
->;
+> & {clientData: any};
 
 const StatusIndicator = <
   At extends UnknownType = DefaultAttachmentType,
@@ -135,6 +135,7 @@ const ChannelListMessengerWithContext = <
   let {
     additionalFlatListProps,
     channels,
+    clientData,
     EmptyStateIndicator,
     error,
     FooterLoadingIndicator,
@@ -174,21 +175,27 @@ const ChannelListMessengerWithContext = <
   const [firstPage, setFirstPage] = useState(true);
   const [joinChannel, setJoinChannel] = useState([])
 
-  const setDataFromLocalStorage = async () => {
-    const value = await AsyncStorage.getItem('PERSIST_LIST');
-    setJoinChannel(JSON.parse(value));
-  }
-
-  useEffect(() => {
-    setDataFromLocalStorage();
-  }, []);
-
   useEffect(() => {
     if (!!loadingChannels !== loading) {
       setLoading(!!loadingChannels);
     }
   }, [loading, loadingChannels]);
 
+  const getFromClientData = async () => {
+    const newChannel = await clientData.concat(additionalData).map((channel) => {
+      if(!channel.data.last_message_at) {
+        return Object.assign(channel, {data: {...channel.data, last_message_at: channel.data.updated_at, last_message_time: new Date(channel.data.updated_at).getTime()}})
+      } else {
+        return Object.assign(channel, {data: {...channel.data, last_message_time: new Date(channel.data.last_message_at).getTime()}})
+      }
+    }).sort((a, b) => b.data.last_message_time - a.data.last_message_time)
+
+    await setJoinChannel(newChannel);
+  }
+
+  useEffect(() => {
+    getFromClientData();
+  }, [])
 
   if (error && !refreshing && !loadingChannels && !channels?.length) {
     // return (
@@ -228,9 +235,6 @@ const handleUpdate = async () => {
     }
   }).sort((a, b) => b.data.last_message_time - a.data.last_message_time)
 
-  if (firstPage) {
-    await AsyncStorage.setItem('PERSIST_LIST', JSON.stringify(newChannel));
-  }
   await setJoinChannel(newChannel)
   setTimeout(() => {
     refreshList()
@@ -244,6 +248,7 @@ const handleUpdate = async () => {
 
     }
   }, [channels, additionalData, loading])
+
   const ListFooterComponent = () =>
     channels.length && ListHeaderComponent ? <ListHeaderComponent /> : null;
   return (

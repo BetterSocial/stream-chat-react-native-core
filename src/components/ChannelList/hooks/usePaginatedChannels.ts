@@ -66,16 +66,9 @@ export const usePaginatedChannels = <
   const setLocalStorageChannels = async () => {
     // @ts-ignore
     const channelQueryResponse = await client.getLocalChannelData();
-
     channelQueryResponse.forEach((channel) => channel.state.setIsUpToDate(true));
     setChannels(channelQueryResponse);
   }
-
-  useEffect(() => {
-    if (channels.length === 0) {
-      setLocalStorageChannels();
-    }
-  }, []);
 
   useEffect(() => {
     if (isMounted && channels.length !== 0) {
@@ -167,6 +160,7 @@ export const usePaginatedChannels = <
   const sortStr = useMemo(() => JSON.stringify(sort), [sort]);
 
   useEffect(() => {
+    setLocalStorageChannels();
     reloadList();
   }, [filterStr, sortStr]);
 
@@ -174,10 +168,10 @@ export const usePaginatedChannels = <
     channels,
     error,
     hasNextPage,
-    loadingChannels,
-    loadingNextPage,
+    loadingChannels: false,
+    loadingNextPage: false,
     loadNextPage,
-    refreshing,
+    refreshing: false,
     refreshList,
     reloadList,
     setChannels,

@@ -394,7 +394,6 @@ export const ChannelList = <
     PostNotifComponent
   });
 
-  console.tron.log('BANG G MUNCUL BANG');
   return (
     <ChannelsProvider value={channelsContext}>
       <List PostNotifComponent={PostNotifComponent} countPostNotif={countPostNotif} showBadgePostNotif={showBadgePostNotif} onSelectAdditionalData={onSelectAdditionalData} context={context}  additionalData={additionalData} />
