@@ -1,10 +1,12 @@
-import {useChatContext} from "../contexts/chatContext/ChatContext";
+// @ts-ignore
+import React from 'react';
 import {
     DefaultAttachmentType,
     DefaultChannelType,
     DefaultCommandType, DefaultEventType, DefaultMessageType, DefaultReactionType, DefaultUserType,
     UnknownType
 } from "../types/types";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export const useLocalChannelsFirst = async <
     At extends UnknownType = DefaultAttachmentType,
@@ -15,12 +17,11 @@ export const useLocalChannelsFirst = async <
     Re extends UnknownType = DefaultReactionType,
     Us extends UnknownType = DefaultUserType,
     >(get) => {
-
-    const { client } = useChatContext<At, Ch, Co, Ev, Me, Re, Us>();
     // @ts-ignore
-    const channelQueryResponse = await client.getLocalChannelData();
+    const localStorageChannel = (await AsyncStorage.getItem('@FIRST_CHANNEL')) || '';
+    const data = JSON.parse(localStorageChannel);
 
-    // console.tron.log(channelQueryResponse, 'testing');
-    channelQueryResponse.forEach((channel) => channel.state.setIsUpToDate(true));
-    get(channelQueryResponse);
+    React.useEffect(() => {
+        get(data);
+    }, []);
 }
