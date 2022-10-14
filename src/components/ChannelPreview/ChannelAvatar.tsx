@@ -32,6 +32,11 @@ export type ChannelAvatarProps<
 /**
  * This UI component displays an avatar for a particular channel.
  */
+
+type AdjustmentAvatarProps = {
+  size?:number
+}
+
 export const ChannelAvatar = <
   At extends UnknownType = DefaultAttachmentType,
   Ch extends UnknownType = DefaultChannelType,
@@ -41,9 +46,9 @@ export const ChannelAvatar = <
   Re extends UnknownType = DefaultReactionType,
   Us extends UnknownType = DefaultUserType,
 >(
-  props: ChannelAvatarProps<At, Ch, Co, Ev, Me, Re, Us>,
+  props: ChannelAvatarProps<At, Ch, Co, Ev, Me, Re, Us> & AdjustmentAvatarProps,
 ) => {
-  const { channel } = props;
+  const { channel, size } = props;
 
   const displayAvatar = useChannelPreviewDisplayAvatar(channel);
   const displayPresence = useChannelPreviewDisplayPresence(channel);
@@ -57,7 +62,7 @@ export const ChannelAvatar = <
       image={displayAvatar.image}
       name={displayAvatar.name}
       online={displayPresence}
-      size={48}
+      size={size || 48}
     />
   );
 };
