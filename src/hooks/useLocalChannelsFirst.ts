@@ -21,7 +21,5 @@ export const useLocalChannelsFirst = async <
     const localStorageChannel = (await AsyncStorage.getItem('@FIRST_CHANNEL')) || '';
     const data = JSON.parse(localStorageChannel);
 
-    React.useEffect(() => {
-        get(data);
-    }, []);
+    get(data);
 }
