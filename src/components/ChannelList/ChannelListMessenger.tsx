@@ -34,28 +34,28 @@ const styles = StyleSheet.create({
 });
 
 export type ChannelListMessengerPropsWithContext<
-    At extends UnknownType = DefaultAttachmentType,
-    Ch extends UnknownType = DefaultChannelType,
-    Co extends string = DefaultCommandType,
-    Ev extends UnknownType = DefaultEventType,
-    Me extends UnknownType = DefaultMessageType,
-    Re extends UnknownType = DefaultReactionType,
-    Us extends UnknownType = DefaultUserType,
-    > = Omit<
-    ChannelsContextValue<At, Ch, Co, Ev, Me, Re, Us>,
-    | 'hasNextPage'
-    | 'HeaderErrorIndicator'
-    | 'HeaderNetworkDownIndicator'
-    | 'maxUnreadCount'
-    | 'numberOfSkeletons'
-    | 'onSelect'
-    | 'Preview'
-    | 'PreviewTitle'
-    | 'PreviewStatus'
-    | 'PreviewAvatar'
-    | 'previewMessage'
-    | 'Skeleton'
-    > & {clientData: any};
+  At extends UnknownType = DefaultAttachmentType,
+  Ch extends UnknownType = DefaultChannelType,
+  Co extends string = DefaultCommandType,
+  Ev extends UnknownType = DefaultEventType,
+  Me extends UnknownType = DefaultMessageType,
+  Re extends UnknownType = DefaultReactionType,
+  Us extends UnknownType = DefaultUserType,
+> = Omit<
+  ChannelsContextValue<At, Ch, Co, Ev, Me, Re, Us>,
+  | 'hasNextPage'
+  | 'HeaderErrorIndicator'
+  | 'HeaderNetworkDownIndicator'
+  | 'maxUnreadCount'
+  | 'numberOfSkeletons'
+  | 'onSelect'
+  | 'Preview'
+  | 'PreviewTitle'
+  | 'PreviewStatus'
+  | 'PreviewAvatar'
+  | 'previewMessage'
+  | 'Skeleton'
+>;
 
 const StatusIndicator = <
     At extends UnknownType = DefaultAttachmentType,
@@ -173,7 +173,6 @@ const ChannelListMessengerWithContext = <
    */
   const [loading, setLoading] = useState(true);
   const [loadingUpdate, setLoadingUpdate] = useState(true)
-  const [firstPage, setFirstPage] = useState(true);
   const [joinChannel, setJoinChannel] = useState([])
 
   useEffect(() => {
@@ -213,7 +212,6 @@ const ChannelListMessengerWithContext = <
   const onEndReached = () => {
     if (loadNextPage) {
       loadNextPage();
-      setFirstPage(false);
     }
   };
 
