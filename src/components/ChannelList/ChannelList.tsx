@@ -1,3 +1,4 @@
+// @ts-ignore
 import React, { useState } from 'react';
 
 import { ChannelListHeaderErrorIndicator } from './ChannelListHeaderErrorIndicator';
@@ -392,6 +393,7 @@ export const ChannelList = <
     countPostNotif,
     PostNotifComponent
   });
+
   return (
     <ChannelsProvider value={channelsContext}>
       <List PostNotifComponent={PostNotifComponent} countPostNotif={countPostNotif} showBadgePostNotif={showBadgePostNotif} onSelectAdditionalData={onSelectAdditionalData} context={context}  additionalData={additionalData} />
