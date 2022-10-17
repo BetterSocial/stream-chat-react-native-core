@@ -105,6 +105,7 @@
     "path": "0.12.7",
     "react-art": "^17.0.2",
     "react-native-markdown-package": "1.8.1",
+    "stream-chat": "~3.13.1",
     "@react-native-async-storage/async-storage": "1.15.2"
   },
   "deprecated": false,
@@ -161,7 +162,6 @@
     "react-native-web": "0.15.0",
     "react-styleguidist": "11.1.6",
     "react-test-renderer": "17.0.2",
-    "stream-chat": "github:kevinnath1007/stream-chat-js",
     "typescript": "4.2.4",
     "uuid": "8.3.2",
     "webpack": "4.44.2"
@@ -183,9 +183,7 @@
     "react-native": "*",
     "react-native-gesture-handler": "^1.8.0",
     "react-native-reanimated": "^2.0.0",
-    "react-native-svg": "^12.1.0",
-    "@react-native-async-storage/async-storage": "^1.15.2",
-    "stream-chat": "^4.2.0"
+    "react-native-svg": "^12.1.0"
   },
   "react-native": "src/index.ts",
   "react-native-builder-bob": {
