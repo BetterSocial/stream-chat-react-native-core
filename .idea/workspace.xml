@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="eaba4a62-ce87-49c6-9131-b4a5831891dd" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/node_modules/@babel/core/lib/config/caching.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/@babel/core/lib/config/caching.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/@babel/core/lib/config/config-chain.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/@babel/core/lib/config/config-chain.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/@babel/core/lib/config/config-descriptors.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/@babel/core/lib/config/config-descriptors.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/@babel/core/lib/config/files/configuration.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/@babel/core/lib/config/files/configuration.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/@babel/core/lib/config/files/index-browser.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/@babel/core/lib/config/files/index-browser.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/@babel/core/lib/config/files/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/@babel/core/lib/config/files/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/@babel/core/lib/config/files/module-types.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/@babel/core/lib/config/files/module-types.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/@babel/core/lib/config/files/package.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/@babel/core/lib/config/files/package.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/@babel/core/lib/config/files/plugins.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/@babel/core/lib/config/files/plugins.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/@babel/core/lib/config/files/utils.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/@babel/core/lib/config/files/utils.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/@babel/core/lib/config/full.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/@babel/core/lib/config/full.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/@babel/core/lib/config/helpers/config-api.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/@babel/core/lib/config/helpers/config-api.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/@babel/core/lib/config/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/@babel/core/lib/config/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/@babel/core/lib/config/item.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/@babel/core/lib/config/item.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/@babel/core/lib/config/partial.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/@babel/core/lib/config/partial.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/@babel/core/lib/config/pattern-to-regex.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/@babel/core/lib/config/pattern-to-regex.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/@babel/core/lib/config/printer.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/@babel/core/lib/config/printer.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/@babel/core/lib/config/resolve-targets-browser.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/@babel/core/lib/config/resolve-targets-browser.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/@babel/core/lib/config/resolve-targets.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/@babel/core/lib/config/resolve-targets.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/@babel/core/lib/config/util.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/@babel/core/lib/config/util.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/@babel/core/lib/config/validation/option-assertions.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/@babel/core/lib/config/validation/option-assertions.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/@babel/core/lib/config/validation/options.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/@babel/core/lib/config/validation/options.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/@babel/core/lib/gensync-utils/async.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/@babel/core/lib/gensync-utils/async.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/@babel/core/lib/gensync-utils/fs.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/@babel/core/lib/gensync-utils/fs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/@babel/core/lib/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/@babel/core/lib/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/@babel/core/lib/parse.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/@babel/core/lib/parse.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/@babel/core/lib/parser/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/@babel/core/lib/parser/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/@babel/core/lib/parser/util/missing-plugin-helper.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/@babel/core/lib/parser/util/missing-plugin-helper.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/@babel/core/lib/tools/build-external-helpers.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/@babel/core/lib/tools/build-external-helpers.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/@babel/core/lib/transform-ast.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/@babel/core/lib/transform-ast.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/@babel/core/lib/transform-file-browser.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/@babel/core/lib/transform-file-browser.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/@babel/core/lib/transform-file.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/@babel/core/lib/transform-file.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/@babel/core/lib/transform.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/@babel/core/lib/transform.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/@babel/core/lib/transformation/block-hoist-plugin.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/@babel/core/lib/transformation/block-hoist-plugin.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/@babel/core/lib/transformation/file/file.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/@babel/core/lib/transformation/file/file.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/@babel/core/lib/transformation/file/generate.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/@babel/core/lib/transformation/file/generate.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/@babel/core/lib/transformation/file/merge-map.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/@babel/core/lib/transformation/file/merge-map.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/@babel/core/lib/transformation/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/@babel/core/lib/transformation/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/@babel/core/lib/transformation/normalize-file.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/@babel/core/lib/transformation/normalize-file.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/@babel/core/lib/transformation/normalize-opts.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/@babel/core/lib/transformation/normalize-opts.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/@babel/core/lib/transformation/plugin-pass.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/@babel/core/lib/transformation/plugin-pass.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/@babel/core/lib/transformation/util/clone-deep-browser.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/@babel/core/lib/transformation/util/clone-deep.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/@babel/core/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/@babel/core/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/@babel/core/src/config/files/index-browser.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/@babel/core/src/config/files/index.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/@babel/core/src/config/resolve-targets-browser.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/@babel/core/src/config/resolve-targets.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/@babel/core/src/transform-file-browser.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/@babel/core/src/transform-file.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/@babel/core/src/transformation/util/clone-deep-browser.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/@babel/core/src/transformation/util/clone-deep.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/dayjs/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/dayjs/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/i18next/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/i18next/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/metro-react-native-babel-preset/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/metro-react-native-babel-preset/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/stream-chat/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/stream-chat/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/ChannelList/ChannelListMessenger.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ChannelList/ChannelListMessenger.tsx" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitToolBoxStore">
+    <option name="recentBranches">
+      <RecentBranches>
+        <option name="branchesForRepo">
+          <list>
+            <RecentBranchesForRepo>
+              <option name="branches">
+                <list>
+                  <RecentBranch>
+                    <option name="branchName" value="main" />
+                    <option name="lastUsedInstant" value="1666007258" />
+                  </RecentBranch>
+                  <RecentBranch>
+                    <option name="branchName" value="feat/async-storage" />
+                    <option name="lastUsedInstant" value="1661172129" />
+                  </RecentBranch>
+                </list>
+              </option>
+              <option name="repositoryRootUrl" value="file://$PROJECT_DIR$" />
+            </RecentBranchesForRepo>
+          </list>
+        </option>
+      </RecentBranches>
+    </option>
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2DhcjkbZM0ySW1TNcX6u6qdmTmZ" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="prettierjs.PrettierConfiguration.Package" value="$PROJECT_DIR$/node_modules/prettier" />
+    <property name="ts.external.directory.path" value="$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external" />
+    <property name="vue.rearranger.settings.migration" value="true" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+    </key>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="eaba4a62-ce87-49c6-9131-b4a5831891dd" name="Changes" comment="" />
+      <created>1661154895146</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1661154895146</updated>
+      <workItem from="1661154896600" duration="8294000" />
+      <workItem from="1661855385842" duration="1385000" />
+      <workItem from="1662299118400" duration="2960000" />
+      <workItem from="1663035406805" duration="353000" />
+      <workItem from="1663411800982" duration="708000" />
+      <workItem from="1663605442033" duration="1267000" />
+      <workItem from="1664459352989" duration="772000" />
+      <workItem from="1664717844034" duration="443000" />
+      <workItem from="1665825803102" duration="1326000" />
+      <workItem from="1665828052168" duration="58000" />
+      <workItem from="1665828630177" duration="2703000" />
+      <workItem from="1665930569456" duration="2693000" />
+      <workItem from="1665942462116" duration="597000" />
+      <workItem from="1665943637833" duration="621000" />
+      <workItem from="1665944390630" duration="15000" />
+      <workItem from="1666006580777" duration="620000" />
+      <workItem from="1666007212615" duration="395000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>
