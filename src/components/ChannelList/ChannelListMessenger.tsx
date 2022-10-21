@@ -54,7 +54,6 @@ export type ChannelListMessengerPropsWithContext<
   | 'PreviewAvatar'
   | 'previewMessage'
   | 'Skeleton'
-    | 'clientData'
 >;
 
 const StatusIndicator = <
@@ -156,8 +155,7 @@ const ChannelListMessengerWithContext = <
     onSelectAdditionalData,
     showBadgePostNotif,
     countPostNotif,
-    PostNotifComponent,
-    clientData
+    PostNotifComponent
   } = props;
   const {
     theme: {
@@ -174,28 +172,12 @@ const ChannelListMessengerWithContext = <
   const [loading, setLoading] = useState(true);
   const [loadingUpdate, setLoadingUpdate] = useState(true)
   const [joinChannel, setJoinChannel] = useState([])
-
   useEffect(() => {
     if (!!loadingChannels !== loading) {
       setLoading(!!loadingChannels);
     }
   }, [loading, loadingChannels]);
 
-  const getFromClientData = async () => {
-    const newChannel = await clientData.concat(additionalData).map((channel) => {
-      if(!channel.data.last_message_at) {
-        return Object.assign(channel, {data: {...channel.data, last_message_at: channel.data.updated_at, last_message_time: new Date(channel.data.updated_at).getTime()}})
-      } else {
-        return Object.assign(channel, {data: {...channel.data, last_message_time: new Date(channel.data.last_message_at).getTime()}})
-      }
-    }).sort((a, b) => b.data.last_message_time - a.data.last_message_time)
-
-    await setJoinChannel(newChannel);
-  }
-
-  useEffect(() => {
-    getFromClientData();
-  }, [])
 
   if (error && !refreshing && !loadingChannels && !channels?.length) {
     // return (
@@ -234,7 +216,7 @@ const handleUpdate = async () => {
     }
   }).sort((a, b) => b.data.last_message_time - a.data.last_message_time)
   await setJoinChannel(newChannel)
-  setTimeout(() => {
+  setTimeout(() => {  
     refreshList()
     setLoadingUpdate(false)
   }, 1000)
@@ -278,7 +260,7 @@ const handleUpdate = async () => {
         testID='channel-list-messenger'
         {...additionalFlatListProps}
       />
-
+      
       <StatusIndicator<At, Ch, Co, Ev, Me, Re, Us> />
     </>
   );
@@ -311,10 +293,6 @@ export const ChannelListMessenger = <
 >(
   props: ChannelListMessengerProps<At, Ch, Co, Ev, Me, Re, Us>,
 ) => {
-
-  const {client} = useChatContext<At, Ch, Co, Ev, Me, Re, Us>();
-  const clientData = client.getLocalChannelData(props?.clientData);
-
   const {
     additionalFlatListProps,
     channels,
@@ -356,7 +334,6 @@ export const ChannelListMessenger = <
         reloadList,
         setFlatListRef,
       }}
-        clientData={clientData}
       {...props}
     />
   );
