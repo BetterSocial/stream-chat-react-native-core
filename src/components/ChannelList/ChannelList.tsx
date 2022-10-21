@@ -394,7 +394,7 @@ export const ChannelList = <
   });
   return (
     <ChannelsProvider value={channelsContext}>
-      <List PostNotifComponent={PostNotifComponent} countPostNotif={countPostNotif} showBadgePostNotif={showBadgePostNotif} onSelectAdditionalData={onSelectAdditionalData} context={context}  additionalData={additionalData} clientData={props.clientData} />
+      <List PostNotifComponent={PostNotifComponent} countPostNotif={countPostNotif} showBadgePostNotif={showBadgePostNotif} onSelectAdditionalData={onSelectAdditionalData} context={context}  additionalData={additionalData} />
     </ChannelsProvider>
   );
 };
