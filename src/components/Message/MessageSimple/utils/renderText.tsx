@@ -34,6 +34,7 @@ const defaultMarkdownStyles: MarkdownStyle = {
     fontSize: 13,
     padding: 3,
     paddingHorizontal: 5,
+    fontWeight: 'normal'
   },
   list: {
     marginBottom: 8,
@@ -144,6 +145,7 @@ export const renderText = <
       ...defaultMarkdownStyles.autolink,
       color: colors.accent_blue,
       ...markdownStyles?.autolink,
+      fontWeight: 'normal'
     },
     inlineCode: {
       ...defaultMarkdownStyles.inlineCode,
@@ -161,6 +163,7 @@ export const renderText = <
       ...defaultMarkdownStyles.text,
       color: colors.black,
       ...markdownStyles?.text,
+      fontWeight: 'normal'
     },
   };
 
