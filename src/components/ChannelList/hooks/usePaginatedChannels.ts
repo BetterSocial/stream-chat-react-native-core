@@ -19,18 +19,23 @@ import type {
 } from '../../../types/types';
 
 const wait = (ms: number) =>
-  new Promise((resolve) => {
-    setTimeout(resolve, ms);
-  });
+    new Promise((resolve) => {
+      setTimeout(resolve, ms);
+    });
 
 type Parameters<
-  Ch extends UnknownType = DefaultChannelType,
-  Co extends string = DefaultCommandType,
-  Us extends UnknownType = DefaultUserType,
-> = {
+    Ch extends UnknownType = DefaultChannelType,
+    Co extends string = DefaultCommandType,
+    Us extends UnknownType = DefaultUserType,
+    At extends UnknownType = DefaultAttachmentType,
+    Ev extends UnknownType = DefaultEventType,
+    Me extends UnknownType = DefaultMessageType,
+    Re extends UnknownType = DefaultReactionType
+    > = {
   filters: ChannelFilters<Ch, Co, Us>;
   options: ChannelOptions;
   sort: ChannelSort<Ch>;
+  localData?:  Channel<At, Ch, Co, Ev, Me, Re, Us>[];
 };
 
 const DEFAULT_OPTIONS = {
@@ -38,18 +43,19 @@ const DEFAULT_OPTIONS = {
 };
 
 export const usePaginatedChannels = <
-  At extends UnknownType = DefaultAttachmentType,
-  Ch extends UnknownType = DefaultChannelType,
-  Co extends string = DefaultCommandType,
-  Ev extends UnknownType = DefaultEventType,
-  Me extends UnknownType = DefaultMessageType,
-  Re extends UnknownType = DefaultReactionType,
-  Us extends UnknownType = DefaultUserType,
->({
-  filters = {},
-  options = DEFAULT_OPTIONS,
-  sort = {},
-}: Parameters<Ch, Co, Us>) => {
+    At extends UnknownType = DefaultAttachmentType,
+    Ch extends UnknownType = DefaultChannelType,
+    Co extends string = DefaultCommandType,
+    Ev extends UnknownType = DefaultEventType,
+    Me extends UnknownType = DefaultMessageType,
+    Re extends UnknownType = DefaultReactionType,
+    Us extends UnknownType = DefaultUserType,
+    >({
+        filters = {},
+        options = DEFAULT_OPTIONS,
+        sort = {},
+        localData = []
+      }: Parameters<Ch, Co, Us, At, Ev, Me, Re>) => {
   const { client } = useChatContext<At, Ch, Co, Ev, Me, Re, Us>();
 
   const [channels, setChannels] = useState<Channel<At, Ch, Co, Ev, Me, Re, Us>[]>([]);
@@ -59,6 +65,8 @@ export const usePaginatedChannels = <
   const [loadingChannels, setLoadingChannels] = useState(false);
   const [loadingNextPage, setLoadingNextPage] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
+  // const [localCheckFirst, setLocalCheckFirst] = useState(true);
+  const localCheckFirst = useRef(true);
   const isMounted = useIsMountedRef();
 
   const queryChannels = async (queryType = '', retryCount = 0): Promise<void> => {
@@ -79,15 +87,21 @@ export const usePaginatedChannels = <
     };
 
     try {
-      const channelQueryResponse = await client.queryChannels(filters, sort, newOptions);
+      let channelQueryResponse;
+      if (localData.length !== 0 && localCheckFirst?.current === true) {
+        channelQueryResponse = await client.getLocalChannelData();
+        localCheckFirst.current = false;
+      } else {
+        channelQueryResponse = await client.queryChannels(filters, sort, newOptions);
+      }
       if (!isMounted.current) return;
 
       channelQueryResponse.forEach((channel) => channel.state.setIsUpToDate(true));
 
       const newChannels =
-        queryType === 'reload' || queryType === 'refresh'
-          ? channelQueryResponse
-          : [...channels, ...channelQueryResponse];
+          queryType === 'reload' || queryType === 'refresh'
+              ? channelQueryResponse
+              : [...channels, ...channelQueryResponse];
       setChannels(newChannels);
       setHasNextPage(channelQueryResponse.length >= newOptions.limit);
       setError(false);

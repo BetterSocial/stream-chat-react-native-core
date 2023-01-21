@@ -28,18 +28,18 @@ import type {
 } from '../../types/types';
 
 type PostNotificationValue = {
-  
+
 }
 
 export type ChannelsContextValue<
-  At extends UnknownType = DefaultAttachmentType,
-  Ch extends UnknownType = DefaultChannelType,
-  Co extends string = DefaultCommandType,
-  Ev extends UnknownType = DefaultEventType,
-  Me extends UnknownType = DefaultMessageType,
-  Re extends UnknownType = DefaultReactionType,
-  Us extends UnknownType = DefaultUserType,
-> = {
+    At extends UnknownType = DefaultAttachmentType,
+    Ch extends UnknownType = DefaultChannelType,
+    Co extends string = DefaultCommandType,
+    Ev extends UnknownType = DefaultEventType,
+    Me extends UnknownType = DefaultMessageType,
+    Re extends UnknownType = DefaultReactionType,
+    Us extends UnknownType = DefaultUserType,
+    > = {
   /**
    * Besides the existing default behavior of the ChannelListMessenger component, you can attach
    * additional props to the underlying React Native FlatList.
@@ -215,8 +215,8 @@ export type ChannelsContextValue<
    * **Default** [ChannelPreviewUnreadCount](https://github.com/GetStream/stream-chat-react-native/blob/master/src/components/ChannelPreview/ChannelPreviewUnreadCount.tsx)
    */
   PreviewUnreadCount?: React.ComponentType<
-    ChannelPreviewUnreadCountProps<At, Ch, Co, Ev, Me, Re, Us>
-  >;
+      ChannelPreviewUnreadCountProps<At, Ch, Co, Ev, Me, Re, Us>
+      >;
 
   additionalData?: object[];
   context?:object;
@@ -224,39 +224,39 @@ export type ChannelsContextValue<
   showBadgePostNotif?:boolean;
   countPostNotif?:React.ReactNode;
   PostNotifComponent?:React.ReactNode
-
+  localData?: Channel<At, Ch, Co, Ev, Me, Re, Us>[];
 };
 
 export const ChannelsContext = React.createContext({} as ChannelsContextValue);
 
 export const ChannelsProvider = <
-  At extends UnknownType = DefaultAttachmentType,
-  Ch extends UnknownType = DefaultChannelType,
-  Co extends string = DefaultCommandType,
-  Ev extends UnknownType = DefaultEventType,
-  Me extends UnknownType = DefaultMessageType,
-  Re extends UnknownType = DefaultReactionType,
-  Us extends UnknownType = DefaultUserType,
->({
-  children,
-  value,
-}: PropsWithChildren<{
+    At extends UnknownType = DefaultAttachmentType,
+    Ch extends UnknownType = DefaultChannelType,
+    Co extends string = DefaultCommandType,
+    Ev extends UnknownType = DefaultEventType,
+    Me extends UnknownType = DefaultMessageType,
+    Re extends UnknownType = DefaultReactionType,
+    Us extends UnknownType = DefaultUserType,
+    >({
+        children,
+        value,
+      }: PropsWithChildren<{
   value: ChannelsContextValue<At, Ch, Co, Ev, Me, Re, Us>;
 }>) => (
-  <ChannelsContext.Provider value={value as unknown as ChannelsContextValue}>
-    {children}
-  </ChannelsContext.Provider>
+    <ChannelsContext.Provider value={value as unknown as ChannelsContextValue}>
+      {children}
+    </ChannelsContext.Provider>
 );
 
 export const useChannelsContext = <
-  At extends UnknownType = DefaultAttachmentType,
-  Ch extends UnknownType = DefaultChannelType,
-  Co extends string = DefaultCommandType,
-  Ev extends UnknownType = DefaultEventType,
-  Me extends UnknownType = DefaultMessageType,
-  Re extends UnknownType = DefaultReactionType,
-  Us extends UnknownType = DefaultUserType,
->() => useContext(ChannelsContext) as unknown as ChannelsContextValue<At, Ch, Co, Ev, Me, Re, Us>;
+    At extends UnknownType = DefaultAttachmentType,
+    Ch extends UnknownType = DefaultChannelType,
+    Co extends string = DefaultCommandType,
+    Ev extends UnknownType = DefaultEventType,
+    Me extends UnknownType = DefaultMessageType,
+    Re extends UnknownType = DefaultReactionType,
+    Us extends UnknownType = DefaultUserType,
+    >() => useContext(ChannelsContext) as unknown as ChannelsContextValue<At, Ch, Co, Ev, Me, Re, Us>;
 
 /**
  * Typescript currently does not support partial inference so if ChatContext
@@ -264,19 +264,19 @@ export const useChannelsContext = <
  * wrapped component must be provided as the first generic.
  */
 export const withChannelsContext = <
-  P extends UnknownType,
-  At extends UnknownType = DefaultAttachmentType,
-  Ch extends UnknownType = DefaultChannelType,
-  Co extends string = DefaultCommandType,
-  Ev extends UnknownType = DefaultEventType,
-  Me extends UnknownType = DefaultMessageType,
-  Re extends UnknownType = DefaultReactionType,
-  Us extends UnknownType = DefaultUserType,
->(
-  Component: React.ComponentType<P>,
+    P extends UnknownType,
+    At extends UnknownType = DefaultAttachmentType,
+    Ch extends UnknownType = DefaultChannelType,
+    Co extends string = DefaultCommandType,
+    Ev extends UnknownType = DefaultEventType,
+    Me extends UnknownType = DefaultMessageType,
+    Re extends UnknownType = DefaultReactionType,
+    Us extends UnknownType = DefaultUserType,
+    >(
+    Component: React.ComponentType<P>,
 ): React.FC<Omit<P, keyof ChannelsContextValue<At, Ch, Co, Ev, Me, Re, Us>>> => {
   const WithChannelsContextComponent = (
-    props: Omit<P, keyof ChannelsContextValue<At, Ch, Co, Ev, Me, Re, Us>>,
+      props: Omit<P, keyof ChannelsContextValue<At, Ch, Co, Ev, Me, Re, Us>>,
   ) => {
     const channelsContext = useChannelsContext<At, Ch, Co, Ev, Me, Re, Us>();
 
