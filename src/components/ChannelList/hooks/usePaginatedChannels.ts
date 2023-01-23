@@ -35,7 +35,7 @@ type Parameters<
   filters: ChannelFilters<Ch, Co, Us>;
   options: ChannelOptions;
   sort: ChannelSort<Ch>;
-  localData?:  Channel<At, Ch, Co, Ev, Me, Re, Us>[];
+  localData?: Channel<At, Ch, Co, Ev, Me, Re, Us>[];
 };
 
 const DEFAULT_OPTIONS = {
@@ -102,7 +102,9 @@ export const usePaginatedChannels = <
           queryType === 'reload' || queryType === 'refresh'
               ? channelQueryResponse
               : [...channels, ...channelQueryResponse];
+
       setChannels(newChannels);
+
       setHasNextPage(channelQueryResponse.length >= newOptions.limit);
       setError(false);
     } catch (err) {

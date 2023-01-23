@@ -44,45 +44,45 @@ import type {
 } from '../../types/types';
 
 export type ChannelListProps<
-  At extends UnknownType = DefaultAttachmentType,
-  Ch extends UnknownType = DefaultChannelType,
-  Co extends string = DefaultCommandType,
-  Ev extends UnknownType = DefaultEventType,
-  Me extends UnknownType = DefaultMessageType,
-  Re extends UnknownType = DefaultReactionType,
-  Us extends UnknownType = DefaultUserType,
-> = Partial<
-  Pick<
-    ChannelsContextValue<At, Ch, Co, Ev, Me, Re, Us>,
-    | 'additionalFlatListProps'
-    | 'EmptyStateIndicator'
-    | 'FooterLoadingIndicator'
-    | 'HeaderErrorIndicator'
-    | 'HeaderNetworkDownIndicator'
-    | 'LoadingErrorIndicator'
-    | 'LoadingIndicator'
-    | 'Preview'
-    | 'setFlatListRef'
-    | 'ListHeaderComponent'
-    | 'onSelect'
-    | 'PreviewAvatar'
-    | 'PreviewMessage'
-    | 'PreviewStatus'
-    | 'PreviewTitle'
-    | 'PreviewUnreadCount'
-    | 'loadMoreThreshold'
-    | 'Skeleton'
-    | 'maxUnreadCount'
-    | 'numberOfSkeletons'
-    | 'additionalData'
-    | 'context'
-    | 'onSelectAdditionalData'
-    | 'showBadgePostNotif'
-    | 'countPostNotif'
-    | 'PostNotifComponent'
-    | 'localData'
-  >
-> & {
+    At extends UnknownType = DefaultAttachmentType,
+    Ch extends UnknownType = DefaultChannelType,
+    Co extends string = DefaultCommandType,
+    Ev extends UnknownType = DefaultEventType,
+    Me extends UnknownType = DefaultMessageType,
+    Re extends UnknownType = DefaultReactionType,
+    Us extends UnknownType = DefaultUserType,
+    > = Partial<
+    Pick<
+        ChannelsContextValue<At, Ch, Co, Ev, Me, Re, Us>,
+        | 'additionalFlatListProps'
+        | 'EmptyStateIndicator'
+        | 'FooterLoadingIndicator'
+        | 'HeaderErrorIndicator'
+        | 'HeaderNetworkDownIndicator'
+        | 'LoadingErrorIndicator'
+        | 'LoadingIndicator'
+        | 'Preview'
+        | 'setFlatListRef'
+        | 'ListHeaderComponent'
+        | 'onSelect'
+        | 'PreviewAvatar'
+        | 'PreviewMessage'
+        | 'PreviewStatus'
+        | 'PreviewTitle'
+        | 'PreviewUnreadCount'
+        | 'loadMoreThreshold'
+        | 'Skeleton'
+        | 'maxUnreadCount'
+        | 'numberOfSkeletons'
+        | 'additionalData'
+        | 'context'
+        | 'onSelectAdditionalData'
+        | 'showBadgePostNotif'
+        | 'countPostNotif'
+        | 'PostNotifComponent'
+        | 'localData'
+        >
+    > & {
   /**
    * Object containing channel query filters
    *
@@ -110,8 +110,8 @@ export type ChannelListProps<
    * @overrideType Function
    * */
   onAddedToChannel?: (
-    setChannels: React.Dispatch<React.SetStateAction<Channel<At, Ch, Co, Ev, Me, Re, Us>[]>>,
-    event: Event<At, Ch, Co, Ev, Me, Re, Us>,
+      setChannels: React.Dispatch<React.SetStateAction<Channel<At, Ch, Co, Ev, Me, Re, Us>[]>>,
+      event: Event<At, Ch, Co, Ev, Me, Re, Us>,
   ) => void;
   /**
    * Function that overrides default behavior when a channel gets deleted. In absence of this prop, the channel will be removed from the list.
@@ -122,8 +122,8 @@ export type ChannelListProps<
    * @overrideType Function
    * */
   onChannelDeleted?: (
-    setChannels: React.Dispatch<React.SetStateAction<Channel<At, Ch, Co, Ev, Me, Re, Us>[]>>,
-    event: Event<At, Ch, Co, Ev, Me, Re, Us>,
+      setChannels: React.Dispatch<React.SetStateAction<Channel<At, Ch, Co, Ev, Me, Re, Us>[]>>,
+      event: Event<At, Ch, Co, Ev, Me, Re, Us>,
   ) => void;
   /**
    * Function that overrides default behavior when a channel gets hidden. In absence of this prop, the channel will be removed from the list.
@@ -134,8 +134,8 @@ export type ChannelListProps<
    * @overrideType Function
    * */
   onChannelHidden?: (
-    setChannels: React.Dispatch<React.SetStateAction<Channel<At, Ch, Co, Ev, Me, Re, Us>[]>>,
-    event: Event<At, Ch, Co, Ev, Me, Re, Us>,
+      setChannels: React.Dispatch<React.SetStateAction<Channel<At, Ch, Co, Ev, Me, Re, Us>[]>>,
+      event: Event<At, Ch, Co, Ev, Me, Re, Us>,
   ) => void;
   /**
    * Function to customize behavior when a channel gets truncated
@@ -146,8 +146,8 @@ export type ChannelListProps<
    * @overrideType Function
    * */
   onChannelTruncated?: (
-    setChannels: React.Dispatch<React.SetStateAction<Channel<At, Ch, Co, Ev, Me, Re, Us>[]>>,
-    event: Event<At, Ch, Co, Ev, Me, Re, Us>,
+      setChannels: React.Dispatch<React.SetStateAction<Channel<At, Ch, Co, Ev, Me, Re, Us>[]>>,
+      event: Event<At, Ch, Co, Ev, Me, Re, Us>,
   ) => void;
   /**
    * Function that overrides default behavior when a channel gets updated
@@ -158,8 +158,8 @@ export type ChannelListProps<
    * @overrideType Function
    * */
   onChannelUpdated?: (
-    setChannels: React.Dispatch<React.SetStateAction<Channel<At, Ch, Co, Ev, Me, Re, Us>[]>>,
-    event: Event<At, Ch, Co, Ev, Me, Re, Us>,
+      setChannels: React.Dispatch<React.SetStateAction<Channel<At, Ch, Co, Ev, Me, Re, Us>[]>>,
+      event: Event<At, Ch, Co, Ev, Me, Re, Us>,
   ) => void;
   /**
    * Function that overrides default behavior when a channel gets visible. In absence of this prop, the channel will be added to the list.
@@ -170,8 +170,8 @@ export type ChannelListProps<
    * @overrideType Function
    * */
   onChannelVisible?: (
-    setChannels: React.Dispatch<React.SetStateAction<Channel<At, Ch, Co, Ev, Me, Re, Us>[]>>,
-    event: Event<At, Ch, Co, Ev, Me, Re, Us>,
+      setChannels: React.Dispatch<React.SetStateAction<Channel<At, Ch, Co, Ev, Me, Re, Us>[]>>,
+      event: Event<At, Ch, Co, Ev, Me, Re, Us>,
   ) => void;
   /**
    * Override the default listener/handler for event `notification.message_new`
@@ -183,8 +183,8 @@ export type ChannelListProps<
    * @overrideType Function
    * */
   onMessageNew?: (
-    setChannels: React.Dispatch<React.SetStateAction<Channel<At, Ch, Co, Ev, Me, Re, Us>[]>>,
-    event: Event<At, Ch, Co, Ev, Me, Re, Us>,
+      setChannels: React.Dispatch<React.SetStateAction<Channel<At, Ch, Co, Ev, Me, Re, Us>[]>>,
+      event: Event<At, Ch, Co, Ev, Me, Re, Us>,
   ) => void;
   /**
    * Function that overrides default behavior when a user gets removed from a channel
@@ -195,8 +195,8 @@ export type ChannelListProps<
    * @overrideType Function
    * */
   onRemovedFromChannel?: (
-    setChannels: React.Dispatch<React.SetStateAction<Channel<At, Ch, Co, Ev, Me, Re, Us>[]>>,
-    event: Event<At, Ch, Co, Ev, Me, Re, Us>,
+      setChannels: React.Dispatch<React.SetStateAction<Channel<At, Ch, Co, Ev, Me, Re, Us>[]>>,
+      event: Event<At, Ch, Co, Ev, Me, Re, Us>,
   ) => void;
   /**
    * Object containing channel query options
@@ -222,15 +222,15 @@ const DEFAULT_SORT = {};
  * @example ./ChannelList.md
  */
 export const ChannelList = <
-  At extends UnknownType = DefaultAttachmentType,
-  Ch extends UnknownType = DefaultChannelType,
-  Co extends string = DefaultCommandType,
-  Ev extends UnknownType = DefaultEventType,
-  Me extends UnknownType = DefaultMessageType,
-  Re extends UnknownType = DefaultReactionType,
-  Us extends UnknownType = DefaultUserType,
->(
-  props: ChannelListProps<At, Ch, Co, Ev, Me, Re, Us>,
+    At extends UnknownType = DefaultAttachmentType,
+    Ch extends UnknownType = DefaultChannelType,
+    Co extends string = DefaultCommandType,
+    Ev extends UnknownType = DefaultEventType,
+    Me extends UnknownType = DefaultMessageType,
+    Re extends UnknownType = DefaultReactionType,
+    Us extends UnknownType = DefaultUserType,
+    >(
+    props: ChannelListProps<At, Ch, Co, Ev, Me, Re, Us>,
 ) => {
   const {
     additionalFlatListProps = {},
@@ -388,16 +388,16 @@ export const ChannelList = <
       }
     },
     Skeleton,
-    additionalData,
     context,
     onSelectAdditionalData ,
     showBadgePostNotif,
     countPostNotif,
-    PostNotifComponent
+    PostNotifComponent,
+    additionalData
   });
   return (
-    <ChannelsProvider value={channelsContext}>
-      <List PostNotifComponent={PostNotifComponent} countPostNotif={countPostNotif} showBadgePostNotif={showBadgePostNotif} onSelectAdditionalData={onSelectAdditionalData} context={context}  additionalData={additionalData} />
-    </ChannelsProvider>
+      <ChannelsProvider value={channelsContext}>
+        <List PostNotifComponent={PostNotifComponent} countPostNotif={countPostNotif} showBadgePostNotif={showBadgePostNotif} onSelectAdditionalData={onSelectAdditionalData} context={context}  additionalData={additionalData} />
+      </ChannelsProvider>
   );
 };
