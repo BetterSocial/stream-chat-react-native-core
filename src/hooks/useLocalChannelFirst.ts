@@ -18,8 +18,10 @@ export const useLocalChannelsFirst = async <
     Us extends UnknownType = DefaultUserType,
     >(get) => {
     // @ts-ignore
-    const localStorageChannel = (await AsyncStorage.getItem('@FIRST_CHANNEL')) || '';
-    const data = JSON.parse(localStorageChannel);
+    return async () => {
+        const localStorageChannel = (await AsyncStorage.getItem('@FIRST_CHANNEL')) || '';
+        const data = JSON.parse(localStorageChannel);
 
-    get(data);
+        get(data);
+    }
 }

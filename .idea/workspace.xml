@@ -1,13 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="eaba4a62-ce87-49c6-9131-b4a5831891dd" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/ChannelList/ChannelList.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ChannelList/ChannelList.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/ChannelList/ChannelListMessenger.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ChannelList/ChannelListMessenger.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/ChannelList/hooks/usePaginatedChannels.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ChannelList/hooks/usePaginatedChannels.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/contexts/channelsContext/ChannelsContext.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/contexts/channelsContext/ChannelsContext.tsx" afterDir="false" />
-    </list>
+    <list default="true" id="eaba4a62-ce87-49c6-9131-b4a5831891dd" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -32,16 +26,20 @@
               <option name="branches">
                 <list>
                   <RecentBranch>
+                    <option name="branchName" value="perf/rerendering" />
+                    <option name="lastUsedInstant" value="1674454898" />
+                  </RecentBranch>
+                  <RecentBranch>
+                    <option name="branchName" value="main" />
+                    <option name="lastUsedInstant" value="1674295518" />
+                  </RecentBranch>
+                  <RecentBranch>
                     <option name="branchName" value="test" />
                     <option name="lastUsedInstant" value="1666615677" />
                   </RecentBranch>
                   <RecentBranch>
                     <option name="branchName" value="feat/async-storage" />
                     <option name="lastUsedInstant" value="1666615534" />
-                  </RecentBranch>
-                  <RecentBranch>
-                    <option name="branchName" value="main" />
-                    <option name="lastUsedInstant" value="1666007258" />
                   </RecentBranch>
                 </list>
               </option>
@@ -105,7 +103,8 @@
       <workItem from="1666007212615" duration="2237000" />
       <workItem from="1666176336133" duration="24000" />
       <workItem from="1666615497823" duration="596000" />
-      <workItem from="1674294907444" duration="364000" />
+      <workItem from="1674294907444" duration="620000" />
+      <workItem from="1674453119085" duration="1796000" />
     </task>
     <servers />
   </component>
