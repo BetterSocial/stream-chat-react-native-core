@@ -8,7 +8,7 @@ import {
 } from "../types/types";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-export const useLocalChannelsFirst = async <
+export const useLocalChannelsFirst = <
     At extends UnknownType = DefaultAttachmentType,
     Ch extends UnknownType = DefaultChannelType,
     Co extends string = DefaultCommandType,
