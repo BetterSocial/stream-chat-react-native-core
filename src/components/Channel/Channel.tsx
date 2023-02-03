@@ -798,7 +798,10 @@ const ChannelWithContext = <
           }
         }),
       );
-      channelSubscriptions.push(channel.on(handleEvent));
+      if(channel.on && typeof channel.on === 'function') {
+        channelSubscriptions.push(channel.on(handleEvent));
+
+      }
       }
       
     };
@@ -809,7 +812,7 @@ const ChannelWithContext = <
       clientSubscriptions.forEach((s) => s.unsubscribe());
       channelSubscriptions.forEach((s) => s.unsubscribe());
     };
-  }, [channelId, connectionRecoveredHandler, handleEvent]);
+  }, [channelId, connectionRecoveredHandler, handleEvent, channel]);
 
   const channelQueryCall = async (queryCall: () => void = () => null) => {
     setError(false);
