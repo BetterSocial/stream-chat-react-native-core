@@ -798,10 +798,7 @@ const ChannelWithContext = <
           }
         }),
       );
-  
-      }
-      if(channel.on && typeof channel.on === 'function') {
-        channelSubscriptions.push(channel.on(handleEvent));
+      channelSubscriptions.push(channel.on(handleEvent));
       }
       
     };
