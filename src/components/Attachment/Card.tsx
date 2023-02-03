@@ -1,4 +1,5 @@
 import React from 'react';
+import type { Attachment } from 'stream-chat';
 import {
   Image,
   ImageStyle,
@@ -12,19 +13,6 @@ import {
   ViewStyle,
 } from 'react-native';
 
-import {
-  MessageContextValue,
-  useMessageContext,
-} from '../../contexts/messageContext/MessageContext';
-import {
-  MessagesContextValue,
-  useMessagesContext,
-} from '../../contexts/messagesContext/MessagesContext';
-import { useTheme } from '../../contexts/themeContext/ThemeContext';
-import { makeImageCompatibleUrl } from '../../utils/utils';
-
-import type { Attachment } from 'stream-chat';
-
 import type {
   DefaultAttachmentType,
   DefaultChannelType,
@@ -35,6 +23,16 @@ import type {
   DefaultUserType,
   UnknownType,
 } from '../../types/types';
+import {
+  MessageContextValue,
+  useMessageContext,
+} from '../../contexts/messageContext/MessageContext';
+import {
+  MessagesContextValue,
+  useMessagesContext,
+} from '../../contexts/messagesContext/MessagesContext';
+import { makeImageCompatibleUrl } from '../../utils/utils';
+import { useTheme } from '../../contexts/themeContext/ThemeContext';
 
 const styles = StyleSheet.create({
   authorName: { fontSize: 14.5, fontWeight: '600' },
@@ -80,11 +78,12 @@ const styles = StyleSheet.create({
 const goToURL = (url?: string) => {
   if (!url) return;
   Linking.canOpenURL(url).then((supported) => {
-    if (supported) {
-      Linking.openURL(url);
-    } else {
-      console.log(`Don't know how to open URI: ${url}`);
-    }
+    // if (supported) {
+    //   Linking.openURL(url);
+    // } else {
+    //   console.log(`Don't know how to open URI: ${url}`);
+    // }
+    Linking.openURL(url);
   });
 };
 
@@ -298,10 +297,10 @@ export type CardProps<
 > = Attachment<At> &
   Partial<
     Pick<MessageContextValue<At, Ch, Co, Ev, Me, Re, Us>, 'onLongPress' | 'onPress' | 'onPressIn'> &
-      Pick<
-        MessagesContextValue<At, Ch, Co, Ev, Me, Re, Us>,
-        'additionalTouchableProps' | 'CardCover' | 'CardFooter' | 'CardHeader'
-      >
+    Pick<
+      MessagesContextValue<At, Ch, Co, Ev, Me, Re, Us>,
+      'additionalTouchableProps' | 'CardCover' | 'CardFooter' | 'CardHeader'
+    >
   >;
 
 /**

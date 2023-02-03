@@ -1,21 +1,20 @@
-import React from 'react';
-import { GestureResponderEvent, Linking, Text, View } from 'react-native';
-import anchorme from 'anchorme';
-import truncate from 'lodash/truncate';
 // @ts-expect-error
 import Markdown from 'react-native-markdown-package';
+import React from 'react';
+import anchorme from 'anchorme';
+import truncate from 'lodash/truncate';
 import {
   DefaultRules,
-  defaultRules,
   MatchFunction,
   ParseFunction,
-  parseInline,
   ReactNodeOutput,
   SingleASTNode,
+  defaultRules,
+  parseInline,
 } from 'simple-markdown';
+import { GestureResponderEvent, Linking, Text, View } from 'react-native';
 
-import type { MessageType } from '../../../MessageList/hooks/useMessageList';
-
+import type { Colors, MarkdownStyle } from '../../../../contexts/themeContext/utils/theme';
 import type {
   DefaultAttachmentType,
   DefaultChannelType,
@@ -27,7 +26,7 @@ import type {
   UnknownType,
 } from '../../../../types/types';
 import type { MessageContextValue } from '../../../../contexts/messageContext/MessageContext';
-import type { Colors, MarkdownStyle } from '../../../../contexts/themeContext/utils/theme';
+import type { MessageType } from '../../../MessageList/hooks/useMessageList';
 
 const defaultMarkdownStyles: MarkdownStyle = {
   inlineCode: {
@@ -170,7 +169,7 @@ export const renderText = <
   const onLink = (url: string) =>
     onLinkParams
       ? onLinkParams(url)
-      : Linking.canOpenURL(url).then((canOpenUrl) => canOpenUrl && Linking.openURL(url));
+      : Linking.canOpenURL(url).then((canOpenUrl) => Linking.openURL(url));
 
   const react: ReactNodeOutput = (node, output, { ...state }) => {
     const onPress = (event: GestureResponderEvent) => {
@@ -207,12 +206,12 @@ export const renderText = <
 
   const mentionedUsers = Array.isArray(mentioned_users)
     ? mentioned_users.reduce((acc, cur) => {
-        const userName = cur.name || cur.id || '';
-        if (userName) {
-          acc += `${acc.length ? '|' : ''}@${userName}`;
-        }
-        return acc;
-      }, '')
+      const userName = cur.name || cur.id || '';
+      if (userName) {
+        acc += `${acc.length ? '|' : ''}@${userName}`;
+      }
+      return acc;
+    }, '')
     : '';
 
   const regEx = new RegExp(`^\\B(${mentionedUsers})`, 'g');
@@ -258,33 +257,33 @@ export const renderText = <
    * */
   const customListAtLevel =
     (level: keyof typeof listLevels): ReactNodeOutput =>
-    (node, output, { ...state }) => {
-      const items = node.items.map((item: Array<SingleASTNode>, index: number) => {
-        const withinList = item.length > 1 && item[1].type === 'list';
-        const content = output(item, { ...state, withinList });
+      (node, output, { ...state }) => {
+        const items = node.items.map((item: Array<SingleASTNode>, index: number) => {
+          const withinList = item.length > 1 && item[1].type === 'list';
+          const content = output(item, { ...state, withinList });
 
-        const isTopLevelText =
-          ['text', 'paragraph', 'strong'].includes(item[0].type) && withinList === false;
+          const isTopLevelText =
+            ['text', 'paragraph', 'strong'].includes(item[0].type) && withinList === false;
 
+          return (
+            <View key={index} style={styles.listRow}>
+              <Text style={styles.listItemNumber}>
+                {node.ordered ? `${node.start + index}. ` : `\u2022`}
+              </Text>
+              <Text style={[styles.listItemText, isTopLevelText && { marginBottom: 0 }]}>
+                {content}
+              </Text>
+            </View>
+          );
+        });
+
+        const isSublist = level === 'sub';
         return (
-          <View key={index} style={styles.listRow}>
-            <Text style={styles.listItemNumber}>
-              {node.ordered ? `${node.start + index}. ` : `\u2022`}
-            </Text>
-            <Text style={[styles.listItemText, isTopLevelText && { marginBottom: 0 }]}>
-              {content}
-            </Text>
+          <View key={state.key} style={[isSublist ? styles.list : styles.sublist]}>
+            {items}
           </View>
         );
-      });
-
-      const isSublist = level === 'sub';
-      return (
-        <View key={state.key} style={[isSublist ? styles.list : styles.sublist]}>
-          {items}
-        </View>
-      );
-    };
+      };
 
   const customRules = {
     link: { react },
@@ -294,21 +293,20 @@ export const renderText = <
     sublist: { react: customListAtLevel('sub') },
     ...(mentionedUsers
       ? {
-          mentions: {
-            match,
-            order: defaultRules.text.order - 0.5,
-            parse,
-            react: mentionsReact,
-          },
-        }
+        mentions: {
+          match,
+          order: defaultRules.text.order - 0.5,
+          parse,
+          react: mentionsReact,
+        },
+      }
       : {}),
   };
 
   return (
     <Markdown
-      key={`${JSON.stringify(mentioned_users)}-${onlyEmojis}-${
-        messageOverlay ? JSON.stringify(markdownStyles) : undefined
-      }-${JSON.stringify(colors)}`}
+      key={`${JSON.stringify(mentioned_users)}-${onlyEmojis}-${messageOverlay ? JSON.stringify(markdownStyles) : undefined
+        }-${JSON.stringify(colors)}`}
       onLink={onLink}
       rules={{
         ...customRules,

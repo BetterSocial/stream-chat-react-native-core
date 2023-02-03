@@ -1,4 +1,5 @@
 import React from 'react';
+import type { Attachment } from 'stream-chat';
 import {
   Linking,
   StyleProp,
@@ -11,6 +12,16 @@ import {
 } from 'react-native';
 
 import { AttachmentActions as AttachmentActionsDefault } from '../../components/Attachment/AttachmentActions';
+import type {
+  DefaultAttachmentType,
+  DefaultChannelType,
+  DefaultCommandType,
+  DefaultEventType,
+  DefaultMessageType,
+  DefaultReactionType,
+  DefaultUserType,
+  UnknownType,
+} from '../../types/types';
 import { FileIcon as FileIconDefault } from '../../components/Attachment/FileIcon';
 import {
   MessageContextValue,
@@ -22,19 +33,6 @@ import {
 } from '../../contexts/messagesContext/MessagesContext';
 import { useTheme } from '../../contexts/themeContext/ThemeContext';
 import { vw } from '../../utils/utils';
-
-import type { Attachment } from 'stream-chat';
-
-import type {
-  DefaultAttachmentType,
-  DefaultChannelType,
-  DefaultCommandType,
-  DefaultEventType,
-  DefaultMessageType,
-  DefaultReactionType,
-  DefaultUserType,
-  UnknownType,
-} from '../../types/types';
 
 const styles = StyleSheet.create({
   container: {
@@ -228,11 +226,12 @@ export const getFileSizeDisplayText = (size?: number | string) => {
 export const goToURL = (url?: string) => {
   if (!url) return;
   Linking.canOpenURL(url).then((supported) => {
-    if (supported) {
-      Linking.openURL(url);
-    } else {
-      console.log(`Don't know how to open URI: ${url}`);
-    }
+    // if (supported) {
+    //   Linking.openURL(url);
+    // } else {
+    //   console.log(`Don't know how to open URI: ${url}`);
+    // }
+    Linking.openURL(url);
   });
 };
 
