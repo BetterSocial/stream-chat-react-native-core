@@ -60,31 +60,34 @@ const ChannelPreviewWithContext = <
     | undefined
   >(channel.state.messages[channel.state.messages.length - 1]);
   const [forceUpdate, setForceUpdate] = useState(0);
-  const [unread, setUnread] = useState(channel.countUnread());
+  const [unread, setUnread] = useState(0);
 
   const latestMessagePreview = useLatestMessagePreview(channel, forceUpdate, lastMessage);
 
-  const channelLastMessage = channel.lastMessage();
-  const channelLastMessageString = `${channelLastMessage?.id}${channelLastMessage?.updated_at}`;
+  
 
   useEffect(() => {
     if (
-      channelLastMessage &&
-      (channelLastMessage.id !== lastMessage?.id ||
-        channelLastMessage.updated_at !== lastMessage?.updated_at)
+      channel.lastMessage &&
+      channel.lastMessage() &&
+      (channel.lastMessage().id !== lastMessage?.id ||
+        channel.lastMessage().updated_at !== lastMessage?.updated_at)
     ) {
-      setLastMessage(channelLastMessage);
+      setLastMessage(channel.lastMessage());
     }
-
-    const newUnreadCount = channel.countUnread();
+    if(channel.countUnread && typeof channel.countUnread === 'function') {
+      const newUnreadCount = channel.countUnread();
 
     if (newUnreadCount !== unread) {
       setUnread(newUnreadCount);
     }
-  }, [channelLastMessageString]);
+    } 
+    
+  }, [channel]);
 
   useEffect(() => {
-    const handleEvent = (event: Event<At, Ch, Co, Ev, Me, Re, Us>) => {
+    if(channel.on && typeof channel.on === 'function') {
+       const handleEvent = (event: Event<At, Ch, Co, Ev, Me, Re, Us>) => {
       if (event.message) {
         setLastMessage(event.message);
       }
@@ -103,10 +106,13 @@ const ChannelPreviewWithContext = <
       channel.off('message.updated', handleEvent);
       channel.off('message.deleted', handleEvent);
     };
+    }
+   
   }, []);
 
   useEffect(() => {
-    const handleReadEvent = (event: Event<At, Ch, Co, Ev, Me, Re, Us>) => {
+    if(channel.on && typeof channel.on === 'function') {
+          const handleReadEvent = (event: Event<At, Ch, Co, Ev, Me, Re, Us>) => {
       if (event.user?.id === client.userID) {
         setUnread(0);
       } else if (event.user?.id) {
@@ -116,6 +122,7 @@ const ChannelPreviewWithContext = <
 
     channel.on('message.read', handleReadEvent);
     return () => channel.off('message.read', handleReadEvent);
+    }
   }, []);
 
   return <Preview channel={channel} refreshList={refreshList} latestMessagePreview={latestMessagePreview} unread={unread} />;

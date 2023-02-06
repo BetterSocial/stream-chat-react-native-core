@@ -788,6 +788,7 @@ const ChannelWithContext = <
        * The more complex sync logic around internet connectivity (NetInfo) is part of Chat.tsx
        * listen to client.connection.recovered and all channel events
        */
+      if(client.on && typeof client.on === 'function') {
       clientSubscriptions.push(client.on('connection.recovered', connectionRecoveredHandler));
       clientSubscriptions.push(client.on('connection.changed', connectionChangedHandler));
       clientSubscriptions.push(
@@ -797,7 +798,12 @@ const ChannelWithContext = <
           }
         }),
       );
-      channelSubscriptions.push(channel.on(handleEvent));
+      if(channel.on && typeof channel.on === 'function') {
+        channelSubscriptions.push(channel.on(handleEvent));
+
+      }
+      }
+      
     };
 
     subscribe();
@@ -806,7 +812,7 @@ const ChannelWithContext = <
       clientSubscriptions.forEach((s) => s.unsubscribe());
       channelSubscriptions.forEach((s) => s.unsubscribe());
     };
-  }, [channelId, connectionRecoveredHandler, handleEvent]);
+  }, [channelId, connectionRecoveredHandler, handleEvent, channel]);
 
   const channelQueryCall = async (queryCall: () => void = () => null) => {
     setError(false);
