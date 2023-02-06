@@ -109,7 +109,7 @@ export const useCreateChannelsContext = <
                 loadingChannels,
                 loadingNextPage,
                 refreshing,
-                additionalData
+               newChannel
             ],
         );
 
