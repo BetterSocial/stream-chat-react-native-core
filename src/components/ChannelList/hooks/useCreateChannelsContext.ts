@@ -61,34 +61,17 @@ export const useCreateChannelsContext = <
                     .join()}`,
         )
         .join();
-
-    if (additionalData && additionalData.length !== 0) {
-        const channelsConcatWithData = channels.concat(additionalData).map((channel) => {
-
-            if(!channel?.data?.last_message_at) {
-                return {
-                    ...channel,
-                    data: {
-                        ...channel.data,
-                        last_message_at: channel.data.updated_at,
-                        last_message_time: new Date(channel.data.updated_at).getTime()
-                    }
-                };
-            } else {
-                return {
-                    ...channel,
-                    data: {
-                        ...channel.data,
-                        last_message_time: new Date(channel.data.last_message_at).getTime()
-                    }
-                }
-            };
-        }).sort((a, b) => b.data.last_message_time - a.data.last_message_time)
+        console.log(additionalData, 'sujika')
+        if(!additionalData) {
+            additionalData = []
+        }
+        const newChannel = [...channels, ...additionalData].sort((a, b) => new Date(b.data.last_message_at) - new Date(a.data.last_message_at))
+        
 
         const channelsContext: ChannelsContextValue<At, Ch, Co, Ev, Me, Re, Us> = useMemo(
             () => ({
                 additionalFlatListProps,
-                channels: channelsConcatWithData,
+                channels: newChannel,
                 EmptyStateIndicator,
                 error,
                 FooterLoadingIndicator,
@@ -126,55 +109,9 @@ export const useCreateChannelsContext = <
                 loadingChannels,
                 loadingNextPage,
                 refreshing,
+                additionalData
             ],
         );
 
         return channelsContext;
-    }
-
-    const channelsContext: ChannelsContextValue<At, Ch, Co, Ev, Me, Re, Us> = useMemo(
-        () => ({
-            additionalFlatListProps,
-            channels,
-            EmptyStateIndicator,
-            error,
-            FooterLoadingIndicator,
-            forceUpdate,
-            hasNextPage,
-            HeaderErrorIndicator,
-            HeaderNetworkDownIndicator,
-            ListHeaderComponent,
-            loadingChannels,
-            LoadingErrorIndicator,
-            LoadingIndicator,
-            loadingNextPage,
-            loadMoreThreshold,
-            loadNextPage,
-            maxUnreadCount,
-            numberOfSkeletons,
-            onSelect,
-            Preview,
-            PreviewAvatar,
-            PreviewMessage,
-            PreviewStatus,
-            PreviewTitle,
-            PreviewUnreadCount,
-            refreshing,
-            refreshList,
-            reloadList,
-            setFlatListRef,
-            Skeleton
-        }),
-        [
-            channelValueString,
-            error,
-            forceUpdate,
-            hasNextPage,
-            loadingChannels,
-            loadingNextPage,
-            refreshing,
-        ],
-    );
-
-    return channelsContext;
 };
