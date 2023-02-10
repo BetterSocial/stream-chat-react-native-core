@@ -20,8 +20,12 @@ export const useLocalChannelsFirst = <
     // @ts-ignore
     return async () => {
         const localStorageChannel = (await AsyncStorage.getItem('@FIRST_CHANNEL')) || '';
-        const data = JSON.parse(localStorageChannel);
 
-        get(data);
+        if (localStorageChannel === '') {
+            get([]);
+        } else {
+            const data = JSON.parse(localStorageChannel);
+            get(data);
+        }
     }
 }
