@@ -61,13 +61,12 @@ export const useCreateChannelsContext = <
                     .join()}`,
         )
         .join();
-        console.log(additionalData, 'sujika')
+
         if(!additionalData) {
             additionalData = []
         }
         const newChannel = [...channels, ...additionalData].sort((a, b) => new Date(b.data.last_message_at) - new Date(a.data.last_message_at))
-        
-
+    
         const channelsContext: ChannelsContextValue<At, Ch, Co, Ev, Me, Re, Us> = useMemo(
             () => ({
                 additionalFlatListProps,

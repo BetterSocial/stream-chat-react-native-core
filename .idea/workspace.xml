@@ -4,6 +4,8 @@
     <list default="true" id="eaba4a62-ce87-49c6-9131-b4a5831891dd" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/ChannelList/hooks/useCreateChannelsContext.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ChannelList/hooks/useCreateChannelsContext.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/ChannelList/hooks/usePaginatedChannels.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ChannelList/hooks/usePaginatedChannels.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hooks/useLocalChannelFirst.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/hooks/useLocalChannelFirst.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -110,7 +112,9 @@
       <workItem from="1674453119085" duration="1796000" />
       <workItem from="1674498598800" duration="676000" />
       <workItem from="1674651516399" duration="637000" />
-      <workItem from="1675277567150" duration="21000" />
+      <workItem from="1675277567150" duration="280000" />
+      <workItem from="1675341191361" duration="646000" />
+      <workItem from="1676023623762" duration="1092000" />
     </task>
     <servers />
   </component>
