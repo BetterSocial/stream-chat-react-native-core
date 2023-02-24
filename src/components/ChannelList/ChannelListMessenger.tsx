@@ -199,7 +199,7 @@ const ChannelListMessengerWithContext = <
   };
 
   const renderItem = ({item, index}) => {
-    if(item.type === 'messaging' || item.type === 'topics') {
+    if(item.type === 'messaging' || item.type === 'topics' || item.type === 'group') {
       return <ChannelPreview<At, Ch, Co, Ev, Me, Re, Us> key={index} refreshList={refreshList} channel={item} />
     } else {
       return PostNotifComponent ? <PostNotifComponent item={item} index={index} refreshList={refreshList} />  : <PostNotificationPreview countPostNotif={countPostNotif} showBadgePostNotif={showBadgePostNotif} onSelectAdditionalData={onSelectAdditionalData} item={item} context={context}  />
