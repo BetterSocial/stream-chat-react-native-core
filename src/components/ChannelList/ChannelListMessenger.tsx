@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 // RNGR's FlatList ist currently breaking the pull-to-refresh behaviour on Android
 // See https://github.com/software-mansion/react-native-gesture-handler/issues/598
-import { FlatList, RefreshControl, StyleSheet, View } from 'react-native';
+import {AppState, FlatList, RefreshControl, StyleSheet, View} from 'react-native';
 
 import { ChannelPreview } from '../ChannelPreview/ChannelPreview';
 
@@ -165,6 +165,10 @@ const ChannelListMessengerWithContext = <
       colors: { white_snow },
     },
   } = useTheme();
+  const [forcedRendered, setForcedRendered] = React.useState(false);
+  const appState = React.useRef(AppState.currentState);
+
+  const prevChannels = React.useRef(channels);
 
   /**
    * In order to prevent the EmptyStateIndicator component from showing up briefly on mount,
@@ -213,8 +217,31 @@ const ChannelListMessengerWithContext = <
     }, 500)
   }
 
+  const handleAppStateChange = async (nextAppState) => {
+    if (appState.current.match(/inactive|background/) && nextAppState === 'active') {
+      if(!loading) {
+        handleUpdate();
+      }
+    }
+
+    appState.current = nextAppState;
+  };
+
+
+
+
+  useEffect(() => {
+    AppState.addEventListener('change', handleAppStateChange);
+
+    return () => {
+      AppState.removeEventListener('change', handleAppStateChange);
+    }
+  }, []);
+
+
   useEffect(() => {
     if(!loading) {
+      prevChannels.current = channels[0];
       handleUpdate();
     }
   }, [channels, additionalData, loading]);
@@ -231,7 +258,7 @@ const ChannelListMessengerWithContext = <
               flatListContent,
             ]}
             data={channels}
-            extraData={forceUpdate}
+            extraData={forcedRendered}
             keyExtractor={keyExtractor}
             ListFooterComponent={loadingNextPage ? <FooterLoadingIndicator /> : undefined}
             ListHeaderComponent={ListFooterComponent}
