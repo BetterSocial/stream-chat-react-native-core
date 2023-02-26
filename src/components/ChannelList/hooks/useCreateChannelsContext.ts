@@ -53,6 +53,7 @@ export const useCreateChannelsContext = <
           Skeleton,
           additionalData
       }: ChannelsContextValue<At, Ch, Co, Ev, Me, Re, Us>) => {
+
     const channelValueString = channels
         .map(
             (channel) =>
@@ -62,55 +63,57 @@ export const useCreateChannelsContext = <
         )
         .join();
 
-        if(!additionalData) {
-            additionalData = []
-        }
-        const newChannel = [...channels, ...additionalData].sort((a, b) => new Date(b.data.last_message_at) - new Date(a.data.last_message_at))
-    
-        const channelsContext: ChannelsContextValue<At, Ch, Co, Ev, Me, Re, Us> = useMemo(
-            () => ({
-                additionalFlatListProps,
-                channels: newChannel,
-                EmptyStateIndicator,
-                error,
-                FooterLoadingIndicator,
-                forceUpdate,
-                hasNextPage,
-                HeaderErrorIndicator,
-                HeaderNetworkDownIndicator,
-                ListHeaderComponent,
-                loadingChannels,
-                LoadingErrorIndicator,
-                LoadingIndicator,
-                loadingNextPage,
-                loadMoreThreshold,
-                loadNextPage,
-                maxUnreadCount,
-                numberOfSkeletons,
-                onSelect,
-                Preview,
-                PreviewAvatar,
-                PreviewMessage,
-                PreviewStatus,
-                PreviewTitle,
-                PreviewUnreadCount,
-                refreshing,
-                refreshList,
-                reloadList,
-                setFlatListRef,
-                Skeleton
-            }),
-            [
-                channelValueString,
-                error,
-                forceUpdate,
-                hasNextPage,
-                loadingChannels,
-                loadingNextPage,
-                refreshing,
-               newChannel
-            ],
-        );
+    if(!additionalData) {
+        additionalData = []
+    }
+    const newChannel = [...channels, ...additionalData].sort((a, b) => new Date(b.data.last_message_at) - new Date(a.data.last_message_at))
 
-        return channelsContext;
+    const channelsContext: ChannelsContextValue<At, Ch, Co, Ev, Me, Re, Us> = useMemo(
+        () => ({
+            additionalFlatListProps,
+            channels: newChannel,
+            EmptyStateIndicator,
+            error,
+            FooterLoadingIndicator,
+            forceUpdate,
+            hasNextPage,
+            HeaderErrorIndicator,
+            HeaderNetworkDownIndicator,
+            ListHeaderComponent,
+            loadingChannels,
+            LoadingErrorIndicator,
+            LoadingIndicator,
+            loadingNextPage,
+            loadMoreThreshold,
+            loadNextPage,
+            maxUnreadCount,
+            numberOfSkeletons,
+            onSelect,
+            Preview,
+            PreviewAvatar,
+            PreviewMessage,
+            PreviewStatus,
+            PreviewTitle,
+            PreviewUnreadCount,
+            refreshing,
+            refreshList,
+            reloadList,
+            setFlatListRef,
+            Skeleton
+        }),
+        [
+            channelValueString,
+            error,
+            forceUpdate,
+            hasNextPage,
+            loadingChannels,
+            loadingNextPage,
+            refreshing,
+            newChannel,
+            additionalData,
+            channels
+        ],
+    );
+
+    return channelsContext;
 };
