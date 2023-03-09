@@ -88,12 +88,8 @@ export const usePaginatedChannels = <
 
     try {
       let channelQueryResponse;
-      if (localData.length !== 0 && localCheckFirst?.current === true) {
-        channelQueryResponse = await client.getLocalChannelData(localData);
-        localCheckFirst.current = false;
-      } else {
-        channelQueryResponse = await client.queryChannels(filters, sort, newOptions);
-      }
+      channelQueryResponse = await client.queryChannels(filters, sort, newOptions);
+
       if (!isMounted.current) return;
 
       channelQueryResponse.forEach((channel) => channel.state.setIsUpToDate(true));

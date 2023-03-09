@@ -166,9 +166,9 @@ const ChannelListMessengerWithContext = <
     },
   } = useTheme();
   const [forcedRendered, setForcedRendered] = React.useState(false);
-  const appState = React.useRef(AppState.currentState);
+  // const appState = React.useRef(AppState.currentState);
 
-  const prevChannels = React.useRef(channels);
+  // const prevChannels = React.useRef(channels);
 
   /**
    * In order to prevent the EmptyStateIndicator component from showing up briefly on mount,
@@ -217,31 +217,31 @@ const ChannelListMessengerWithContext = <
     }, 500)
   }
 
-  const handleAppStateChange = async (nextAppState) => {
-    if (appState.current.match(/inactive|background/) && nextAppState === 'active') {
-      if(!loading) {
-        handleUpdate();
-      }
-    }
+  // const handleAppStateChange = async (nextAppState) => {
+  //   if (appState.current.match(/inactive|background/) && nextAppState === 'active') {
+  //     if(!loading) {
+  //       handleUpdate();
+  //     }
+  //   }
 
-    appState.current = nextAppState;
-  };
-
-
+  //   appState.current = nextAppState;
+  // };
 
 
-  useEffect(() => {
-    AppState.addEventListener('change', handleAppStateChange);
 
-    return () => {
-      AppState.removeEventListener('change', handleAppStateChange);
-    }
-  }, []);
+
+  // useEffect(() => {
+  //   AppState.addEventListener('change', handleAppStateChange);
+
+  //   return () => {
+  //     AppState.removeEventListener('change', handleAppStateChange);
+  //   }
+  // }, []);
 
 
   useEffect(() => {
     if(!loading) {
-      prevChannels.current = channels[0];
+      // prevChannels.current = channels[0];
       handleUpdate();
     }
   }, [channels, additionalData, loading]);
