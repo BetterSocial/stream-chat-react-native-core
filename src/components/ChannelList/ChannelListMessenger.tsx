@@ -72,7 +72,12 @@ const StatusIndicator = <
 
   if (loadingChannels) return null;
 
-  if (!isOnline) {
+  let checkingValue = false;
+  setTimeout(() => {
+    checkingValue = !isOnline;
+  }, 3500);
+
+  if (checkingValue) {
     return (
         <View style={styles.statusIndicator}>
           <HeaderNetworkDownIndicator />
@@ -166,9 +171,9 @@ const ChannelListMessengerWithContext = <
     },
   } = useTheme();
   const [forcedRendered, setForcedRendered] = React.useState(false);
-  const appState = React.useRef(AppState.currentState);
+  // const appState = React.useRef(AppState.currentState);
 
-  const prevChannels = React.useRef(channels);
+  // const prevChannels = React.useRef(channels);
 
   /**
    * In order to prevent the EmptyStateIndicator component from showing up briefly on mount,
@@ -203,7 +208,7 @@ const ChannelListMessengerWithContext = <
   };
 
   const renderItem = ({item, index}) => {
-    if(item.type === 'messaging' || item.type === 'topics') {
+    if(item.type === 'messaging' || item.type === 'topics' || item.type === 'group') {
       return <ChannelPreview<At, Ch, Co, Ev, Me, Re, Us> key={index} refreshList={refreshList} channel={item} />
     } else {
       return PostNotifComponent ? <PostNotifComponent item={item} index={index} refreshList={refreshList} />  : <PostNotificationPreview countPostNotif={countPostNotif} showBadgePostNotif={showBadgePostNotif} onSelectAdditionalData={onSelectAdditionalData} item={item} context={context}  />
@@ -217,31 +222,31 @@ const ChannelListMessengerWithContext = <
     }, 500)
   }
 
-  const handleAppStateChange = async (nextAppState) => {
-    if (appState.current.match(/inactive|background/) && nextAppState === 'active') {
-      if(!loading) {
-        handleUpdate();
-      }
-    }
+  // const handleAppStateChange = async (nextAppState) => {
+  //   if (appState.current.match(/inactive|background/) && nextAppState === 'active') {
+  //     if(!loading) {
+  //       handleUpdate();
+  //     }
+  //   }
 
-    appState.current = nextAppState;
-  };
-
-
+  //   appState.current = nextAppState;
+  // };
 
 
-  useEffect(() => {
-    AppState.addEventListener('change', handleAppStateChange);
 
-    return () => {
-      AppState.removeEventListener('change', handleAppStateChange);
-    }
-  }, []);
+
+  // useEffect(() => {
+  //   AppState.addEventListener('change', handleAppStateChange);
+
+  //   return () => {
+  //     AppState.removeEventListener('change', handleAppStateChange);
+  //   }
+  // }, []);
 
 
   useEffect(() => {
     if(!loading) {
-      prevChannels.current = channels[0];
+      // prevChannels.current = channels[0];
       handleUpdate();
     }
   }, [channels, additionalData, loading]);

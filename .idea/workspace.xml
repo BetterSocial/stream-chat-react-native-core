@@ -1,12 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="eaba4a62-ce87-49c6-9131-b4a5831891dd" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/ChannelList/ChannelListMessenger.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ChannelList/ChannelListMessenger.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/ChannelList/hooks/useCreateChannelsContext.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ChannelList/hooks/useCreateChannelsContext.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/ChannelPreview/ChannelPreview.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ChannelPreview/ChannelPreview.tsx" afterDir="false" />
-    </list>
+    <list default="true" id="eaba4a62-ce87-49c6-9131-b4a5831891dd" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -115,7 +110,7 @@
       <workItem from="1675277567150" duration="280000" />
       <workItem from="1675341191361" duration="646000" />
       <workItem from="1676023623762" duration="1632000" />
-      <workItem from="1677414430539" duration="104000" />
+      <workItem from="1677414430539" duration="739000" />
     </task>
     <servers />
   </component>
