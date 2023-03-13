@@ -72,7 +72,12 @@ const StatusIndicator = <
 
   if (loadingChannels) return null;
 
-  if (!isOnline) {
+  let checkingValue = false;
+  setTimeout(() => {
+    checkingValue = !isOnline;
+  }, 3500);
+
+  if (checkingValue) {
     return (
         <View style={styles.statusIndicator}>
           <HeaderNetworkDownIndicator />
