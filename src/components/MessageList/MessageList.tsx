@@ -563,7 +563,6 @@ const MessageListWithContext = <
     const showUnreadUnderlay = !!isUnreadMessage(message, lastRead) && scrollToBottomButtonVisible;
     const insertInlineUnreadIndicator =
       showUnreadUnderlay && !isUnreadMessage(lastMessage, lastRead);
-
     if (message.type === 'system') {
       return (
         <>
