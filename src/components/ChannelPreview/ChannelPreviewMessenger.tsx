@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 8,
     paddingVertical: 12,
   },
-  contentContainer: { flex: 2 },
+  contentContainer: { flex: 2.5 },
   row: {
     alignItems: 'center',
     flex: 1,
@@ -182,7 +182,7 @@ const ChannelPreviewMessengerWithContext = <
   const [temporaryShowed, setTemporaryShowed] = React.useState(false);
 
   const {fetchValue, followAction} = React.useContext(FollowSystemContext);
-  const [forcedUpdate, setForcedUpdate] = React.useState({isfollowing: true, isFollowers: false});
+  const [forcedUpdate, setForcedUpdate] = React.useState({isFollowing: true, isFollowers: false});
   const isFocused = useIsFocused();
   const displayName = useChannelPreviewDisplayName(
       channel,
@@ -217,15 +217,17 @@ const ChannelPreviewMessengerWithContext = <
   }
 
   const onPressFollow = () => {
-    const targetUserIdList = Object.entries(channel.state.members);
-    const filtered = targetUserIdList.filter(([key, value]) => key !== channel?._client?._user?.id);
+    if (!temporaryShowed) {
+      const targetUserIdList = Object.entries(channel.state.members);
+      const filtered = targetUserIdList.filter(([key, value]) => key !== channel?._client?._user?.id);
 
-    const returnedOrSaved = followAction(channel?._client?._user?.id, filtered[0][0], channel?._client?._user?.name, filtered[0][1].user.name);
-    setTemporaryShowed(true);
+      const returnedOrSaved = followAction(channel?._client?._user?.id, filtered[0][0], channel?._client?._user?.name, filtered[0][1].user.name);
+      setTemporaryShowed(true);
+    }
   }
 
   const followButton = () => {
-    if (!temporaryShowed || isFollowing || (isFollowers && isFollowing)) {
+    if ((!temporaryShowed && forcedUpdate.isFollowing) || forcedUpdate.isFollowing || (forcedUpdate.isFollowers && forcedUpdate.isFollowing)) {
       return styles.columnRight;
     }
     return styles.columnRightCenter;
