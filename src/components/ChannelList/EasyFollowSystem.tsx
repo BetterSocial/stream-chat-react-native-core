@@ -17,7 +17,7 @@ const EasyFollowSystem: React.FC<EasyFollowSystemProps> = ({children, valueCallb
     const fetchValue = async (targetUserId: string) => {
         if (valueCallback) {
             const dataTemp = await valueCallback(targetUserId);
-            return{
+            return {
                 isFollowing: dataTemp?.isMeFollowingTarget || false,
                 isFollowers: dataTemp?.isTargetFollowingMe || false,
             };
