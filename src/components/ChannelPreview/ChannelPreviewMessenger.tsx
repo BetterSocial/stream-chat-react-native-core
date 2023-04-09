@@ -227,14 +227,14 @@ const ChannelPreviewMessengerWithContext = <
   }
 
   const followButton = () => {
-    if ((!temporaryShowed && forcedUpdate.isFollowing) || forcedUpdate.isFollowing || (forcedUpdate.isFollowers && forcedUpdate.isFollowing)) {
+    if (channel.type !== 'messaging' || (!temporaryShowed && forcedUpdate.isFollowing) || forcedUpdate.isFollowing || (forcedUpdate.isFollowers && forcedUpdate.isFollowing)) {
       return styles.columnRight;
     }
     return styles.columnRightCenter;
   }
 
   const FollowButtonSwitch = () => {
-    if ((!temporaryShowed && forcedUpdate.isFollowing) || forcedUpdate.isFollowing || (forcedUpdate.isFollowers && forcedUpdate.isFollowing)) {
+    if (channel.type !== 'messaging' || (!temporaryShowed && forcedUpdate.isFollowing) || forcedUpdate.isFollowing || (forcedUpdate.isFollowers && forcedUpdate.isFollowing)) {
       return (
           <>
             <PreviewStatus
