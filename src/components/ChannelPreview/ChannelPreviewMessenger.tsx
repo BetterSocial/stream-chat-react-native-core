@@ -65,20 +65,20 @@ const styles = StyleSheet.create({
   },
   columnRightCenter: {
     alignItems: 'center',
-    flex: 1,
+    flex: 1.5,
     justifyContent: 'center',
     paddingLeft: 8,
   },
   title: { fontSize: 14, fontWeight: '700' },
   followButton: {
     paddingVertical: 6,
-    paddingHorizontal: 21,
+    paddingHorizontal: 8,
     borderRadius: 8,
     backgroundColor: '#00ADB5',
   },
   followingButton: {
     paddingVertical: 6,
-    paddingHorizontal: 21,
+    paddingHorizontal: 6,
     borderRadius: 8,
     backgroundColor: '#FFFFFF',
     borderWidth: 1,
