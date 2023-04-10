@@ -32,6 +32,9 @@ import { ChannelPreviewStatus } from './ChannelPreviewStatus';
 import { ChannelPreviewUnreadCount } from './ChannelPreviewUnreadCount';
 import ButtonHighlight from 'stream-chat-react-native-core/src/components/ChannelPreview/ButtonHighlight';
 import {FollowSystem} from "stream-chat-react-native-core/src/components/ChannelList/EasyFollowSystem";
+import {
+  useChannelPreviewDisplayAvatar
+} from "stream-chat-react-native-core/src/components/ChannelPreview/hooks/useChannelPreviewDisplayAvatar";
 
 const styles = StyleSheet.create({
   container: {
@@ -64,10 +67,11 @@ const styles = StyleSheet.create({
     paddingLeft: 8,
   },
   columnRightCenter: {
-    alignItems: 'center',
+    alignItems: 'flex-end',
     flex: 1.5,
     justifyContent: 'center',
     paddingLeft: 8,
+    paddingRight: 10
   },
   title: { fontSize: 14, fontWeight: '700' },
   followButton: {
@@ -183,6 +187,7 @@ const ChannelPreviewMessengerWithContext = <
 
   const {fetchValue, followAction} = React.useContext(FollowSystemContext);
   const [forcedUpdate, setForcedUpdate] = React.useState({isFollowing: true, isFollowers: false});
+  const displayAvatar = useChannelPreviewDisplayAvatar(channel);
   const isFocused = useIsFocused();
   const displayName = useChannelPreviewDisplayName(
       channel,
@@ -227,14 +232,14 @@ const ChannelPreviewMessengerWithContext = <
   }
 
   const followButton = () => {
-    if (channel.type !== 'messaging' || (!temporaryShowed && forcedUpdate.isFollowing) || forcedUpdate.isFollowing || (forcedUpdate.isFollowers && forcedUpdate.isFollowing)) {
+    if (channel.data.member_count > 2 || channel.state.members.length <= 2 || channel.type !== 'messaging' || (!temporaryShowed && forcedUpdate.isFollowing) || forcedUpdate.isFollowing || (forcedUpdate.isFollowers && forcedUpdate.isFollowing)) {
       return styles.columnRight;
     }
     return styles.columnRightCenter;
   }
 
   const FollowButtonSwitch = () => {
-    if (channel.type !== 'messaging' || (!temporaryShowed && forcedUpdate.isFollowing) || forcedUpdate.isFollowing || (forcedUpdate.isFollowers && forcedUpdate.isFollowing)) {
+    if (channel.data.member_count > 2 || channel.type !== 'messaging' || (!temporaryShowed && forcedUpdate.isFollowing) || forcedUpdate.isFollowing || (forcedUpdate.isFollowers && forcedUpdate.isFollowing)) {
       return (
           <>
             <PreviewStatus
