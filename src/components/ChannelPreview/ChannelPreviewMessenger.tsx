@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 8,
     paddingVertical: 12,
   },
-  contentContainer: { flex: 2.5 },
+  contentContainer: { flex: 1.5 },
   row: {
     alignItems: 'center',
     flex: 1,

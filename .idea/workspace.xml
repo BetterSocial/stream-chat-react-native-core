@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="eaba4a62-ce87-49c6-9131-b4a5831891dd" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/ChannelPreview/ChannelPreviewMessenger.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ChannelPreview/ChannelPreviewMessenger.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
