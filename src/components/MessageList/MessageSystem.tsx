@@ -160,11 +160,13 @@ export const MessageSystem = <
   }
 
   const onPressFollow = () => {
-    const targetUserIdList = Object.entries(channel.state.members);
-    const filtered = targetUserIdList.filter(([key, value]) => key !== channel?._client?._user?.id);
+    if (!temporaryShowed) {
+      const targetUserIdList = Object.entries(channel.state.members);
+      const filtered = targetUserIdList.filter(([key, value]) => key !== channel?._client?._user?.id);
 
-    const returnedOrSaved = followAction(channel?._client?._user?.id, filtered[0][0], channel?._client?._user?.name, filtered[0][1].user.name);
-    setTemporaryShowed(true);
+      const returnedOrSaved = followAction(channel?._client?._user?.id, filtered[0][0], channel?._client?._user?.name, filtered[0][1].user.name);
+      setTemporaryShowed(true);
+    }
   }
 
   return (
@@ -174,7 +176,7 @@ export const MessageSystem = <
         <Text style={[styles.text, { color: grey }, text]}>
           {message.text?.toUpperCase() || ''}
         </Text>
-        {temporaryShowed || !data.isFollowing ? (
+        {channel.type === 'messaging' && (temporaryShowed || !data.isFollowing) ? (
             <TouchableOpacity onPress={onPressFollow} style={temporaryShowed ? styles.followingButton : styles.followButton}>
           <Text style={temporaryShowed ? styles.followingText : styles.followText}>
             {followOrFollowingText()}
