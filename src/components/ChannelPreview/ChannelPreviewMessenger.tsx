@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 8,
     paddingVertical: 12,
   },
-  contentContainer: { flex: 1.5 },
+  contentContainer: { flex: 3 },
   row: {
     alignItems: 'center',
     flex: 1,
@@ -261,7 +261,7 @@ const ChannelPreviewMessengerWithContext = <
           </TouchableOpacity>
         </>
     )}
-
+      console.log(channel, 'boba')
   return (
       <ButtonHighlight
           onPress={() => {
