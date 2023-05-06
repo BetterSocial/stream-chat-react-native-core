@@ -66,7 +66,7 @@ export const useCreateChannelsContext = <
     if(!additionalData) {
         additionalData = []
     }
-    let newChannel = [...channels, ...additionalData].sort((a, b) => new Date(b.data?.updated_at).getTime() - new Date(a.data?.updated_at).getTime())
+    let newChannel = [...channels, ...additionalData].sort((a, b) => b.data?.last_message_at ? new Date(b.data?.last_message_at).getTime() - new Date(a.data?.last_message_at).getTime() : new Date(b.data?.updated_at).getTime() - new Date(a.data?.updated_at).getTime())
     const channelsContext: ChannelsContextValue<At, Ch, Co, Ev, Me, Re, Us> = useMemo(
         () => ({
             additionalFlatListProps,
