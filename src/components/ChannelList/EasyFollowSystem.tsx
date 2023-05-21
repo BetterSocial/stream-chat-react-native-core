@@ -13,7 +13,13 @@ export const FollowSystemContext = React.createContext({
     followAction: () => {}
 });
 
+export const LoadingFollowSystemContext = React.createContext({
+    loading: true,
+    setLoading: () => {}
+});
+
 const EasyFollowSystem: React.FC<EasyFollowSystemProps> = ({children, valueCallback, followButtonAction}) => {
+    const [loading, setLoading] = React.useState(true);
     const fetchValue = async (targetUserId: string) => {
         if (valueCallback) {
             const dataTemp = await valueCallback(targetUserId);
@@ -26,7 +32,9 @@ const EasyFollowSystem: React.FC<EasyFollowSystemProps> = ({children, valueCallb
 
     return (
         <FollowSystemContext.Provider value={{ fetchValue, followAction: followButtonAction}}>
-            {children}
+            <LoadingFollowSystemContext.Provider value ={{loading, setLoading}}>
+                {children}
+            </LoadingFollowSystemContext.Provider>
         </FollowSystemContext.Provider>
     )
 }
