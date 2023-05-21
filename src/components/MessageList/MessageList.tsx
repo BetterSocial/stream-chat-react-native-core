@@ -63,6 +63,11 @@ import type {
   DefaultUserType,
   UnknownType,
 } from '../../types/types';
+import EasyFollowSystem, {
+  FollowSystemContext,
+  LoadingFollowSystemContext
+} from 'stream-chat-react-native-core/src/components/ChannelList/EasyFollowSystem';
+import {useIsFocused} from '@react-navigation/native';
 
 const styles = StyleSheet.create({
   container: {
@@ -96,140 +101,140 @@ const styles = StyleSheet.create({
 });
 
 const keyExtractor = <
-  At extends UnknownType = DefaultAttachmentType,
-  Ch extends UnknownType = DefaultChannelType,
-  Co extends string = DefaultCommandType,
-  Ev extends UnknownType = DefaultEventType,
-  Me extends UnknownType = DefaultMessageType,
-  Re extends UnknownType = DefaultReactionType,
-  Us extends UnknownType = DefaultUserType,
+    At extends UnknownType = DefaultAttachmentType,
+    Ch extends UnknownType = DefaultChannelType,
+    Co extends string = DefaultCommandType,
+    Ev extends UnknownType = DefaultEventType,
+    Me extends UnknownType = DefaultMessageType,
+    Re extends UnknownType = DefaultReactionType,
+    Us extends UnknownType = DefaultUserType,
 >(
-  item: MessageType<At, Ch, Co, Ev, Me, Re, Us>,
+    item: MessageType<At, Ch, Co, Ev, Me, Re, Us>,
 ) =>
-  item.id ||
-  (item.created_at
-    ? typeof item.created_at === 'string'
-      ? item.created_at
-      : item.created_at.toISOString()
-    : Date.now().toString());
+    item.id ||
+    (item.created_at
+        ? typeof item.created_at === 'string'
+            ? item.created_at
+            : item.created_at.toISOString()
+        : Date.now().toString());
 
 const flatListViewabilityConfig = {
   viewAreaCoveragePercentThreshold: 1,
 };
 type MessageListPropsWithContext<
-  At extends UnknownType = DefaultAttachmentType,
-  Ch extends UnknownType = DefaultChannelType,
-  Co extends string = DefaultCommandType,
-  Ev extends UnknownType = DefaultEventType,
-  Me extends UnknownType = DefaultMessageType,
-  Re extends UnknownType = DefaultReactionType,
-  Us extends UnknownType = DefaultUserType,
+    At extends UnknownType = DefaultAttachmentType,
+    Ch extends UnknownType = DefaultChannelType,
+    Co extends string = DefaultCommandType,
+    Ev extends UnknownType = DefaultEventType,
+    Me extends UnknownType = DefaultMessageType,
+    Re extends UnknownType = DefaultReactionType,
+    Us extends UnknownType = DefaultUserType,
 > = Pick<AttachmentPickerContextValue, 'closePicker' | 'selectedPicker' | 'setSelectedPicker'> &
-  Pick<
-    ChannelContextValue<At, Ch, Co, Ev, Me, Re, Us>,
-    | 'channel'
-    | 'disabled'
-    | 'EmptyStateIndicator'
-    | 'hideStickyDateHeader'
-    | 'loadChannelAtMessage'
-    | 'loading'
-    | 'LoadingIndicator'
-    | 'markRead'
-    | 'NetworkDownIndicator'
-    | 'reloadChannel'
-    | 'scrollToFirstUnreadThreshold'
-    | 'setTargetedMessage'
-    | 'StickyHeader'
-    | 'targetedMessage'
-    | 'typingEventsEnabled'
-  > &
-  Pick<ChatContextValue<At, Ch, Co, Ev, Me, Re, Us>, 'client'> &
-  Pick<ImageGalleryContextValue<At, Ch, Co, Ev, Me, Re, Us>, 'setImages'> &
-  Pick<
-    PaginatedMessageListContextValue<At, Ch, Co, Ev, Me, Re, Us>,
-    'loadMore' | 'loadMoreRecent'
-  > &
-  Pick<OverlayContextValue, 'overlay'> &
-  Pick<
-    MessagesContextValue<At, Ch, Co, Ev, Me, Re, Us>,
-    | 'DateHeader'
-    | 'disableTypingIndicator'
-    | 'FlatList'
-    | 'initialScrollToFirstUnreadMessage'
-    | 'InlineDateSeparator'
-    | 'InlineUnreadIndicator'
-    | 'legacyImageViewerSwipeBehaviour'
-    | 'Message'
-    | 'ScrollToBottomButton'
-    | 'MessageSystem'
-    | 'myMessageTheme'
-    | 'TypingIndicator'
-    | 'TypingIndicatorContainer'
-  > &
-  Pick<ThreadContextValue<At, Ch, Co, Ev, Me, Re, Us>, 'loadMoreThread' | 'thread'> &
-  Pick<TranslationContextValue, 't' | 'tDateTimeParser'> & {
-    /**
-     * Besides existing (default) UX behavior of underlying FlatList of MessageList component, if you want
-     * to attach some additional props to underlying FlatList, you can add it to following prop.
-     *
-     * You can find list of all the available FlatList props here - https://facebook.github.io/react-native/docs/flatlist#props
-     *
-     * **NOTE** Don't use `additionalFlatListProps` to get access to ref of flatlist. Use `setFlatListRef` instead.
-     *
-     * e.g.
-     * ```js
-     * <MessageList
-     *  additionalFlatListProps={{ bounces: true, keyboardDismissMode: true }} />
-     * ```
-     */
-    additionalFlatListProps?: Partial<FlatListProps<MessageType<At, Ch, Co, Ev, Me, Re, Us>>>;
-    /**
-     * UI component for footer of message list. By default message list will use `InlineLoadingMoreIndicator`
-     * as FooterComponent. If you want to implement your own inline loading indicator, you can access `loadingMore`
-     * from context.
-     *
-     * This is a [ListHeaderComponent](https://facebook.github.io/react-native/docs/flatlist#listheadercomponent) of FlatList
-     * used in MessageList. Should be used for header by default if inverted is true or defaulted
-     */
-    FooterComponent?: React.ComponentType;
-    /**
-     * UI component for header of message list. By default message list will use `InlineLoadingMoreRecentIndicator`
-     * as HeaderComponent. If you want to implement your own inline loading indicator, you can access `loadingMoreRecent`
-     * from context.
-     *
-     * This is a [ListFooterComponent](https://facebook.github.io/react-native/docs/flatlist#listheadercomponent) of FlatList
-     * used in MessageList. Should be used for header if inverted is false
-     */
-    HeaderComponent?: React.ComponentType;
-    /** Whether or not the FlatList is inverted. Defaults to true */
-    inverted?: boolean;
-    /** Turn off grouping of messages by user */
-    noGroupByUser?: boolean;
-    onListScroll?: ScrollViewProps['onScroll'];
-    /**
-     * Handler to open the thread on message. This is callback for touch event for replies button.
-     *
-     * @param message A message object to open the thread upon.
-     */
-    onThreadSelect?: (message: ThreadContextValue<At, Ch, Co, Ev, Me, Re, Us>['thread']) => void;
-    /**
-     * Use `setFlatListRef` to get access to ref to inner FlatList.
-     *
-     * e.g.
-     * ```js
-     * <MessageList
-     *  setFlatListRef={(ref) => {
-     *    // Use ref for your own good
-     *  }}
-     * ```
-     */
-    setFlatListRef?: (ref: FlatListType<MessageType<At, Ch, Co, Ev, Me, Re, Us>> | null) => void;
-    /**
-     * Boolean whether or not the Messages in the MessageList are part of a Thread
-     **/
-    threadList?: boolean;
-    myMessage?: (messageList) => void;
-  };
+    Pick<
+        ChannelContextValue<At, Ch, Co, Ev, Me, Re, Us>,
+        | 'channel'
+        | 'disabled'
+        | 'EmptyStateIndicator'
+        | 'hideStickyDateHeader'
+        | 'loadChannelAtMessage'
+        | 'loading'
+        | 'LoadingIndicator'
+        | 'markRead'
+        | 'NetworkDownIndicator'
+        | 'reloadChannel'
+        | 'scrollToFirstUnreadThreshold'
+        | 'setTargetedMessage'
+        | 'StickyHeader'
+        | 'targetedMessage'
+        | 'typingEventsEnabled'
+    > &
+    Pick<ChatContextValue<At, Ch, Co, Ev, Me, Re, Us>, 'client'> &
+    Pick<ImageGalleryContextValue<At, Ch, Co, Ev, Me, Re, Us>, 'setImages'> &
+    Pick<
+        PaginatedMessageListContextValue<At, Ch, Co, Ev, Me, Re, Us>,
+        'loadMore' | 'loadMoreRecent'
+    > &
+    Pick<OverlayContextValue, 'overlay'> &
+    Pick<
+        MessagesContextValue<At, Ch, Co, Ev, Me, Re, Us>,
+        | 'DateHeader'
+        | 'disableTypingIndicator'
+        | 'FlatList'
+        | 'initialScrollToFirstUnreadMessage'
+        | 'InlineDateSeparator'
+        | 'InlineUnreadIndicator'
+        | 'legacyImageViewerSwipeBehaviour'
+        | 'Message'
+        | 'ScrollToBottomButton'
+        | 'MessageSystem'
+        | 'myMessageTheme'
+        | 'TypingIndicator'
+        | 'TypingIndicatorContainer'
+    > &
+    Pick<ThreadContextValue<At, Ch, Co, Ev, Me, Re, Us>, 'loadMoreThread' | 'thread'> &
+    Pick<TranslationContextValue, 't' | 'tDateTimeParser'> & {
+  /**
+   * Besides existing (default) UX behavior of underlying FlatList of MessageList component, if you want
+   * to attach some additional props to underlying FlatList, you can add it to following prop.
+   *
+   * You can find list of all the available FlatList props here - https://facebook.github.io/react-native/docs/flatlist#props
+   *
+   * **NOTE** Don't use `additionalFlatListProps` to get access to ref of flatlist. Use `setFlatListRef` instead.
+   *
+   * e.g.
+   * ```js
+   * <MessageList
+   *  additionalFlatListProps={{ bounces: true, keyboardDismissMode: true }} />
+   * ```
+   */
+  additionalFlatListProps?: Partial<FlatListProps<MessageType<At, Ch, Co, Ev, Me, Re, Us>>>;
+  /**
+   * UI component for footer of message list. By default message list will use `InlineLoadingMoreIndicator`
+   * as FooterComponent. If you want to implement your own inline loading indicator, you can access `loadingMore`
+   * from context.
+   *
+   * This is a [ListHeaderComponent](https://facebook.github.io/react-native/docs/flatlist#listheadercomponent) of FlatList
+   * used in MessageList. Should be used for header by default if inverted is true or defaulted
+   */
+  FooterComponent?: React.ComponentType;
+  /**
+   * UI component for header of message list. By default message list will use `InlineLoadingMoreRecentIndicator`
+   * as HeaderComponent. If you want to implement your own inline loading indicator, you can access `loadingMoreRecent`
+   * from context.
+   *
+   * This is a [ListFooterComponent](https://facebook.github.io/react-native/docs/flatlist#listheadercomponent) of FlatList
+   * used in MessageList. Should be used for header if inverted is false
+   */
+  HeaderComponent?: React.ComponentType;
+  /** Whether or not the FlatList is inverted. Defaults to true */
+  inverted?: boolean;
+  /** Turn off grouping of messages by user */
+  noGroupByUser?: boolean;
+  onListScroll?: ScrollViewProps['onScroll'];
+  /**
+   * Handler to open the thread on message. This is callback for touch event for replies button.
+   *
+   * @param message A message object to open the thread upon.
+   */
+  onThreadSelect?: (message: ThreadContextValue<At, Ch, Co, Ev, Me, Re, Us>['thread']) => void;
+  /**
+   * Use `setFlatListRef` to get access to ref to inner FlatList.
+   *
+   * e.g.
+   * ```js
+   * <MessageList
+   *  setFlatListRef={(ref) => {
+   *    // Use ref for your own good
+   *  }}
+   * ```
+   */
+  setFlatListRef?: (ref: FlatListType<MessageType<At, Ch, Co, Ev, Me, Re, Us>> | null) => void;
+  /**
+   * Boolean whether or not the Messages in the MessageList are part of a Thread
+   **/
+  threadList?: boolean;
+  myMessage?: (messageList) => void;
+};
 
 /**
  * The message list component renders a list of messages. It consumes the following contexts:
@@ -241,19 +246,19 @@ type MessageListPropsWithContext<
  * [TranslationContext](https://getstream.github.io/stream-chat-react-native/v3/#translationcontext)
  */
 const MessageListWithContext = <
-  At extends UnknownType = DefaultAttachmentType,
-  Ch extends UnknownType = DefaultChannelType,
-  Co extends string = DefaultCommandType,
-  Ev extends UnknownType = DefaultEventType,
-  Me extends UnknownType = DefaultMessageType,
-  Re extends UnknownType = DefaultReactionType,
-  Us extends UnknownType = DefaultUserType,
+    At extends UnknownType = DefaultAttachmentType,
+    Ch extends UnknownType = DefaultChannelType,
+    Co extends string = DefaultCommandType,
+    Ev extends UnknownType = DefaultEventType,
+    Me extends UnknownType = DefaultMessageType,
+    Re extends UnknownType = DefaultReactionType,
+    Us extends UnknownType = DefaultUserType,
 >(
-  props: MessageListPropsWithContext<At, Ch, Co, Ev, Me, Re, Us>,
+    props: MessageListPropsWithContext<At, Ch, Co, Ev, Me, Re, Us>,
 ) => {
   const LoadingMoreIndicator = props.threadList
-    ? InlineLoadingMoreThreadIndicator
-    : InlineLoadingMoreIndicator;
+      ? InlineLoadingMoreThreadIndicator
+      : InlineLoadingMoreIndicator;
   const {
     additionalFlatListProps,
     channel,
@@ -314,8 +319,8 @@ const MessageListWithContext = <
   } = theme;
 
   const modifiedTheme = useMemo(
-    () => mergeThemes({ style: myMessageTheme, theme }),
-    [myMessageTheme, theme],
+      () => mergeThemes({ style: myMessageTheme, theme }),
+      [myMessageTheme, theme],
   );
 
   const messageList = useMessageList<At, Ch, Co, Ev, Me, Re, Us>({
@@ -323,6 +328,7 @@ const MessageListWithContext = <
     noGroupByUser,
     threadList,
   });
+  const {loading: loadingFollowSystem, setLoading: setLoadingFollow} = React.useContext(LoadingFollowSystemContext);
   const messageListLengthBeforeUpdate = useRef(0);
   const messageListLengthAfterUpdate = messageList.length;
 
@@ -356,6 +362,10 @@ const MessageListWithContext = <
 
   const [stickyHeaderDate, setStickyHeaderDate] = useState<Date | undefined>();
   const stickyHeaderDateRef = useRef<Date | undefined>();
+  const isFocused = useIsFocused();
+  const {fetchValue, followAction} = React.useContext(FollowSystemContext);
+  const [ temporaryShowed, setTemporaryShowed] = React.useState(false);
+  const [data, setData] = React.useState({isFollowing: false, isFollowers: false});
   /**
    * channel.lastRead throws error if the channel is not initialized.
    */
@@ -364,8 +374,8 @@ const MessageListWithContext = <
   const channelLastRead = useRef(getLastReadSafely());
 
   const isUnreadMessage = (
-    message: MessageType<At, Ch, Co, Ev, Me, Re, Us> | undefined,
-    lastRead?: ReturnType<StreamChannel<At, Ch, Co, Ev, Me, Re, Us>['lastRead']>,
+      message: MessageType<At, Ch, Co, Ev, Me, Re, Us> | undefined,
+      lastRead?: ReturnType<StreamChannel<At, Ch, Co, Ev, Me, Re, Us>['lastRead']>,
   ) => message && lastRead && message.created_at && lastRead < message.created_at;
 
   /**
@@ -398,10 +408,10 @@ const MessageListWithContext = <
       };
 
       if (
-        lastItem?.item?.created_at &&
-        !lastItem.item.deleted_at &&
-        typeof lastItem.item.created_at !== 'string' &&
-        lastItem.item.created_at.toDateString() !== stickyHeaderDateRef.current?.toDateString()
+          lastItem?.item?.created_at &&
+          !lastItem.item.deleted_at &&
+          typeof lastItem.item.created_at !== 'string' &&
+          lastItem.item.created_at.toDateString() !== stickyHeaderDateRef.current?.toDateString()
       ) {
         stickyHeaderDateRef.current = lastItem.item.created_at;
         setStickyHeaderDate(lastItem.item.created_at);
@@ -414,18 +424,30 @@ const MessageListWithContext = <
    * Thus useRef.
    */
   const onViewableItemsChanged = useRef(
-    ({ viewableItems }: { viewableItems: ViewToken[] | undefined }) => {
-      if (viewableItems && !hideStickyDateHeader) {
-        updateStickyHeaderDateIfNeeded(viewableItems);
-      }
-      setInitialScrollIfNeeded();
-    },
+      ({ viewableItems }: { viewableItems: ViewToken[] | undefined }) => {
+        if (viewableItems && !hideStickyDateHeader) {
+          updateStickyHeaderDateIfNeeded(viewableItems);
+        }
+        setInitialScrollIfNeeded();
+      },
   );
 
   const resetPaginationTrackers = () => {
     onStartReachedTracker.current = {};
     onEndReachedTracker.current = {};
   };
+
+  React.useEffect(async () => {
+    if (channel?.state?.members) {
+      const targetUserIdList = Object.entries(channel.state.members);
+      const filtered = targetUserIdList.filter(([key, value]) => key !== channel?._client?._user?.id);
+
+      const data = await fetchValue(filtered[0][0]);
+      setData({...data});
+      setTemporaryShowed(false);
+      setLoadingFollow(false);
+    }
+  }, [isFocused]);
 
   useEffect(() => {
     setScrollToBottomButtonVisible(false);
@@ -445,11 +467,11 @@ const MessageListWithContext = <
      *    won't need to scroll up. So we can safely mark the channel as read right after opening.
      */
     const shouldMarkReadOnFirstLoad =
-      !loading &&
-      channel &&
-      ((!initialScrollToFirstUnreadMessage && channel.countUnread() > 0) ||
-        (initialScrollToFirstUnreadMessage &&
-          channel.countUnread() <= scrollToFirstUnreadThreshold));
+        !loading &&
+        channel &&
+        ((!initialScrollToFirstUnreadMessage && channel.countUnread() > 0) ||
+            (initialScrollToFirstUnreadMessage &&
+                channel.countUnread() <= scrollToFirstUnreadThreshold));
 
     if (shouldMarkReadOnFirstLoad) {
       markRead();
@@ -476,22 +498,22 @@ const MessageListWithContext = <
       }
 
       if (
-        (hasNewMessage && isMyMessage) ||
-        messageListLengthAfterUpdate < messageListLengthBeforeUpdate.current ||
-        (topMessageBeforeUpdate.current?.created_at &&
-          topMessageAfterUpdate?.created_at &&
-          topMessageBeforeUpdate.current.created_at < topMessageAfterUpdate.created_at)
+          (hasNewMessage && isMyMessage) ||
+          messageListLengthAfterUpdate < messageListLengthBeforeUpdate.current ||
+          (topMessageBeforeUpdate.current?.created_at &&
+              topMessageAfterUpdate?.created_at &&
+              topMessageBeforeUpdate.current.created_at < topMessageAfterUpdate.created_at)
       ) {
         channelResyncScrollSet.current = false;
         setScrollToBottomButtonVisible(false);
         resetPaginationTrackers();
 
         setTimeout(
-          () =>
-            flatListRef.current?.scrollToOffset({
-              offset: 0,
-            }),
-          50,
+            () =>
+                flatListRef.current?.scrollToOffset({
+                  offset: 0,
+                }),
+            50,
         );
         setTimeout(() => {
           channelResyncScrollSet.current = true;
@@ -509,10 +531,10 @@ const MessageListWithContext = <
     }
 
     if (
-      !channel?.state.isUpToDate &&
-      flatListRef.current &&
-      messageListLengthBeforeUpdate.current === 0 &&
-      messageListLengthAfterUpdate < 10
+        !channel?.state.isUpToDate &&
+        flatListRef.current &&
+        messageListLengthBeforeUpdate.current === 0 &&
+        messageListLengthAfterUpdate < 10
     ) {
       /**
        * Trigger onStartReached on first load, if messages are not enough to fill the screen.
@@ -547,10 +569,17 @@ const MessageListWithContext = <
     }
   }, [messageList])
 
+  React.useEffect( () => {
+    return () => {
+      setTemporaryShowed(false);
+      setLoadingFollow(true);
+    }
+  }, [])
+
   const renderItem = ({
-    index,
-    item: message,
-  }: {
+                        index,
+                        item: message,
+                      }: {
     index: number;
     item: MessageType<At, Ch, Co, Ev, Me, Re, Us>;
   }) => {
@@ -562,63 +591,63 @@ const MessageListWithContext = <
 
     const showUnreadUnderlay = !!isUnreadMessage(message, lastRead) && scrollToBottomButtonVisible;
     const insertInlineUnreadIndicator =
-      showUnreadUnderlay && !isUnreadMessage(lastMessage, lastRead);
+        showUnreadUnderlay && !isUnreadMessage(lastMessage, lastRead);
     if (message.type === 'system' || message.isRemoveMember) {
       return (
-        <>
-          <MessageSystem channel={channel} message={message} style={styles.messagePadding} />
-          {insertInlineUnreadIndicator && <InlineUnreadIndicator />}
-        </>
+          <>
+            <MessageSystem channel={channel} message={message} style={styles.messagePadding} data={data} temporaryShowed={temporaryShowed} setTemporaryShowed={setTemporaryShowed} />
+            {insertInlineUnreadIndicator && <InlineUnreadIndicator />}
+          </>
       );
     }
 
     const wrapMessageInTheme = client.userID === message.user?.id && !!myMessageTheme;
     return wrapMessageInTheme ? (
-      <>
-        <ThemeProvider mergedStyle={modifiedTheme}>
-          <Message
-            goToMessage={goToMessage}
-            groupStyles={
-              isMessageWithStylesReadByAndDateSeparator(message) ? message.groupStyles : []
-            }
-            lastReceivedId={lastReceivedId === message.id ? lastReceivedId : undefined}
-            message={message}
-            onThreadSelect={onThreadSelect}
-            showUnreadUnderlay={showUnreadUnderlay}
-            style={styles.messagePadding}
-            targetedMessage={targetedMessage === message.id}
-            threadList={threadList}
-          />
-        </ThemeProvider>
-        {isMessageWithStylesReadByAndDateSeparator(message) && message.dateSeparator && (
-          <InlineDateSeparator date={message.dateSeparator} />
-        )}
-        {/* Adding indicator below the messages, since the list is inverted */}
-        {insertInlineUnreadIndicator && <InlineUnreadIndicator />}
-      </>
+        <>
+          <ThemeProvider mergedStyle={modifiedTheme}>
+            <Message
+                goToMessage={goToMessage}
+                groupStyles={
+                  isMessageWithStylesReadByAndDateSeparator(message) ? message.groupStyles : []
+                }
+                lastReceivedId={lastReceivedId === message.id ? lastReceivedId : undefined}
+                message={message}
+                onThreadSelect={onThreadSelect}
+                showUnreadUnderlay={showUnreadUnderlay}
+                style={styles.messagePadding}
+                targetedMessage={targetedMessage === message.id}
+                threadList={threadList}
+            />
+          </ThemeProvider>
+          {isMessageWithStylesReadByAndDateSeparator(message) && message.dateSeparator && (
+              <InlineDateSeparator date={message.dateSeparator} />
+          )}
+          {/* Adding indicator below the messages, since the list is inverted */}
+          {insertInlineUnreadIndicator && <InlineUnreadIndicator />}
+        </>
     ) : (
-      <>
-        <Message
-          goToMessage={goToMessage}
-          groupStyles={
-            isMessageWithStylesReadByAndDateSeparator(message) ? message.groupStyles : []
-          }
-          lastReceivedId={
-            lastReceivedId === message.id || message.quoted_message_id ? lastReceivedId : undefined
-          }
-          message={message}
-          onThreadSelect={onThreadSelect}
-          showUnreadUnderlay={showUnreadUnderlay}
-          style={styles.messagePadding}
-          targetedMessage={targetedMessage === message.id}
-          threadList={threadList}
-        />
-        {isMessageWithStylesReadByAndDateSeparator(message) && message.dateSeparator && (
-          <InlineDateSeparator date={message.dateSeparator} />
-        )}
-        {/* Adding indicator below the messages, since the list is inverted */}
-        {insertInlineUnreadIndicator && <InlineUnreadIndicator />}
-      </>
+        <>
+          <Message
+              goToMessage={goToMessage}
+              groupStyles={
+                isMessageWithStylesReadByAndDateSeparator(message) ? message.groupStyles : []
+              }
+              lastReceivedId={
+                lastReceivedId === message.id || message.quoted_message_id ? lastReceivedId : undefined
+              }
+              message={message}
+              onThreadSelect={onThreadSelect}
+              showUnreadUnderlay={showUnreadUnderlay}
+              style={styles.messagePadding}
+              targetedMessage={targetedMessage === message.id}
+              threadList={threadList}
+          />
+          {isMessageWithStylesReadByAndDateSeparator(message) && message.dateSeparator && (
+              <InlineDateSeparator date={message.dateSeparator} />
+          )}
+          {/* Adding indicator below the messages, since the list is inverted */}
+          {insertInlineUnreadIndicator && <InlineUnreadIndicator />}
+        </>
     );
   };
 
@@ -709,13 +738,13 @@ const MessageListWithContext = <
     if (onStartReachedInPromise.current) {
       onStartReachedInPromise.current.finally(() => {
         onEndReachedInPromise.current = (threadList ? loadMoreThread() : loadMore())
-          .then(callback)
-          .catch(onError);
+            .then(callback)
+            .catch(onError);
       });
     } else {
       onEndReachedInPromise.current = (threadList ? loadMoreThread() : loadMore())
-        .then(callback)
-        .catch(onError);
+          .then(callback)
+          .catch(onError);
     }
   };
 
@@ -751,7 +780,7 @@ const MessageListWithContext = <
     const showScrollToBottomButton = !isScrollAtBottom || !channel?.state.isUpToDate;
 
     const shouldMarkRead =
-      !threadList && offset <= 0 && channel?.state.isUpToDate && channel.countUnread() > 0;
+        !threadList && offset <= 0 && channel?.state.isUpToDate && channel.countUnread() > 0;
 
     if (shouldMarkRead) {
       markRead();
@@ -786,65 +815,65 @@ const MessageListWithContext = <
   };
 
   const goToMessage = useCallback(
-    (messageId: string) => {
-      const indexOfParentInMessageList = messageList.findIndex(
-        (message) => message?.id === messageId,
-      );
+      (messageId: string) => {
+        const indexOfParentInMessageList = messageList.findIndex(
+            (message) => message?.id === messageId,
+        );
 
-      if (indexOfParentInMessageList > -1) {
-        try {
-          if (flatListRef.current) {
-            flatListRef.current.scrollToIndex({
-              index: indexOfParentInMessageList,
-              viewPosition: 0.5,
-            });
-            setTargetedMessage(messageId);
+        if (indexOfParentInMessageList > -1) {
+          try {
+            if (flatListRef.current) {
+              flatListRef.current.scrollToIndex({
+                index: indexOfParentInMessageList,
+                viewPosition: 0.5,
+              });
+              setTargetedMessage(messageId);
 
-            return;
+              return;
+            }
+          } catch (_) {
+            // do nothing;
           }
-        } catch (_) {
-          // do nothing;
         }
-      }
 
-      loadChannelAtMessage({ messageId });
-      resetPaginationTrackers();
-    },
-    [messageListLengthAfterUpdate],
+        loadChannelAtMessage({ messageId });
+        resetPaginationTrackers();
+      },
+      [messageListLengthAfterUpdate],
   );
 
   const messagesWithImages =
-    legacyImageViewerSwipeBehaviour &&
-    messageList.filter((message) => {
-      if (!message.deleted_at && message.attachments) {
-        return message.attachments.some(
-          (attachment) =>
-            attachment.type === 'image' &&
-            !attachment.title_link &&
-            !attachment.og_scrape_url &&
-            (attachment.image_url || attachment.thumb_url),
-        );
-      }
-      return false;
-    });
+      legacyImageViewerSwipeBehaviour &&
+      messageList.filter((message) => {
+        if (!message.deleted_at && message.attachments) {
+          return message.attachments.some(
+              (attachment) =>
+                  attachment.type === 'image' &&
+                  !attachment.title_link &&
+                  !attachment.og_scrape_url &&
+                  (attachment.image_url || attachment.thumb_url),
+          );
+        }
+        return false;
+      });
 
   /**
    * This is for the useEffect to run again in the case that a message
    * gets edited with more or the same number of images
    */
   const imageString =
-    legacyImageViewerSwipeBehaviour &&
-    messagesWithImages &&
-    messagesWithImages
-      .map((message) =>
-        message.attachments
-          ?.map((attachment) => attachment.image_url || attachment.thumb_url || '')
-          .join(),
-      )
-      .join();
+      legacyImageViewerSwipeBehaviour &&
+      messagesWithImages &&
+      messagesWithImages
+          .map((message) =>
+              message.attachments
+                  ?.map((attachment) => attachment.image_url || attachment.thumb_url || '')
+                  .join(),
+          )
+          .join();
 
   const numberOfMessagesWithImages =
-    legacyImageViewerSwipeBehaviour && messagesWithImages && messagesWithImages.length;
+      legacyImageViewerSwipeBehaviour && messagesWithImages && messagesWithImages.length;
   const threadExists = !!thread;
 
   useEffect(() => {
@@ -860,15 +889,15 @@ const MessageListWithContext = <
   ]);
 
   const stickyHeaderFormatDate =
-    stickyHeaderDate?.getFullYear() === new Date().getFullYear() ? 'MMM D' : 'MMM D, YYYY';
+      stickyHeaderDate?.getFullYear() === new Date().getFullYear() ? 'MMM D' : 'MMM D, YYYY';
   const tStickyHeaderDate =
-    stickyHeaderDate && !hideStickyDateHeader ? tDateTimeParser(stickyHeaderDate) : null;
+      stickyHeaderDate && !hideStickyDateHeader ? tDateTimeParser(stickyHeaderDate) : null;
   const stickyHeaderDateToRender =
-    tStickyHeaderDate === null || hideStickyDateHeader
-      ? null
-      : isDayOrMoment(tStickyHeaderDate)
-      ? tStickyHeaderDate.format(stickyHeaderFormatDate)
-      : new Date(tStickyHeaderDate).toDateString();
+      tStickyHeaderDate === null || hideStickyDateHeader
+          ? null
+          : isDayOrMoment(tStickyHeaderDate)
+              ? tStickyHeaderDate.format(stickyHeaderFormatDate)
+              : new Date(tStickyHeaderDate).toDateString();
 
   const dismissImagePicker = () => {
     if (!hasMoved && selectedPicker) {
@@ -887,97 +916,97 @@ const MessageListWithContext = <
     }
   };
   const renderListEmptyComponent = () => (
-    <View style={[styles.flex, styles.invert]} testID='empty-state'>
-      <EmptyStateIndicator listType='message' />
-    </View>
+      <View style={[styles.flex, styles.invert]} testID='empty-state'>
+        <EmptyStateIndicator listType='message' />
+      </View>
   );
 
   if (!FlatList) return null;
 
-  if (loading) {
+  if (loading || loadingFollowSystem) {
     return (
-      <View style={styles.flex}>
-        <LoadingIndicator listType='message' />
-      </View>
+        <View style={styles.flex}>
+          <LoadingIndicator listType='message' />
+        </View>
     );
   }
   return (
-    <View style={[styles.container, { backgroundColor: white_snow }, container]}>
-      <FlatList
-        contentContainerStyle={[styles.contentContainer, contentContainer]}
-        data={messageList}
-        /** Disables the MessageList UI. Which means, message actions, reactions won't work. */
-        extraData={disabled || !channel?.state.isUpToDate}
-        inverted={inverted}
-        keyboardShouldPersistTaps='handled'
-        keyExtractor={keyExtractor}
-        ListEmptyComponent={renderListEmptyComponent}
-        ListFooterComponent={FooterComponent}
-        ListHeaderComponent={HeaderComponent}
-        maintainVisibleContentPosition={{
-          autoscrollToTopThreshold: autoscrollToTop ? 10 : undefined,
-          minIndexForVisible: 1,
-        }}
-        onScroll={handleScroll}
-        onScrollBeginDrag={onScrollBeginDrag}
-        onScrollEndDrag={onScrollEndDrag}
-        onTouchEnd={dismissImagePicker}
-        onViewableItemsChanged={onViewableItemsChanged.current}
-        ref={refCallback}
-        renderItem={renderItem}
-        scrollEnabled={overlay === 'none'}
-        style={[styles.listContainer, listContainer]}
-        testID='message-flat-list'
-        viewabilityConfig={flatListViewabilityConfig}
-        {...additionalFlatListProps}
-      />
-      {!loading && (
-        <>
-          <View style={styles.stickyHeader}>
-            {stickyHeaderDateToRender &&
-              (StickyHeader ? (
-                <StickyHeader dateString={stickyHeaderDateToRender} />
-              ) : messageListLengthAfterUpdate ? (
-                <DateHeader dateString={stickyHeaderDateToRender} />
-              ) : null)}
-          </View>
-          {!disableTypingIndicator && TypingIndicator && typingEventsEnabled !== false && (
-            <TypingIndicatorContainer>
-              <TypingIndicator />
-            </TypingIndicatorContainer>
-          )}
-          <ScrollToBottomButton
-            onPress={goToNewMessages}
-            showNotification={scrollToBottomButtonVisible}
-            unreadCount={threadList ? 0 : channel?.countUnread()}
-          />
-        </>
-      )}
-      <NetworkDownIndicator />
-    </View>
+      <View style={[styles.container, { backgroundColor: white_snow }, container]}>
+        <FlatList
+            contentContainerStyle={[styles.contentContainer, contentContainer]}
+            data={messageList}
+            /** Disables the MessageList UI. Which means, message actions, reactions won't work. */
+            extraData={disabled || !channel?.state.isUpToDate}
+            inverted={inverted}
+            keyboardShouldPersistTaps='handled'
+            keyExtractor={keyExtractor}
+            ListEmptyComponent={renderListEmptyComponent}
+            ListFooterComponent={FooterComponent}
+            ListHeaderComponent={HeaderComponent}
+            maintainVisibleContentPosition={{
+              autoscrollToTopThreshold: autoscrollToTop ? 10 : undefined,
+              minIndexForVisible: 1,
+            }}
+            onScroll={handleScroll}
+            onScrollBeginDrag={onScrollBeginDrag}
+            onScrollEndDrag={onScrollEndDrag}
+            onTouchEnd={dismissImagePicker}
+            onViewableItemsChanged={onViewableItemsChanged.current}
+            ref={refCallback}
+            renderItem={renderItem}
+            scrollEnabled={overlay === 'none'}
+            style={[styles.listContainer, listContainer]}
+            testID='message-flat-list'
+            viewabilityConfig={flatListViewabilityConfig}
+            {...additionalFlatListProps}
+        />
+        {!loading && (
+            <>
+              <View style={styles.stickyHeader}>
+                {stickyHeaderDateToRender &&
+                    (StickyHeader ? (
+                        <StickyHeader dateString={stickyHeaderDateToRender} />
+                    ) : messageListLengthAfterUpdate ? (
+                        <DateHeader dateString={stickyHeaderDateToRender} />
+                    ) : null)}
+              </View>
+              {!disableTypingIndicator && TypingIndicator && typingEventsEnabled !== false && (
+                  <TypingIndicatorContainer>
+                    <TypingIndicator />
+                  </TypingIndicatorContainer>
+              )}
+              <ScrollToBottomButton
+                  onPress={goToNewMessages}
+                  showNotification={scrollToBottomButtonVisible}
+                  unreadCount={threadList ? 0 : channel?.countUnread()}
+              />
+            </>
+        )}
+        <NetworkDownIndicator />
+      </View>
   );
 };
 
 export type MessageListProps<
-  At extends UnknownType = DefaultAttachmentType,
-  Ch extends UnknownType = DefaultChannelType,
-  Co extends string = DefaultCommandType,
-  Ev extends UnknownType = DefaultEventType,
-  Me extends UnknownType = DefaultMessageType,
-  Re extends UnknownType = DefaultReactionType,
-  Us extends UnknownType = DefaultUserType,
+    At extends UnknownType = DefaultAttachmentType,
+    Ch extends UnknownType = DefaultChannelType,
+    Co extends string = DefaultCommandType,
+    Ev extends UnknownType = DefaultEventType,
+    Me extends UnknownType = DefaultMessageType,
+    Re extends UnknownType = DefaultReactionType,
+    Us extends UnknownType = DefaultUserType,
 > = Partial<MessageListPropsWithContext<At, Ch, Co, Ev, Me, Re, Us>>;
 
 export const MessageList = <
-  At extends UnknownType = DefaultAttachmentType,
-  Ch extends UnknownType = DefaultChannelType,
-  Co extends string = DefaultCommandType,
-  Ev extends UnknownType = DefaultEventType,
-  Me extends UnknownType = DefaultMessageType,
-  Re extends UnknownType = DefaultReactionType,
-  Us extends UnknownType = DefaultUserType,
+    At extends UnknownType = DefaultAttachmentType,
+    Ch extends UnknownType = DefaultChannelType,
+    Co extends string = DefaultCommandType,
+    Ev extends UnknownType = DefaultEventType,
+    Me extends UnknownType = DefaultMessageType,
+    Re extends UnknownType = DefaultReactionType,
+    Us extends UnknownType = DefaultUserType,
 >(
-  props: MessageListProps<At, Ch, Co, Ev, Me, Re, Us>,
+    props: MessageListProps<At, Ch, Co, Ev, Me, Re, Us>,
 ) => {
   const { closePicker, selectedPicker, setSelectedPicker } = useAttachmentPickerContext();
   const {
@@ -1022,53 +1051,53 @@ export const MessageList = <
   const { t, tDateTimeParser } = useTranslationContext();
 
   return (
-    <MessageListWithContext
-      {...{
-        channel,
-        client,
-        closePicker,
-        DateHeader,
-        disabled,
-        disableTypingIndicator,
-        EmptyStateIndicator,
-        enableMessageGroupingByUser,
-        error,
-        FlatList,
-        hideStickyDateHeader,
-        initialScrollToFirstUnreadMessage,
-        InlineDateSeparator,
-        InlineUnreadIndicator,
-        legacyImageViewerSwipeBehaviour,
-        loadChannelAtMessage,
-        loading,
-        LoadingIndicator,
-        loadMore,
-        loadMoreRecent,
-        loadMoreThread,
-        markRead,
-        Message,
-        MessageSystem,
-        myMessageTheme,
-        NetworkDownIndicator,
-        overlay,
-        reloadChannel,
-        ScrollToBottomButton,
-        scrollToFirstUnreadThreshold,
-        selectedPicker,
-        setImages,
-        setSelectedPicker,
-        setTargetedMessage,
-        StickyHeader,
-        t,
-        targetedMessage,
-        tDateTimeParser,
-        thread,
-        typingEventsEnabled,
-        TypingIndicator,
-        TypingIndicatorContainer,
-      }}
-      {...props}
-      noGroupByUser={!enableMessageGroupingByUser || props.noGroupByUser}
-    />
+      <MessageListWithContext
+          {...{
+            channel,
+            client,
+            closePicker,
+            DateHeader,
+            disabled,
+            disableTypingIndicator,
+            EmptyStateIndicator,
+            enableMessageGroupingByUser,
+            error,
+            FlatList,
+            hideStickyDateHeader,
+            initialScrollToFirstUnreadMessage,
+            InlineDateSeparator,
+            InlineUnreadIndicator,
+            legacyImageViewerSwipeBehaviour,
+            loadChannelAtMessage,
+            loading,
+            LoadingIndicator,
+            loadMore,
+            loadMoreRecent,
+            loadMoreThread,
+            markRead,
+            Message,
+            MessageSystem,
+            myMessageTheme,
+            NetworkDownIndicator,
+            overlay,
+            reloadChannel,
+            ScrollToBottomButton,
+            scrollToFirstUnreadThreshold,
+            selectedPicker,
+            setImages,
+            setSelectedPicker,
+            setTargetedMessage,
+            StickyHeader,
+            t,
+            targetedMessage,
+            tDateTimeParser,
+            thread,
+            typingEventsEnabled,
+            TypingIndicator,
+            TypingIndicatorContainer,
+          }}
+          {...props}
+          noGroupByUser={!enableMessageGroupingByUser || props.noGroupByUser}
+      />
   );
 };

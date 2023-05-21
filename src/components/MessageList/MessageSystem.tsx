@@ -21,7 +21,10 @@ import type {
   UnknownType,
 } from '../../types/types';
 import {useIsFocused} from "@react-navigation/native";
-import {FollowSystemContext} from "stream-chat-react-native-core/src/components/ChannelList/EasyFollowSystem";
+import {
+  FollowSystemContext,
+  LoadingFollowSystemContext
+} from 'stream-chat-react-native-core/src/components/ChannelList/EasyFollowSystem';
 
 const styles = StyleSheet.create({
   container: {
@@ -71,13 +74,13 @@ const styles = StyleSheet.create({
 });
 
 export type MessageSystemProps<
-  At extends UnknownType = DefaultAttachmentType,
-  Ch extends UnknownType = DefaultChannelType,
-  Co extends string = DefaultCommandType,
-  Ev extends UnknownType = DefaultEventType,
-  Me extends UnknownType = DefaultMessageType,
-  Re extends UnknownType = DefaultReactionType,
-  Us extends UnknownType = DefaultUserType,
+    At extends UnknownType = DefaultAttachmentType,
+    Ch extends UnknownType = DefaultChannelType,
+    Co extends string = DefaultCommandType,
+    Ev extends UnknownType = DefaultEventType,
+    Me extends UnknownType = DefaultMessageType,
+    Re extends UnknownType = DefaultReactionType,
+    Us extends UnknownType = DefaultUserType,
 > = {
   /** Current [message object](https://getstream.io/chat/docs/#message_format) */
   message: MessageType<At, Ch, Co, Ev, Me, Re, Us>;
@@ -97,21 +100,20 @@ export type MessageSystemProps<
  * in message list as (type) system message.
  */
 export const MessageSystem = <
-  At extends UnknownType = DefaultAttachmentType,
-  Ch extends UnknownType = DefaultChannelType,
-  Co extends string = DefaultCommandType,
-  Ev extends UnknownType = DefaultEventType,
-  Me extends UnknownType = DefaultMessageType,
-  Re extends UnknownType = DefaultReactionType,
-  Us extends UnknownType = DefaultUserType,
+    At extends UnknownType = DefaultAttachmentType,
+    Ch extends UnknownType = DefaultChannelType,
+    Co extends string = DefaultCommandType,
+    Ev extends UnknownType = DefaultEventType,
+    Me extends UnknownType = DefaultMessageType,
+    Re extends UnknownType = DefaultReactionType,
+    Us extends UnknownType = DefaultUserType,
 >(
-  props: MessageSystemProps<At, Ch, Co, Ev, Me, Re, Us>,
+    props: MessageSystemProps<At, Ch, Co, Ev, Me, Re, Us>,
 ) => {
-  const { formatDate, message, style, channel } = props;
-  const [temporaryShowed, setTemporaryShowed] = React.useState(false);
-  const {fetchValue, followAction} = React.useContext(FollowSystemContext);
-  const [data, setData] = React.useState({isfollowing: false, isFollowers: false});
+  const { formatDate, message, style, channel, data, temporaryShowed, setTemporaryShowed } = props;
+  const {setLoading} = React.useContext(LoadingFollowSystemContext);
   const isFocused = useIsFocused();
+  const {followAction} = React.useContext(FollowSystemContext);
   const {
     theme: {
       colors: { grey, grey_whisper },
@@ -125,32 +127,18 @@ export const MessageSystem = <
   const createdAt = message.created_at;
   const parsedDate = tDateTimeParser(createdAt);
   const date =
-    formatDate && createdAt
-      ? formatDate(createdAt)
-      : parsedDate && isDayOrMoment(parsedDate)
-      ? parsedDate.calendar().toUpperCase()
-      : parsedDate;
-
-
-  React.useEffect(async () => {
-    return () => {
-      setTemporaryShowed(false);
-    }
-  }, [])
-
-  React.useEffect(async () => {
-    if (channel?.state?.members) {
-      const targetUserIdList = Object.entries(channel.state.members);
-      const filtered = targetUserIdList.filter(([key, value]) => key !== channel?._client?._user?.id);
-
-      const data = await fetchValue(filtered[0][0]);
-      setData({...data});
-      setTemporaryShowed(false);
-    }
-  }, [isFocused]);
+      formatDate && createdAt
+          ? formatDate(createdAt)
+          : parsedDate && isDayOrMoment(parsedDate)
+              ? parsedDate.calendar().toUpperCase()
+              : parsedDate;
 
   const followOrFollowingText = () => {
-    if (temporaryShowed || data.isFollowing) {
+    if (!temporaryShowed && data.isFollowing) {
+      return 'See Profile';
+    }
+
+    if (temporaryShowed && data.isFollowing) {
       return 'Following';
     }
     if (data.isFollowers) {
@@ -164,29 +152,31 @@ export const MessageSystem = <
       const targetUserIdList = Object.entries(channel.state.members);
       const filtered = targetUserIdList.filter(([key, value]) => key !== channel?._client?._user?.id);
 
+
       const returnedOrSaved = followAction(channel?._client?._user?.id, filtered[0][0], channel?._client?._user?.name, filtered[0][1].user.name);
       setTemporaryShowed(true);
+      setLoading(false);
     }
   }
 
   return (
-    <View style={[styles.container, style, container]} testID='message-system'>
-      <View style={[styles.line, { backgroundColor: grey_whisper }, line]} />
-      <View style={[styles.textContainer, textContainer]}>
-        <Text style={[styles.text, { color: grey }, text]}>
-          {message.text?.toUpperCase() || ''}
-        </Text>
-        {channel.type === 'messaging' && (temporaryShowed || !data.isFollowing) ? (
-            <TouchableOpacity onPress={onPressFollow} style={temporaryShowed ? styles.followingButton : styles.followButton}>
-          <Text style={temporaryShowed ? styles.followingText : styles.followText}>
-            {followOrFollowingText()}
+      <View style={[styles.container, style, container]} testID='message-system'>
+        <View style={[styles.line, { backgroundColor: grey_whisper }, line]} />
+        <View style={[styles.textContainer, textContainer]}>
+          <Text style={[styles.text, { color: grey }, text]}>
+            {message.text?.toUpperCase() || ''}
           </Text>
-        </TouchableOpacity>
-        ):<></>}
-        <Text style={[styles.text, { color: grey }, dateText]}>{date}</Text>
+          {channel.type === 'messaging' ? (
+              <TouchableOpacity onPress={onPressFollow} style={temporaryShowed || data.isFollowing ? styles.followingButton : styles.followButton}>
+                <Text style={temporaryShowed || data.isFollowing ? styles.followingText : styles.followText}>
+                  {followOrFollowingText()}
+                </Text>
+              </TouchableOpacity>
+          ):<></>}
+          <Text style={[styles.text, { color: grey }, dateText]}>{date}</Text>
+        </View>
+        <View style={[styles.line, { backgroundColor: grey_whisper }, line]} />
       </View>
-      <View style={[styles.line, { backgroundColor: grey_whisper }, line]} />
-    </View>
   );
 };
 
