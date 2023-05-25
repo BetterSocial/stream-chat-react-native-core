@@ -261,7 +261,7 @@ const ChannelPreviewMessengerWithContext = <
           </TouchableOpacity>
         </>
     )}
-      console.log(channel, 'boba')
+
   return (
       <ButtonHighlight
           onPress={() => {

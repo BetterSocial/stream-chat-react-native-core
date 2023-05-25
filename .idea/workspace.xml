@@ -6,7 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="eaba4a62-ce87-49c6-9131-b4a5831891dd" name="Changes" comment="feat: see profile feature">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/MessageList/MessageSystem.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/MessageList/MessageSystem.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/ChannelPreview/ChannelPreviewMessenger.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ChannelPreview/ChannelPreviewMessenger.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -112,7 +112,7 @@
       <workItem from="1675341191361" duration="646000" />
       <workItem from="1676023623762" duration="1632000" />
       <workItem from="1677414430539" duration="739000" />
-      <workItem from="1685036787894" duration="17000" />
+      <workItem from="1685036787894" duration="668000" />
     </task>
     <servers />
   </component>
