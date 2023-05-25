@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="eaba4a62-ce87-49c6-9131-b4a5831891dd" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/src/components/ChannelPreview/ChannelPreviewMessenger.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ChannelPreview/ChannelPreviewMessenger.tsx" afterDir="false" />
+    <list default="true" id="eaba4a62-ce87-49c6-9131-b4a5831891dd" name="Changes" comment="feat: see profile feature">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/MessageList/MessageSystem.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/MessageList/MessageSystem.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -21,6 +25,7 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GitToolBoxStore">
+    <option name="projectConfigVersion" value="5" />
     <option name="recentBranches">
       <RecentBranches>
         <option name="branchesForRepo">
@@ -29,24 +34,12 @@
               <option name="branches">
                 <list>
                   <RecentBranch>
-                    <option name="branchName" value="feat/follow-chat" />
-                    <option name="lastUsedInstant" value="1680865164" />
+                    <option name="branchName" value="feat/see-profile" />
+                    <option name="lastUsedInstant" value="1684692495" />
                   </RecentBranch>
                   <RecentBranch>
                     <option name="branchName" value="main" />
                     <option name="lastUsedInstant" value="1680786784" />
-                  </RecentBranch>
-                  <RecentBranch>
-                    <option name="branchName" value="perf/rerendering" />
-                    <option name="lastUsedInstant" value="1674454898" />
-                  </RecentBranch>
-                  <RecentBranch>
-                    <option name="branchName" value="test" />
-                    <option name="lastUsedInstant" value="1666615677" />
-                  </RecentBranch>
-                  <RecentBranch>
-                    <option name="branchName" value="feat/async-storage" />
-                    <option name="lastUsedInstant" value="1666615534" />
                   </RecentBranch>
                 </list>
               </option>
@@ -65,19 +58,19 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">
-    <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
-    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src" />
-    <property name="node.js.detected.package.eslint" value="true" />
-    <property name="node.js.selected.package.eslint" value="(autodetect)" />
-    <property name="nodejs_package_manager_path" value="npm" />
-    <property name="prettierjs.PrettierConfiguration.Package" value="$PROJECT_DIR$/node_modules/prettier" />
-    <property name="ts.external.directory.path" value="$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external" />
-    <property name="vue.rearranger.settings.migration" value="true" />
-  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "feat/see-profile",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "yarn",
+    "ts.external.directory.path": "/Applications/WebStorm.app/Contents/plugins/javascript-impl/jsLanguageServicesImpl/external",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src" />
@@ -119,6 +112,7 @@
       <workItem from="1675341191361" duration="646000" />
       <workItem from="1676023623762" duration="1632000" />
       <workItem from="1677414430539" duration="739000" />
+      <workItem from="1685036787894" duration="17000" />
     </task>
     <servers />
   </component>
@@ -135,5 +129,9 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="feat: see profile feature" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: see profile feature" />
   </component>
 </project>

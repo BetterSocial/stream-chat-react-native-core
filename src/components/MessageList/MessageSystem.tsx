@@ -25,6 +25,7 @@ import {
   FollowSystemContext,
   LoadingFollowSystemContext
 } from 'stream-chat-react-native-core/src/components/ChannelList/EasyFollowSystem';
+import {useNavigation} from '@react-navigation/core';
 
 const styles = StyleSheet.create({
   container: {
@@ -110,10 +111,11 @@ export const MessageSystem = <
 >(
     props: MessageSystemProps<At, Ch, Co, Ev, Me, Re, Us>,
 ) => {
-  const { formatDate, message, style, channel, data, temporaryShowed, setTemporaryShowed } = props;
+  const { formatDate, message, style, channel, temporaryShowed, data, setTemporaryShowed } = props;
   const {setLoading} = React.useContext(LoadingFollowSystemContext);
   const isFocused = useIsFocused();
   const {followAction} = React.useContext(FollowSystemContext);
+  const {navigate} = useNavigation();
   const {
     theme: {
       colors: { grey, grey_whisper },
@@ -134,25 +136,30 @@ export const MessageSystem = <
               : parsedDate;
 
   const followOrFollowingText = () => {
-    if (!temporaryShowed && data.isFollowing) {
+    if (temporaryShowed || (data.isFollowers && data.isFollowing)) {
       return 'See Profile';
     }
 
-    if (temporaryShowed && data.isFollowing) {
-      return 'Following';
-    }
     if (data.isFollowers) {
       return 'Follow Back';
     }
+
     return 'Follow';
   }
 
   const onPressFollow = () => {
-    if (!temporaryShowed) {
-      const targetUserIdList = Object.entries(channel.state.members);
-      const filtered = targetUserIdList.filter(([key, value]) => key !== channel?._client?._user?.id);
+    const targetUserIdList = Object.entries(channel.state.members);
+    const filtered = targetUserIdList.filter(([key, value]) => key !== channel?._client?._user?.id);
 
-
+    if (temporaryShowed || (data.isFollowers && data.isFollowing)) {
+      navigate('OtherProfile', {
+        data: {
+          user_id: channel?._client?._user?.id,
+          other_id: filtered[0][1].user.id,
+          username: filtered[0][1].user.name
+        }
+      });
+    } else if (!temporaryShowed || data.isFollowers) {
       const returnedOrSaved = followAction(channel?._client?._user?.id, filtered[0][0], channel?._client?._user?.name, filtered[0][1].user.name);
       setTemporaryShowed(true);
       setLoading(false);
@@ -167,8 +174,8 @@ export const MessageSystem = <
             {message.text?.toUpperCase() || ''}
           </Text>
           {channel.type === 'messaging' ? (
-              <TouchableOpacity onPress={onPressFollow} style={temporaryShowed || data.isFollowing ? styles.followingButton : styles.followButton}>
-                <Text style={temporaryShowed || data.isFollowing ? styles.followingText : styles.followText}>
+              <TouchableOpacity onPress={onPressFollow} style={temporaryShowed || (data.isFollowing && data.isFollowers) ? styles.followingButton : styles.followButton}>
+                <Text style={temporaryShowed || (data.isFollowing && data.isFollowers) ? styles.followingText : styles.followText}>
                   {followOrFollowingText()}
                 </Text>
               </TouchableOpacity>
