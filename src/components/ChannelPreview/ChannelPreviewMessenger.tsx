@@ -1,21 +1,22 @@
+import ButtonHighlight from 'stream-chat-react-native-core/src/components/ChannelPreview/ButtonHighlight';
 import React from 'react';
+import {FollowSystem} from "stream-chat-react-native-core/src/components/ChannelList/EasyFollowSystem";
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {
+  useChannelPreviewDisplayAvatar
+} from "stream-chat-react-native-core/src/components/ChannelPreview/hooks/useChannelPreviewDisplayAvatar";
+import { useIsFocused } from '@react-navigation/native';
 
 import { ChannelAvatar } from './ChannelAvatar';
-import { useChannelPreviewDisplayName } from './hooks/useChannelPreviewDisplayName';
-
+import { ChannelPreviewMessage } from './ChannelPreviewMessage';
+import type { ChannelPreviewProps } from './ChannelPreview';
+import { ChannelPreviewStatus } from './ChannelPreviewStatus';
+import { ChannelPreviewTitle } from './ChannelPreviewTitle';
+import { ChannelPreviewUnreadCount } from './ChannelPreviewUnreadCount';
 import {
   ChannelsContextValue,
   useChannelsContext,
 } from '../../contexts/channelsContext/ChannelsContext';
-import { useTheme } from '../../contexts/themeContext/ThemeContext';
-import { vw } from '../../utils/utils';
-import {FollowSystemContext} from '../ChannelList/EasyFollowSystem';
-import { useIsFocused } from '@react-navigation/native';
-
-import type { ChannelPreviewProps } from './ChannelPreview';
-import type { LatestMessagePreview } from './hooks/useLatestMessagePreview';
-
 import type {
   DefaultAttachmentType,
   DefaultChannelType,
@@ -26,15 +27,11 @@ import type {
   DefaultUserType,
   UnknownType,
 } from '../../types/types';
-import { ChannelPreviewTitle } from './ChannelPreviewTitle';
-import { ChannelPreviewMessage } from './ChannelPreviewMessage';
-import { ChannelPreviewStatus } from './ChannelPreviewStatus';
-import { ChannelPreviewUnreadCount } from './ChannelPreviewUnreadCount';
-import ButtonHighlight from 'stream-chat-react-native-core/src/components/ChannelPreview/ButtonHighlight';
-import {FollowSystem} from "stream-chat-react-native-core/src/components/ChannelList/EasyFollowSystem";
-import {
-  useChannelPreviewDisplayAvatar
-} from "stream-chat-react-native-core/src/components/ChannelPreview/hooks/useChannelPreviewDisplayAvatar";
+import {FollowSystemContext} from '../ChannelList/EasyFollowSystem';
+import type { LatestMessagePreview } from './hooks/useLatestMessagePreview';
+import { useChannelPreviewDisplayName } from './hooks/useChannelPreviewDisplayName';
+import { useTheme } from '../../contexts/themeContext/ThemeContext';
+import { vw } from '../../utils/utils';
 
 const styles = StyleSheet.create({
   container: {
@@ -261,7 +258,7 @@ const ChannelPreviewMessengerWithContext = <
           </TouchableOpacity>
         </>
     )}
-      console.log(channel, 'boba')
+
   return (
       <ButtonHighlight
           onPress={() => {
