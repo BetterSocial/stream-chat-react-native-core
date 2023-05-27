@@ -223,7 +223,7 @@ const ChannelPreviewMessengerWithContext = <
       const targetUserIdList = Object.entries(channel.state.members);
       const filtered = targetUserIdList.filter(([key, value]) => key !== channel?._client?._user?.id);
 
-      const returnedOrSaved = followAction(channel?._client?._user?.id, filtered[0][0], channel?._client?._user?.name, filtered[0][1].user.name);
+      const returnedOrSaved = followAction(channel?._client?._user?.id, filtered[0][1].user.id, channel?._client?._user?.name, filtered[0][1].user.name);
       setTemporaryShowed(true);
     }
   }
