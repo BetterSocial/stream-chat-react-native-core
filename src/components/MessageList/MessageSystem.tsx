@@ -160,7 +160,7 @@ export const MessageSystem = <
         }
       });
     } else if (!temporaryShowed || data.isFollowers) {
-      const returnedOrSaved = followAction(channel?._client?._user?.id, filtered[0][0], channel?._client?._user?.name, filtered[0][1].user.name);
+      const returnedOrSaved = followAction(channel?._client?._user?.id, filtered[0][1].user.id, channel?._client?._user?.name, filtered[0][1].user.name);
       setTemporaryShowed(true);
       setLoading(false);
     }

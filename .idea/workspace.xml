@@ -7,6 +7,7 @@
     <list default="true" id="eaba4a62-ce87-49c6-9131-b4a5831891dd" name="Changes" comment="feat: see profile feature">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/ChannelPreview/ChannelPreviewMessenger.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ChannelPreview/ChannelPreviewMessenger.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/MessageList/MessageSystem.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/MessageList/MessageSystem.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -53,6 +54,9 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
+  <component name="PackageJsonUpdateNotifier">
+    <dismissed value="$PROJECT_DIR$/package.json" />
+  </component>
   <component name="ProjectId" id="2DhcjkbZM0ySW1TNcX6u6qdmTmZ" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -62,6 +66,7 @@
   "keyToString": {
     "WebServerToolWindowFactoryState": "false",
     "git-widget-placeholder": "feat/see-profile",
+    "last_opened_file_path": "/Users/kevinnathaniel/Workspace/stream-chat-react-native-core",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -112,7 +117,8 @@
       <workItem from="1675341191361" duration="646000" />
       <workItem from="1676023623762" duration="1632000" />
       <workItem from="1677414430539" duration="739000" />
-      <workItem from="1685036787894" duration="668000" />
+      <workItem from="1685036787894" duration="799000" />
+      <workItem from="1685196122865" duration="77000" />
     </task>
     <servers />
   </component>
