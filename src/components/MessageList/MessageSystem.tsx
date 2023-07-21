@@ -1,14 +1,11 @@
 import React from 'react';
-import {StyleProp, StyleSheet, Text, TouchableOpacity, View, ViewStyle} from 'react-native';
-
-import { useTheme } from '../../contexts/themeContext/ThemeContext';
 import {
-  isDayOrMoment,
-  TDateTimeParserInput,
-  useTranslationContext,
-} from '../../contexts/translationContext/TranslationContext';
-
-import type { MessageType } from './hooks/useMessageList';
+  FollowSystemContext,
+  LoadingFollowSystemContext
+} from 'stream-chat-react-native-core/src/components/ChannelList/EasyFollowSystem';
+import {StyleProp, StyleSheet, Text, TouchableOpacity, View, ViewStyle} from 'react-native';
+import {useIsFocused} from "@react-navigation/native";
+import {useNavigation} from '@react-navigation/core';
 
 import type {
   DefaultAttachmentType,
@@ -20,12 +17,13 @@ import type {
   DefaultUserType,
   UnknownType,
 } from '../../types/types';
-import {useIsFocused} from "@react-navigation/native";
+import type { MessageType } from './hooks/useMessageList';
 import {
-  FollowSystemContext,
-  LoadingFollowSystemContext
-} from 'stream-chat-react-native-core/src/components/ChannelList/EasyFollowSystem';
-import {useNavigation} from '@react-navigation/core';
+  TDateTimeParserInput,
+  isDayOrMoment,
+  useTranslationContext,
+} from '../../contexts/translationContext/TranslationContext';
+import { useTheme } from '../../contexts/themeContext/ThemeContext';
 
 const styles = StyleSheet.create({
   container: {
@@ -173,7 +171,7 @@ export const MessageSystem = <
           <Text style={[styles.text, { color: grey }, text]}>
             {message.text?.toUpperCase() || ''}
           </Text>
-          {channel.type === 'messaging' ? (
+          {(channel.type === 'messaging' && !data?.isAnonymous) ? (
               <TouchableOpacity onPress={onPressFollow} style={temporaryShowed || (data.isFollowing && data.isFollowers) ? styles.followingButton : styles.followButton}>
                 <Text style={temporaryShowed || (data.isFollowing && data.isFollowers) ? styles.followingText : styles.followText}>
                   {followOrFollowingText()}
