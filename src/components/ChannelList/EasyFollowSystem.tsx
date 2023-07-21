@@ -3,7 +3,8 @@ import React from 'react';
 interface EasyFollowSystemProps {
     valueCallback: () => {
         isFollowing: false,
-        isFollowers: false
+        isFollowers: false,
+        isAnonymous: true
     },
     followButtonAction: () => void;
 }
