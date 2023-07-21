@@ -241,7 +241,7 @@ const ChannelPreviewMessengerWithContext = <
       (!temporaryShowed && forcedUpdate.isFollowing) || 
       forcedUpdate.isFollowing || 
       (forcedUpdate.isFollowers && forcedUpdate.isFollowing) ||
-      forcedUpdate.isAnonymous) { {
+      forcedUpdate.isAnonymous) {
       return (
           <>
             <PreviewStatus
