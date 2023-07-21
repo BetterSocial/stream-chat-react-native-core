@@ -183,7 +183,7 @@ const ChannelPreviewMessengerWithContext = <
   const [temporaryShowed, setTemporaryShowed] = React.useState(false);
 
   const {fetchValue, followAction} = React.useContext(FollowSystemContext);
-  const [forcedUpdate, setForcedUpdate] = React.useState({isFollowing: true, isFollowers: false});
+  const [forcedUpdate, setForcedUpdate] = React.useState({isFollowing: true, isFollowers: false, isAnonymous: false});
   const displayAvatar = useChannelPreviewDisplayAvatar(channel);
   const isFocused = useIsFocused();
   const displayName = useChannelPreviewDisplayName(
@@ -223,7 +223,7 @@ const ChannelPreviewMessengerWithContext = <
       const targetUserIdList = Object.entries(channel.state.members);
       const filtered = targetUserIdList.filter(([key, value]) => key !== channel?._client?._user?.id);
 
-      const returnedOrSaved = followAction(channel?._client?._user?.id, filtered[0][1].user.id, channel?._client?._user?.name, filtered[0][1].user.name);
+      const returnedOrSaved = followAction(channel?._client?._user?.id, filtered[0][0], channel?._client?._user?.name, filtered[0][1].user.name);
       setTemporaryShowed(true);
     }
   }
@@ -236,7 +236,12 @@ const ChannelPreviewMessengerWithContext = <
   }
 
   const FollowButtonSwitch = () => {
-    if (channel.data.member_count > 2 || channel.type !== 'messaging' || (!temporaryShowed && forcedUpdate.isFollowing) || forcedUpdate.isFollowing || (forcedUpdate.isFollowers && forcedUpdate.isFollowing)) {
+    if (channel.data.member_count > 2 || 
+      channel.type !== 'messaging' || 
+      (!temporaryShowed && forcedUpdate.isFollowing) || 
+      forcedUpdate.isFollowing || 
+      (forcedUpdate.isFollowers && forcedUpdate.isFollowing) ||
+      forcedUpdate.isAnonymous) { {
       return (
           <>
             <PreviewStatus
