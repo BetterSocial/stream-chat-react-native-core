@@ -27,6 +27,7 @@ const EasyFollowSystem: React.FC<EasyFollowSystemProps> = ({children, valueCallb
             return {
                 isFollowing: dataTemp?.isMeFollowingTarget || false,
                 isFollowers: dataTemp?.isTargetFollowingMe || false,
+                isAnonymous: dataTemp?.isAnonymous
             };
         }
     }
