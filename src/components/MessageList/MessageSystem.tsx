@@ -164,6 +164,22 @@ export const MessageSystem = <
     }
   }
 
+  const renderFollowButton = () => {
+    if(message?.system_message_type === 'block_anon_user') return <></>
+
+    if (channel.type === 'messaging' && !data?.isAnonymous) {
+      return (
+          <TouchableOpacity onPress={onPressFollow} style={temporaryShowed || (data.isFollowing && data.isFollowers) ? styles.followingButton : styles.followButton}>
+            <Text style={temporaryShowed || (data.isFollowing && data.isFollowers) ? styles.followingText : styles.followText}>
+              {followOrFollowingText()}
+            </Text>
+          </TouchableOpacity>
+      );
+    }
+
+    return <></>;
+  }
+
   return (
       <View style={[styles.container, style, container]} testID='message-system'>
         <View style={[styles.line, { backgroundColor: grey_whisper }, line]} />
@@ -171,13 +187,7 @@ export const MessageSystem = <
           <Text style={[styles.text, { color: grey }, text]}>
             {message.text?.toUpperCase() || ''}
           </Text>
-          {(channel.type === 'messaging' && !data?.isAnonymous) ? (
-              <TouchableOpacity onPress={onPressFollow} style={temporaryShowed || (data.isFollowing && data.isFollowers) ? styles.followingButton : styles.followButton}>
-                <Text style={temporaryShowed || (data.isFollowing && data.isFollowers) ? styles.followingText : styles.followText}>
-                  {followOrFollowingText()}
-                </Text>
-              </TouchableOpacity>
-          ):<></>}
+          {renderFollowButton()}
           <Text style={[styles.text, { color: grey }, dateText]}>{date}</Text>
         </View>
         <View style={[styles.line, { backgroundColor: grey_whisper }, line]} />
