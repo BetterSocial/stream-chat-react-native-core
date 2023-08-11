@@ -440,14 +440,22 @@ const MessageListWithContext = <
   React.useEffect(async () => {
     if (channel?.state?.members) {
       const targetUserIdList = Object.entries(channel.state.members);
-      const filtered = targetUserIdList.filter(([key, value]) => key !== channel?._client?._user?.id);
-
-      const data = await fetchValue(filtered[0][0]);
-      setData({...data});
-      setTemporaryShowed(false);
+      const filtered = targetUserIdList.filter(
+        ([key, value]) => key !== channel?._client?._user?.id
+      );
+      if (filtered.length > 0) {
+        try {
+          const data = await fetchValue(filtered[0][0]);
+          setData({...data});
+          setTemporaryShowed(false);
+          setLoadingFollow(false);
+        } catch (e) {
+          console.log(e, 'error')
+        }
+      }
       setLoadingFollow(false);
     }
-  }, [isFocused]);
+  }, [channel]);
 
   useEffect(() => {
     setScrollToBottomButtonVisible(false);
@@ -595,7 +603,8 @@ const MessageListWithContext = <
     if (message.type === 'system' || message.isRemoveMember) {
       return (
           <>
-            <MessageSystem channel={channel} message={message} style={styles.messagePadding} data={data} temporaryShowed={temporaryShowed} setTemporaryShowed={setTemporaryShowed} />
+            <MessageSystem channel={channel} message={message} style={styles.messagePadding} data={data} temporaryShowed={temporaryShowed} setTemporaryShowed={setTemporaryShowed} loadingFollow={loadingFollowSystem}
+ />
             {insertInlineUnreadIndicator && <InlineUnreadIndicator />}
           </>
       );
@@ -923,7 +932,7 @@ const MessageListWithContext = <
 
   if (!FlatList) return null;
 
-  if (loading || loadingFollowSystem) {
+  if (loading) {
     return (
         <View style={styles.flex}>
           <LoadingIndicator listType='message' />

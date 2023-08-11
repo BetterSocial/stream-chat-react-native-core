@@ -109,7 +109,8 @@ export const MessageSystem = <
 >(
     props: MessageSystemProps<At, Ch, Co, Ev, Me, Re, Us>,
 ) => {
-  const { formatDate, message, style, channel, temporaryShowed, data, setTemporaryShowed } = props;
+  const { formatDate, message, style, channel, temporaryShowed, data, setTemporaryShowed, loadingFollow
+ } = props;
   const {setLoading} = React.useContext(LoadingFollowSystemContext);
   const isFocused = useIsFocused();
   const {followAction} = React.useContext(FollowSystemContext);
@@ -167,7 +168,7 @@ export const MessageSystem = <
   const renderFollowButton = () => {
     if(message?.system_message_type === 'block_anon_user') return <></>
 
-    if (channel.type === 'messaging' && !data?.isAnonymous) {
+    if (!loadingFollow && channel.type === 'messaging' && !data?.isAnonymous) {
       return (
           <TouchableOpacity onPress={onPressFollow} style={temporaryShowed || (data.isFollowing && data.isFollowers) ? styles.followingButton : styles.followButton}>
             <Text style={temporaryShowed || (data.isFollowing && data.isFollowers) ? styles.followingText : styles.followText}>
