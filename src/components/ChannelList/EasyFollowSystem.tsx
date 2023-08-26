@@ -1,17 +1,19 @@
 import React from 'react';
 
 interface EasyFollowSystemProps {
-    valueCallback: () => {
-        isFollowing: false,
-        isFollowers: false,
-        isAnonymous: true
+    refreshFollowData: (targetUserId: string) => {
+        isMeFollowingTarget: boolean,
+        isTargetFollowingMe: boolean,
+        isAnonymous: boolean
     },
     followButtonAction: () => void;
+    followData: any
 }
 
 export const FollowSystemContext = React.createContext({
-    fetchValue: () => {},
-    followAction: () => {}
+    fetchValue: (targetUserId: string) => {},
+    followAction: () => {},
+    followData: {}
 });
 
 export const LoadingFollowSystemContext = React.createContext({
@@ -19,21 +21,14 @@ export const LoadingFollowSystemContext = React.createContext({
     setLoading: () => {}
 });
 
-const EasyFollowSystem: React.FC<EasyFollowSystemProps> = ({children, valueCallback, followButtonAction}) => {
+const EasyFollowSystem: React.FC<EasyFollowSystemProps> = ({children, followData, refreshFollowData, followButtonAction}) => {
     const [loading, setLoading] = React.useState(true);
     const fetchValue = async (targetUserId: string) => {
-        if (valueCallback) {
-            const dataTemp = await valueCallback(targetUserId);
-            return {
-                isFollowing: dataTemp?.isMeFollowingTarget || false,
-                isFollowers: dataTemp?.isTargetFollowingMe || false,
-                isAnonymous: dataTemp?.isAnonymous
-            };
-        }
+        if (refreshFollowData) refreshFollowData(targetUserId);
     }
 
     return (
-        <FollowSystemContext.Provider value={{ fetchValue, followAction: followButtonAction}}>
+        <FollowSystemContext.Provider value={{ fetchValue, followData, followAction: followButtonAction}}>
             <LoadingFollowSystemContext.Provider value ={{loading, setLoading}}>
                 {children}
             </LoadingFollowSystemContext.Provider>
