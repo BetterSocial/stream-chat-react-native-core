@@ -182,8 +182,7 @@ const ChannelPreviewMessengerWithContext = <
   } = useTheme();
   const [temporaryShowed, setTemporaryShowed] = React.useState(false);
 
-  const {fetchValue, followAction} = React.useContext(FollowSystemContext);
-  const [forcedUpdate, setForcedUpdate] = React.useState({isFollowing: true, isFollowers: false, isAnonymous: false});
+  const {fetchValue, followAction, followData} = React.useContext(FollowSystemContext);
   const displayAvatar = useChannelPreviewDisplayAvatar(channel);
   const isFocused = useIsFocused();
   const displayName = useChannelPreviewDisplayName(
@@ -191,31 +190,61 @@ const ChannelPreviewMessengerWithContext = <
       Math.floor(maxWidth / ((title.fontSize || styles.title.fontSize) / 2)),
   );
 
-  React.useEffect(async () => {
+  const targetUserIdList = Object.entries(channel.state.members);
+  const filtered = targetUserIdList.filter(([key, value]) => key !== channel?._client?._user?.id);
+  let forcedUpdateData = {
+    isFollowing: false,
+    isFollowers: false,
+    isAnonymous: true
+  }
+  try {
+    forcedUpdateData = {
+      isFollowing: followData[filtered[0][0]].isMeFollowingTarget,
+      isFollowers: followData[filtered[0][0]].isTargetFollowingMe,
+      isAnonymous: followData[filtered[0][0]].isAnonymous
+    }
+  } catch(e) {
+  }
+
+  React.useEffect(() => {
     return () => {
       setTemporaryShowed(false);
     }
   }, [])
 
   React.useEffect(async () => {
-    if (channel?.state?.members) {
-      const targetUserIdList = Object.entries(channel.state.members);
-      const filtered = targetUserIdList.filter(([key, value]) => key !== channel?._client?._user?.id);
-
-      const data = await fetchValue(filtered[0][0]);
-      setForcedUpdate({...data});
-      setTemporaryShowed(false);
+    try {
+      if (channel?.state?.members) {
+        if(filtered?.length > 0) {
+          const userId = filtered[0][0];
+          await fetchValue(userId);
+          setTemporaryShowed(false);
+        }
+      }
+    } catch(e) {
     }
   }, [isFocused]);
 
   const followOrFollowingText = () => {
-    if (temporaryShowed || forcedUpdate.isFollowing) {
-      return 'Following';
+    const targetUserIdList = Object.entries(channel.state.members);
+    const filtered = targetUserIdList.filter(([key, value]) => key !== channel?._client?._user?.id);
+
+    try {
+      if(!forcedUpdateData) return null
+
+      if (temporaryShowed || forcedUpdateData?.isFollowing) {
+        return 'Following';
+      }
+      if (forcedUpdateData?.isFollowers) {
+        return 'Follow Back';
+      }
+      return 'Follow';
+      
+    } catch(e) {
+      console.log(e)
+      return null;
     }
-    if (forcedUpdate.isFollowers) {
-      return 'Follow Back';
-    }
-    return 'Follow';
+
   }
 
   const onPressFollow = () => {
@@ -229,7 +258,12 @@ const ChannelPreviewMessengerWithContext = <
   }
 
   const followButton = () => {
-    if (channel.data.member_count > 2 || channel.state.members.length <= 2 || channel.type !== 'messaging' || (!temporaryShowed && forcedUpdate.isFollowing) || forcedUpdate.isFollowing || (forcedUpdate.isFollowers && forcedUpdate.isFollowing)) {
+    if (channel.data.member_count > 2 || 
+      channel.state.members.length <= 2 || 
+      channel.type !== 'messaging' || 
+      (!temporaryShowed && forcedUpdateData?.isFollowing) || 
+      forcedUpdateData?.isFollowing || 
+      (forcedUpdateData?.isFollowers && forcedUpdateData?.isFollowing)) {
       return styles.columnRight;
     }
     return styles.columnRightCenter;
@@ -238,10 +272,10 @@ const ChannelPreviewMessengerWithContext = <
   const FollowButtonSwitch = () => {
     if (channel.data.member_count > 2 || 
       channel.type !== 'messaging' || 
-      (!temporaryShowed && forcedUpdate.isFollowing) || 
-      forcedUpdate.isFollowing || 
-      (forcedUpdate.isFollowers && forcedUpdate.isFollowing) ||
-      forcedUpdate.isAnonymous) {
+      (!temporaryShowed && forcedUpdateData?.isFollowing) || 
+      forcedUpdateData?.isFollowing || 
+      (forcedUpdateData?.isFollowers && forcedUpdateData?.isFollowing) ||
+      forcedUpdateData?.isAnonymous) {
       return (
           <>
             <PreviewStatus
@@ -254,11 +288,14 @@ const ChannelPreviewMessengerWithContext = <
       )
     }
 
+    const followButtonText = followOrFollowingText();
+    if(!followButtonText) return null;
+
     return (
         <>
           <TouchableOpacity onPress={onPressFollow} style={temporaryShowed ? styles.followingButton : styles.followButton}>
             <Text style={temporaryShowed ? styles.followingText : styles.followText}>
-              {followOrFollowingText()}
+              {followButtonText}
             </Text>
           </TouchableOpacity>
         </>

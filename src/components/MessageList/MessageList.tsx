@@ -1,22 +1,18 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
-  FlatListProps,
   FlatList as FlatListType,
+  FlatListProps,
   ScrollViewProps,
   StyleSheet,
   View,
   ViewToken,
 } from 'react-native';
-
 import {
-  isMessageWithStylesReadByAndDateSeparator,
-  MessageType,
-  useMessageList,
-} from './hooks/useMessageList';
-import { InlineLoadingMoreIndicator } from './InlineLoadingMoreIndicator';
-import { InlineLoadingMoreRecentIndicator } from './InlineLoadingMoreRecentIndicator';
-import { InlineLoadingMoreThreadIndicator } from './InlineLoadingMoreThreadIndicator';
-import { getLastReceivedMessage } from './utils/getLastReceivedMessage';
+  FollowSystemContext,
+  LoadingFollowSystemContext
+} from 'stream-chat-react-native-core/src/components/ChannelList/EasyFollowSystem';
+import type { Channel as StreamChannel } from 'stream-chat';
+import {useIsFocused} from '@react-navigation/native';
 
 import {
   AttachmentPickerContextValue,
@@ -27,10 +23,28 @@ import {
   useChannelContext,
 } from '../../contexts/channelContext/ChannelContext';
 import { ChatContextValue, useChatContext } from '../../contexts/chatContext/ChatContext';
+import type {
+  DefaultAttachmentType,
+  DefaultChannelType,
+  DefaultCommandType,
+  DefaultEventType,
+  DefaultMessageType,
+  DefaultReactionType,
+  DefaultUserType,
+  UnknownType,
+} from '../../types/types';
 import {
   ImageGalleryContextValue,
   useImageGalleryContext,
 } from '../../contexts/imageGalleryContext/ImageGalleryContext';
+import { InlineLoadingMoreIndicator } from './InlineLoadingMoreIndicator';
+import { InlineLoadingMoreRecentIndicator } from './InlineLoadingMoreRecentIndicator';
+import { InlineLoadingMoreThreadIndicator } from './InlineLoadingMoreThreadIndicator';
+import {
+  MessageType,
+  isMessageWithStylesReadByAndDateSeparator,
+  useMessageList,
+} from './hooks/useMessageList';
 import {
   MessagesContextValue,
   useMessagesContext,
@@ -43,31 +57,14 @@ import {
   PaginatedMessageListContextValue,
   usePaginatedMessageListContext,
 } from '../../contexts/paginatedMessageListContext/PaginatedMessageListContext';
+import { ThemeProvider, mergeThemes, useTheme } from '../../contexts/themeContext/ThemeContext';
 import { ThreadContextValue, useThreadContext } from '../../contexts/threadContext/ThreadContext';
-import { mergeThemes, ThemeProvider, useTheme } from '../../contexts/themeContext/ThemeContext';
 import {
-  isDayOrMoment,
   TranslationContextValue,
+  isDayOrMoment,
   useTranslationContext,
 } from '../../contexts/translationContext/TranslationContext';
-
-import type { Channel as StreamChannel } from 'stream-chat';
-
-import type {
-  DefaultAttachmentType,
-  DefaultChannelType,
-  DefaultCommandType,
-  DefaultEventType,
-  DefaultMessageType,
-  DefaultReactionType,
-  DefaultUserType,
-  UnknownType,
-} from '../../types/types';
-import EasyFollowSystem, {
-  FollowSystemContext,
-  LoadingFollowSystemContext
-} from 'stream-chat-react-native-core/src/components/ChannelList/EasyFollowSystem';
-import {useIsFocused} from '@react-navigation/native';
+import { getLastReceivedMessage } from './utils/getLastReceivedMessage';
 
 const styles = StyleSheet.create({
   container: {
@@ -362,10 +359,26 @@ const MessageListWithContext = <
 
   const [stickyHeaderDate, setStickyHeaderDate] = useState<Date | undefined>();
   const stickyHeaderDateRef = useRef<Date | undefined>();
-  const isFocused = useIsFocused();
-  const {fetchValue, followAction} = React.useContext(FollowSystemContext);
-  const [ temporaryShowed, setTemporaryShowed] = React.useState(false);
-  const [data, setData] = React.useState({isFollowing: false, isFollowers: false});
+  const {fetchValue, followData} = React.useContext(FollowSystemContext);
+  const [temporaryShowed, setTemporaryShowed] = React.useState(false);
+
+  const targetUserIdList = Object.entries(channel?.state?.members);
+  const filtered = targetUserIdList.filter(([key, value]) => key !== channel?._client?._user?.id);
+  let data = {
+    isFollowing: false,
+    isFollowers: false,
+    isAnonymous: true
+  }
+
+  try {
+    data = {
+      isFollowing: followData[filtered[0][0]].isMeFollowingTarget,
+      isFollowers: followData[filtered[0][0]].isTargetFollowingMe,
+      isAnonymous: followData[filtered[0][0]].isAnonymous
+    }
+  } catch(e) {
+  }
+
   /**
    * channel.lastRead throws error if the channel is not initialized.
    */
@@ -438,21 +451,16 @@ const MessageListWithContext = <
   };
 
   React.useEffect(async () => {
-    if (channel?.state?.members) {
-      const targetUserIdList = Object.entries(channel.state.members);
-      const filtered = targetUserIdList.filter(
-        ([key, value]) => key !== channel?._client?._user?.id
-      );
-      if (filtered.length > 0) {
-        try {
-          const data = await fetchValue(filtered[0][0]);
-          setData({...data});
+    try {
+      if (channel?.state?.members) {
+        if(filtered?.length > 0) {
+          const userId = filtered[0][0];
+          await fetchValue(userId);
           setTemporaryShowed(false);
-          setLoadingFollow(false);
-        } catch (e) {
-          console.log(e, 'error')
         }
       }
+    } catch(e) {
+    } finally {
       setLoadingFollow(false);
     }
   }, [channel]);
