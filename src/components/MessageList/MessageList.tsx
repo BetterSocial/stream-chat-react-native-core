@@ -608,7 +608,7 @@ const MessageListWithContext = <
     const showUnreadUnderlay = !!isUnreadMessage(message, lastRead) && scrollToBottomButtonVisible;
     const insertInlineUnreadIndicator =
         showUnreadUnderlay && !isUnreadMessage(lastMessage, lastRead);
-    if (message.type === 'system' || message.isRemoveMember) {
+    if (message.type === 'system' || message.isRemoveMember || message?.isSystem) {
       return (
           <>
             <MessageSystem channel={channel} message={message} style={styles.messagePadding} data={data} temporaryShowed={temporaryShowed} setTemporaryShowed={setTemporaryShowed} loadingFollow={loadingFollowSystem}
